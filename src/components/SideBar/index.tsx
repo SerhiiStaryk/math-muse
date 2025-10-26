@@ -10,53 +10,41 @@ type SideBarProps = {
 };
 
 export const SideBar = ({ mobileOpen, onDrawerToggle }: SideBarProps) => {
-  const drawer = (
-    <Box
-      onClick={onDrawerToggle}
-      sx={{ textAlign: 'center' }}
-    >
-      <Typography
-        variant='h6'
-        sx={{ my: 2 }}
-      >
-        MUI
-      </Typography>
-      <Divider />
-      <List>
-        {navItems.map(item => (
-          <ListItem
-            key={item.path}
-            disablePadding
-          >
-            <ListItemButton
-              component={Link}
-              sx={{ textAlign: 'center' }}
-              to={item.path}
-            >
-              <ListItemText primary={item.title} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-
   return (
-    <nav>
-      <Drawer
-        variant='temporary'
-        open={mobileOpen}
-        onClose={onDrawerToggle}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-        sx={{
-          display: { xs: 'block', sm: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-        }}
+    <Drawer
+      open={mobileOpen}
+      onClose={onDrawerToggle}
+      sx={{ minWidth: 250 }}
+      anchor='right'
+    >
+      <Box
+        onClick={onDrawerToggle}
+        sx={{ textAlign: 'center', minWidth: drawerWidth }}
       >
-        {drawer}
-      </Drawer>
-    </nav>
+        <Typography
+          variant='h6'
+          sx={{ my: 2 }}
+        >
+          Fun Math Games
+        </Typography>
+        <Divider />
+        <List>
+          {navItems.map(item => (
+            <ListItem
+              key={item.path}
+              disablePadding
+            >
+              <ListItemButton
+                component={Link}
+                sx={{ textAlign: 'center' }}
+                to={item.path}
+              >
+                <ListItemText primary={item.title} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+    </Drawer>
   );
 };

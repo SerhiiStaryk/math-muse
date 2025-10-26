@@ -11,6 +11,9 @@ const theme = createTheme({
     background: {
       default: '#fffde7',
     },
+    action: {
+      active: '#fff',
+    },
   },
   typography: {
     fontFamily: '"Comic Neue", "Segoe UI", Roboto, "Helvetica Neue", Arial',

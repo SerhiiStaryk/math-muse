@@ -33,6 +33,7 @@ export const HomePage = () => (
           size='large'
           component={RouterLink}
           to={item.path}
+          startIcon={<item.icon />}
         >
           {item.title}
         </Button>

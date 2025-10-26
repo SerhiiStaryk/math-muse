@@ -1,5 +1,4 @@
 export { AnswerFeedback } from './AnswerFeedback';
-export { AppBar } from './AppBar';
 export { GameHistoryTable } from './GameHistoryTable';
 export { Header } from './Header';
 export { Layout } from './Layout';
