@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Typography, Box, Card, CardContent } from '@mui/material';
-import { GameHistoryTable, Score, AnswerFeedback } from '@/components';
+import { AnswerFeedback } from '@/components';
 import { getRandomNumber, recordAttempt } from '@/helpers';
 import { useHistory } from '@/hooks';
 import { GameType } from '@/types';
