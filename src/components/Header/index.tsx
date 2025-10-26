@@ -6,7 +6,7 @@ import { navItems } from '@/constants';
 import MenuIcon from '@mui/icons-material/Menu';
 
 export const Header = () => {
-  const [mobileOpen, setMobileOpen] = useState(true);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState);
