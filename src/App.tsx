@@ -11,6 +11,12 @@ const ThemedApp = () => {
   const { settings } = useSettings();
 
   const theme = useMemo(() => {
+    // Define a reusable type for styleOverrides
+    type StyleOverrides = {
+      transition?: string;
+      '&:hover'?: Record<string, unknown>;
+    };
+
     // Create dynamic theme based on settings
     return createTheme({
       ...baseTheme,
@@ -36,24 +42,26 @@ const ThemedApp = () => {
         MuiButton: {
           styleOverrides: {
             root: {
-              ...baseTheme.components?.MuiButton?.styleOverrides?.root,
+              ...((baseTheme.components?.MuiButton?.styleOverrides?.root as Partial<StyleOverrides>) ?? {}),
               transition: settings.reduceMotion
                 ? 'none'
-                : baseTheme.components?.MuiButton?.styleOverrides?.root?.transition,
+                : (baseTheme.components?.MuiButton?.styleOverrides?.root as Partial<StyleOverrides>)?.transition,
               '&:hover': settings.reduceMotion
                 ? {}
-                : baseTheme.components?.MuiButton?.styleOverrides?.root?.['&:hover'],
+                : (baseTheme.components?.MuiButton?.styleOverrides?.root as Partial<StyleOverrides>)?.['&:hover'],
             },
           },
         },
         MuiCard: {
           styleOverrides: {
             root: {
-              ...baseTheme.components?.MuiCard?.styleOverrides?.root,
+              ...((baseTheme.components?.MuiCard?.styleOverrides?.root as Partial<StyleOverrides>) ?? {}),
               transition: settings.reduceMotion
                 ? 'none'
-                : baseTheme.components?.MuiCard?.styleOverrides?.root?.transition,
-              '&:hover': settings.reduceMotion ? {} : baseTheme.components?.MuiCard?.styleOverrides?.root?.['&:hover'],
+                : (baseTheme.components?.MuiCard?.styleOverrides?.root as Partial<StyleOverrides>)?.transition,
+              '&:hover': settings.reduceMotion
+                ? {}
+                : (baseTheme.components?.MuiCard?.styleOverrides?.root as Partial<StyleOverrides>)?.['&:hover'],
             },
           },
         },

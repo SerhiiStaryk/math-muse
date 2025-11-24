@@ -7,7 +7,6 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "resolvePackageJsonImports": true,
-
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
@@ -24,12 +23,11 @@
 
     "esModuleInterop": true,
 
-    "ignoreDeprecations": "6.0",
-
-    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+
+    "types": ["react", "react-dom"]
   },
   "include": ["src"]
 }

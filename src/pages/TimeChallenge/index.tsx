@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Box, Typography, Button, Card, CardContent, Stack, Chip, Alert, TextField } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { useSettings } from '@/context/SettingsContext';
+// import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
 import { recordAttempt } from '@/helpers';
 import { GameType } from '@/types';
@@ -99,7 +99,7 @@ const AnalogClock = ({ hours, minutes, size = 200 }: { hours: number; minutes: n
 };
 
 export const TimeChallengePage = () => {
-  const { settings } = useSettings();
+  // const { settings } = useSettings();
   const { t } = useTranslation();
   const [question, setQuestion] = useState<TimeQuestion | null>(null);
   const [userAnswer, setUserAnswer] = useState('');
@@ -114,7 +114,8 @@ export const TimeChallengePage = () => {
     const types: QuestionType[] = ['read-clock', 'time-difference', 'add-time'];
     const type = types[Math.floor(Math.random() * types.length)];
 
-    let hours: number, minutes: number, hours2: number, minutes2: number;
+    let hours: number, minutes: number;
+    let hours2: number | undefined, minutes2: number | undefined;
     let answer: string, displayText: string;
 
     switch (type) {
