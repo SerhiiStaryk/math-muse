@@ -1,6 +1,12 @@
+export { AddPage } from './Add';
 export { ComparePage } from './Compare';
 export { DashboardPage } from './Dashboard';
 export { DividePage } from './Divide';
 export { HomePage } from './Home';
 export { MultiplyPage } from './Multiply';
 export { SettingsPage } from './Settings';
+export { SubtractPage } from './Subtract';
+export { MissingNumberPage } from './MissingNumber';
+export { TrueFalsePage } from './TrueFalse';
+export { NumberSequencePage } from './NumberSequence';
+export { TimeChallengePage } from './TimeChallenge';
