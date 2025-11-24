@@ -1,0 +1,5 @@
+export const ANSWER_RANGE_MULTIPLIER = 1.2;
+export const MASTERY_THRESHOLD = 5;
+export const MULTIPLE_CHOICE_OPTIONS = 4;
+export const COMPARE_MAX_NUMBER = 10;
+export const FEEDBACK_DISPLAY_DURATION = 1000;

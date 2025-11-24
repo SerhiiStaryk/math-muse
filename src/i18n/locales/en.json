@@ -1,0 +1,136 @@
+{
+  "app": {
+    "name": "Math Muse",
+    "tagline": "Fun Math Games"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "games": "Games"
+  },
+  "games": {
+    "addition": "Addition",
+    "subtraction": "Subtraction",
+    "multiply": "Multiply",
+    "divide": "Divide",
+    "compare": "Compare",
+    "missingNumber": "Missing Number",
+    "trueFalse": "True or False",
+    "numberSequence": "Number Sequence",
+    "timeChallenge": "Time Challenge"
+  },
+  "common": {
+    "score": "Score",
+    "correct": "Correct",
+    "wrong": "Wrong",
+    "question": "Question",
+    "answer": "Answer",
+    "submit": "Submit",
+    "next": "Next",
+    "start": "Start",
+    "finish": "Finish",
+    "reset": "Reset",
+    "time": "Time",
+    "attempts": "Attempts",
+    "result": "Result",
+    "history": "History",
+    "yes": "Yes",
+    "no": "No",
+    "save": "Save",
+    "cancel": "Cancel",
+    "streak": "Streak"
+  },
+  "settings": {
+    "title": "Game Settings",
+    "answerFormat": {
+      "title": "Answer Format",
+      "multipleChoice": "Multiple Choice Mode",
+      "multipleChoiceHelp": "Show 4 answer options instead of typing",
+      "numberPad": "Show Number Pad",
+      "numberPadHelp": "Display on-screen number pad for answers"
+    },
+    "difficulty": {
+      "title": "Difficulty Settings",
+      "numberOfQuestions": "Number of Questions",
+      "questionsHelp": "Questions per game session",
+      "digitRange": "Digit Range",
+      "singleDigit": "Single Digit (0-9)",
+      "doubleDigit": "Double Digit (10-99)",
+      "tripleDigit": "Triple Digit (100-999)"
+    },
+    "timer": {
+      "title": "Timer Settings",
+      "showTimer": "Show Timer",
+      "showTimerHelp": "Display countdown timer during games",
+      "timeLimit": "Time Limit (seconds)",
+      "timeLimitHelp": "Time allowed per question"
+    },
+    "sound": {
+      "title": "Sound & Feedback",
+      "soundEffects": "Sound Effects",
+      "soundEffectsHelp": "Play sounds for correct/incorrect answers",
+      "vibration": "Vibration",
+      "vibrationHelp": "Vibrate on correct/incorrect answers",
+      "animations": "Animations",
+      "animationsHelp": "Show celebratory animations"
+    },
+    "visual": {
+      "title": "Visual Settings",
+      "colorBlindMode": "Color Blind Mode",
+      "colorBlindModeHelp": "Use patterns instead of colors",
+      "fontSize": "Font Size",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large"
+    },
+    "language": {
+      "title": "Language",
+      "selectLanguage": "Select Language",
+      "english": "English",
+      "ukrainian": "Українська"
+    },
+    "data": {
+      "title": "Data Management",
+      "clearHistory": "Clear Game History",
+      "clearHistoryHelp": "Delete all saved game results",
+      "resetSettings": "Reset to Defaults",
+      "resetSettingsHelp": "Restore default settings"
+    }
+  },
+  "feedback": {
+    "correct": "Correct! Well done! 🎉",
+    "incorrect": "Oops! Try again! 💪",
+    "greatJob": "Great job!",
+    "keepGoing": "Keep going!",
+    "almostThere": "Almost there!",
+    "excellent": "Excellent!"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "overview": "Performance Overview",
+    "recentGames": "Recent Games",
+    "statistics": "Statistics",
+    "totalGames": "Total Games",
+    "accuracy": "Accuracy",
+    "averageTime": "Average Time",
+    "bestScore": "Best Score"
+  },
+  "home": {
+    "welcome": "Welcome to Math Muse!",
+    "description": "Choose a game to start practicing your math skills",
+    "getStarted": "Get Started",
+    "chooseGame": "Choose a Game"
+  },
+  "game": {
+    "loading": "Loading...",
+    "completed": "Game Completed!",
+    "finalScore": "Final Score",
+    "playAgain": "Play Again",
+    "backToHome": "Back to Home",
+    "yourAnswer": "Your Answer",
+    "correctAnswer": "Correct Answer",
+    "timeUp": "Time's Up!",
+    "progress": "Progress"
+  }
+}
