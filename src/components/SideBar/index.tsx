@@ -86,11 +86,12 @@ export const SideBar = ({ mobileOpen, onDrawerToggle }: SideBarProps) => {
           {/* Games Group */}
           {navGroups.map(group => {
             const GroupIcon = group.icon;
+
             return (
               <Box key={group.title}>
                 <ListItemButton onClick={handleGamesClick}>
                   <ListItemIcon sx={{ minWidth: 40 }}>
-                    <GroupIcon color='primary' />
+                    {GroupIcon && ((<GroupIcon color='primary' />) as unknown as React.ReactNode)}
                   </ListItemIcon>
                   <ListItemText
                     primary={t(group.translationKey)}
