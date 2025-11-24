@@ -40,21 +40,24 @@ export const SideBar = ({ mobileOpen, onDrawerToggle }: SideBarProps) => {
       open={mobileOpen}
       onClose={onDrawerToggle}
       sx={{ minWidth: 250 }}
-      anchor="right"
+      anchor='right'
     >
       <Box sx={{ textAlign: 'center', minWidth: drawerWidth }}>
         <Typography
-          variant="h6"
+          variant='h6'
           sx={{ my: 2, fontWeight: 700, color: 'primary.main' }}
         >
           {t('app.name')}
         </Typography>
         <Divider />
         <List>
-          {navItems.map((item) => {
+          {navItems.map(item => {
             const Icon = item.icon;
             return (
-              <ListItem key={item.path} disablePadding>
+              <ListItem
+                key={item.path}
+                disablePadding
+              >
                 <ListItemButton
                   component={Link}
                   to={item.path}
@@ -81,13 +84,13 @@ export const SideBar = ({ mobileOpen, onDrawerToggle }: SideBarProps) => {
           <Divider sx={{ my: 1 }} />
 
           {/* Games Group */}
-          {navGroups.map((group) => {
+          {navGroups.map(group => {
             const GroupIcon = group.icon;
             return (
               <Box key={group.title}>
                 <ListItemButton onClick={handleGamesClick}>
                   <ListItemIcon sx={{ minWidth: 40 }}>
-                    <GroupIcon color="primary" />
+                    <GroupIcon color='primary' />
                   </ListItemIcon>
                   <ListItemText
                     primary={t(group.translationKey)}
@@ -95,12 +98,22 @@ export const SideBar = ({ mobileOpen, onDrawerToggle }: SideBarProps) => {
                   />
                   {gamesOpen ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
-                <Collapse in={gamesOpen} timeout="auto" unmountOnExit>
-                  <List component="div" disablePadding>
-                    {group.items.map((item) => {
+                <Collapse
+                  in={gamesOpen}
+                  timeout='auto'
+                  unmountOnExit
+                >
+                  <List
+                    component='div'
+                    disablePadding
+                  >
+                    {group.items.map(item => {
                       const Icon = item.icon;
                       return (
-                        <ListItem key={item.path} disablePadding>
+                        <ListItem
+                          key={item.path}
+                          disablePadding
+                        >
                           <ListItemButton
                             component={Link}
                             to={item.path}
@@ -117,11 +130,7 @@ export const SideBar = ({ mobileOpen, onDrawerToggle }: SideBarProps) => {
                             }}
                           >
                             <ListItemIcon sx={{ minWidth: 40 }}>
-                              <Icon
-                                color={
-                                  isActive(item.path) ? 'primary' : 'inherit'
-                                }
-                              />
+                              <Icon color={isActive(item.path) ? 'primary' : 'inherit'} />
                             </ListItemIcon>
                             <ListItemText primary={t(item.translationKey)} />
                           </ListItemButton>

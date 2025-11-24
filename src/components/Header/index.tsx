@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 import { Logo, SideBar } from '@/components';
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -25,10 +25,10 @@ export const Header = () => {
   const { t } = useTranslation();
 
   const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
+    setMobileOpen(prevState => !prevState);
   };
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -37,13 +37,12 @@ export const Header = () => {
   };
 
   const isActive = (path: string) => location.pathname === path;
-  const isGameActive = () =>
-    navGroups[0].items.some((item) => isActive(item.path));
+  const isGameActive = () => navGroups[0].items.some(item => isActive(item.path));
 
   return (
     <MuiAppBar
-      position="sticky"
-      component="nav"
+      position='sticky'
+      component='nav'
       elevation={2}
       sx={{
         backdropFilter: 'blur(8px)',
@@ -64,9 +63,9 @@ export const Header = () => {
         >
           <Logo size={40} />
           <Typography
-            variant="h6"
+            variant='h6'
             noWrap
-            component="div"
+            component='div'
             sx={{
               fontWeight: 700,
               letterSpacing: 0.5,
@@ -78,10 +77,10 @@ export const Header = () => {
         </Box>
 
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
-          {navItems.map((item) => (
+          {navItems.map(item => (
             <Button
               key={item.path}
-              color="inherit"
+              color='inherit'
               component={Link}
               to={item.path}
               sx={{
@@ -92,9 +91,7 @@ export const Header = () => {
                 position: 'relative',
                 overflow: 'hidden',
                 transition: 'all 0.3s ease',
-                backgroundColor: isActive(item.path)
-                  ? 'rgba(255, 255, 255, 0.2)'
-                  : 'transparent',
+                backgroundColor: isActive(item.path) ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
                 '&:hover': {
                   backgroundColor: 'rgba(255, 255, 255, 0.15)',
                   transform: 'translateY(-2px)',
@@ -120,7 +117,7 @@ export const Header = () => {
 
           {/* Games Dropdown */}
           <Button
-            color="inherit"
+            color='inherit'
             onClick={handleMenuOpen}
             endIcon={<KeyboardArrowDownIcon />}
             sx={{
@@ -131,9 +128,7 @@ export const Header = () => {
               position: 'relative',
               overflow: 'hidden',
               transition: 'all 0.3s ease',
-              backgroundColor: isGameActive()
-                ? 'rgba(255, 255, 255, 0.2)'
-                : 'transparent',
+              backgroundColor: isGameActive() ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
               '&:hover': {
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 transform: 'translateY(-2px)',
@@ -169,7 +164,7 @@ export const Header = () => {
               },
             }}
           >
-            {navGroups[0].items.map((item) => {
+            {navGroups[0].items.map(item => {
               const Icon = item.icon;
               return (
                 <MenuItem
@@ -205,9 +200,9 @@ export const Header = () => {
         </Box>
 
         <IconButton
-          edge="end"
-          color="inherit"
-          aria-label="open drawer"
+          edge='end'
+          color='inherit'
+          aria-label='open drawer'
           sx={{
             display: { xs: 'flex', md: 'none' },
             transition: 'transform 0.2s',
@@ -221,7 +216,10 @@ export const Header = () => {
           <MenuIcon />
         </IconButton>
       </Toolbar>
-      <SideBar mobileOpen={mobileOpen} onDrawerToggle={handleDrawerToggle} />
+      <SideBar
+        mobileOpen={mobileOpen}
+        onDrawerToggle={handleDrawerToggle}
+      />
     </MuiAppBar>
   );
 };

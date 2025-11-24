@@ -43,10 +43,10 @@ export const AddPage = () => {
       handleGameAnswer(value);
 
       // Track stats
-      setTotalCount((prev) => prev + 1);
+      setTotalCount(prev => prev + 1);
       if (correct) {
-        setCorrectCount((prev) => prev + 1);
-        setStreak((prev) => prev + 1);
+        setCorrectCount(prev => prev + 1);
+        setStreak(prev => prev + 1);
         setShowingFeedback(true);
       } else {
         setStreak(0);
@@ -77,10 +77,7 @@ export const AddPage = () => {
 
   // Check if session is complete
   useEffect(() => {
-    if (
-      settings.questionsPerSession > 0 &&
-      totalCount >= settings.questionsPerSession
-    ) {
+    if (settings.questionsPerSession > 0 && totalCount >= settings.questionsPerSession) {
       setSessionComplete(true);
     }
   }, [totalCount, settings.questionsPerSession]);
@@ -94,7 +91,10 @@ export const AddPage = () => {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
+      <Typography
+        variant='h4'
+        gutterBottom
+      >
         ➕ Addition
       </Typography>
 
@@ -113,18 +113,19 @@ export const AddPage = () => {
       />
 
       {/* Incorrect Answer Dialog */}
-      <Dialog open={showPopup} onClose={handleClosePopup}>
+      <Dialog
+        open={showPopup}
+        onClose={handleClosePopup}
+      >
         <DialogTitle>Try Again!</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            The correct answer was {correctAnswer}. Keep practicing!
-          </DialogContentText>
+          <DialogContentText>The correct answer was {correctAnswer}. Keep practicing!</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button
             onClick={handleClosePopup}
-            color="primary"
-            variant="contained"
+            color='primary'
+            variant='contained'
           >
             Next Question
           </Button>
@@ -132,18 +133,31 @@ export const AddPage = () => {
       </Dialog>
 
       {/* Session Complete Dialog */}
-      <Dialog open={sessionComplete} onClose={handleResetSession}>
+      <Dialog
+        open={sessionComplete}
+        onClose={handleResetSession}
+      >
         <DialogTitle>🎉 Session Complete!</DialogTitle>
         <DialogContent>
-          <Typography variant="body1" gutterBottom>
+          <Typography
+            variant='body1'
+            gutterBottom
+          >
             Great job! You completed {settings.questionsPerSession} questions!
           </Typography>
-          <Typography variant="h6" color="primary" sx={{ mt: 2 }}>
-            Score: {correctCount} / {totalCount} (
-            {Math.round((correctCount / totalCount) * 100)}%)
+          <Typography
+            variant='h6'
+            color='primary'
+            sx={{ mt: 2 }}
+          >
+            Score: {correctCount} / {totalCount} ({Math.round((correctCount / totalCount) * 100)}%)
           </Typography>
           {streak > 3 && (
-            <Typography variant="body2" color="success.main" sx={{ mt: 1 }}>
+            <Typography
+              variant='body2'
+              color='success.main'
+              sx={{ mt: 1 }}
+            >
               🔥 Best streak: {streak} in a row!
             </Typography>
           )}
@@ -151,8 +165,8 @@ export const AddPage = () => {
         <DialogActions>
           <Button
             onClick={handleResetSession}
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
           >
             Play Again
           </Button>

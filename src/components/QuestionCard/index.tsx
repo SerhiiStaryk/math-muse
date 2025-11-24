@@ -1,15 +1,5 @@
 import { useState, memo, useCallback, useEffect } from 'react';
-import {
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Button,
-  TextField,
-  LinearProgress,
-  Chip,
-  Alert,
-} from '@mui/material';
+import { Card, CardContent, Typography, Box, Button, TextField, LinearProgress, Chip, Alert } from '@mui/material';
 import { AnswerFeedback } from '../AnswerFeedback';
 import { useSettings } from '@/context/SettingsContext';
 
@@ -23,14 +13,7 @@ type QuestionCardProps = {
 };
 
 export const QuestionCard = memo(
-  ({
-    question,
-    answers,
-    onAnswer,
-    isCorrect,
-    useMultipleChoice = true,
-    hint,
-  }: QuestionCardProps) => {
+  ({ question, answers, onAnswer, isCorrect, useMultipleChoice = true, hint }: QuestionCardProps) => {
     const [inputValue, setInputValue] = useState('');
     const [timeLeft, setTimeLeft] = useState<number | null>(null);
     const [showHint, setShowHint] = useState(false);
@@ -38,15 +21,11 @@ export const QuestionCard = memo(
 
     // Timer logic
     useEffect(() => {
-      if (
-        settings.enableTimer &&
-        !settings.practiceMode &&
-        isCorrect === null
-      ) {
+      if (settings.enableTimer && !settings.practiceMode && isCorrect === null) {
         setTimeLeft(settings.timePerQuestion);
 
         const interval = setInterval(() => {
-          setTimeLeft((prev) => {
+          setTimeLeft(prev => {
             if (prev === null || prev <= 1) {
               clearInterval(interval);
               // Auto-submit when time runs out
@@ -92,9 +71,7 @@ export const QuestionCard = memo(
     );
 
     const timePercentage =
-      timeLeft !== null && settings.timePerQuestion > 0
-        ? (timeLeft / settings.timePerQuestion) * 100
-        : 100;
+      timeLeft !== null && settings.timePerQuestion > 0 ? (timeLeft / settings.timePerQuestion) * 100 : 100;
 
     const isTimeCritical = timeLeft !== null && timeLeft <= 5;
 
@@ -103,39 +80,43 @@ export const QuestionCard = memo(
         <Card>
           <CardContent sx={{ textAlign: 'center' }}>
             {/* Timer Display */}
-            {settings.enableTimer &&
-              !settings.practiceMode &&
-              timeLeft !== null && (
-                <Box sx={{ mb: 2 }}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      mb: 1,
-                    }}
+            {settings.enableTimer && !settings.practiceMode && timeLeft !== null && (
+              <Box sx={{ mb: 2 }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    mb: 1,
+                  }}
+                >
+                  <Typography
+                    variant='body2'
+                    color='text.secondary'
                   >
-                    <Typography variant="body2" color="text.secondary">
-                      Time Left
-                    </Typography>
-                    <Chip
-                      label={`${timeLeft}s`}
-                      color={isTimeCritical ? 'error' : 'primary'}
-                      size={settings.largeText ? 'medium' : 'small'}
-                    />
-                  </Box>
-                  <LinearProgress
-                    variant="determinate"
-                    value={timePercentage}
+                    Time Left
+                  </Typography>
+                  <Chip
+                    label={`${timeLeft}s`}
                     color={isTimeCritical ? 'error' : 'primary'}
-                    sx={{ height: 8, borderRadius: 4 }}
+                    size={settings.largeText ? 'medium' : 'small'}
                   />
                 </Box>
-              )}
+                <LinearProgress
+                  variant='determinate'
+                  value={timePercentage}
+                  color={isTimeCritical ? 'error' : 'primary'}
+                  sx={{ height: 8, borderRadius: 4 }}
+                />
+              </Box>
+            )}
 
             {/* Practice Mode Indicator */}
             {settings.practiceMode && (
-              <Alert severity="info" sx={{ mb: 2 }}>
+              <Alert
+                severity='info'
+                sx={{ mb: 2 }}
+              >
                 🎓 Practice Mode - Take your time!
               </Alert>
             )}
@@ -152,23 +133,23 @@ export const QuestionCard = memo(
             </Typography>
 
             {/* Hint Button */}
-            {settings.enableHints &&
-              hint &&
-              !showHint &&
-              isCorrect === null && (
-                <Button
-                  variant="outlined"
-                  size="small"
-                  onClick={() => setShowHint(true)}
-                  sx={{ mb: 2 }}
-                >
-                  💡 Show Hint
-                </Button>
-              )}
+            {settings.enableHints && hint && !showHint && isCorrect === null && (
+              <Button
+                variant='outlined'
+                size='small'
+                onClick={() => setShowHint(true)}
+                sx={{ mb: 2 }}
+              >
+                💡 Show Hint
+              </Button>
+            )}
 
             {/* Hint Display */}
             {showHint && hint && (
-              <Alert severity="success" sx={{ mb: 2 }}>
+              <Alert
+                severity='success'
+                sx={{ mb: 2 }}
+              >
                 {hint}
               </Alert>
             )}
@@ -183,11 +164,11 @@ export const QuestionCard = memo(
                   justifyContent: 'center',
                 }}
               >
-                {answers.map((a) => (
+                {answers.map(a => (
                   <Button
                     key={a}
-                    variant="contained"
-                    color="primary"
+                    variant='contained'
+                    color='primary'
                     onClick={() => onAnswer(a)}
                     disabled={isCorrect !== null}
                     sx={{
@@ -210,12 +191,12 @@ export const QuestionCard = memo(
                 }}
               >
                 <TextField
-                  type="number"
+                  type='number'
                   value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
+                  onChange={e => setInputValue(e.target.value)}
                   onKeyDown={handleKeyPress}
-                  placeholder="Enter your answer"
-                  variant="outlined"
+                  placeholder='Enter your answer'
+                  variant='outlined'
                   size={settings.largeText ? 'medium' : 'small'}
                   disabled={isCorrect !== null}
                   sx={{
@@ -226,8 +207,8 @@ export const QuestionCard = memo(
                   }}
                 />
                 <Button
-                  variant="contained"
-                  color="primary"
+                  variant='contained'
+                  color='primary'
                   onClick={handleInputSubmit}
                   disabled={!inputValue.trim() || isCorrect !== null}
                   sx={{

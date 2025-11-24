@@ -1,9 +1,4 @@
-import {
-  loadResults,
-  saveSettings,
-  loadSettings,
-  clearResults,
-} from './storage';
+import { loadResults, saveSettings, loadSettings, clearResults, type Settings } from './storage';
 
 describe('storage helpers', () => {
   beforeEach(() => {
@@ -12,16 +7,13 @@ describe('storage helpers', () => {
 
   it('saves and loads settings', () => {
     const settings = { useMultipleChoice: false, maxNumber: 15 };
-    saveSettings(settings);
+    saveSettings(settings as Settings);
 
     expect(loadSettings()).toEqual(settings);
   });
 
   it('clears results', () => {
-    localStorage.setItem(
-      'FunMathame_v1.multiply',
-      JSON.stringify({ task: '2x3', correct: 1, attempts: 2 })
-    );
+    localStorage.setItem('FunMathame_v1.multiply', JSON.stringify({ task: '2x3', correct: 1, attempts: 2 }));
     clearResults();
 
     expect(localStorage.getItem('FunMathame_v1.multiply')).toBeNull();

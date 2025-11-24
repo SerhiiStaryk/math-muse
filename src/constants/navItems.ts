@@ -29,13 +29,13 @@ export interface NavItem {
   path: string;
   title: string;
   translationKey: string;
-  icon: any;
+  icon: React.ElementType;
 }
 
 export interface NavGroup {
   title: string;
   translationKey: string;
-  icon?: any;
+  icon?: React.ElementType;
   items: NavItem[];
 }
 

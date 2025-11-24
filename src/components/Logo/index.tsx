@@ -8,9 +8,9 @@ interface LogoProps {
 export const Logo = ({ size = 120 }: LogoProps) => {
   return (
     <Box
-      component="img"
+      component='img'
       src={logo}
-      alt="Math Muse Logo"
+      alt='Math Muse Logo'
       sx={{ width: size, height: size }}
     />
   );

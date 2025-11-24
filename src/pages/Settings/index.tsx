@@ -41,7 +41,11 @@ export const SettingsPage = () => {
 
   return (
     <Box sx={{ maxWidth: 1200, mx: 'auto' }}>
-      <Typography variant="h4" gutterBottom sx={{ mb: 3 }}>
+      <Typography
+        variant='h4'
+        gutterBottom
+        sx={{ mb: 3 }}
+      >
         ⚙️ {t('settings.title')}
       </Typography>
 
@@ -49,28 +53,25 @@ export const SettingsPage = () => {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography
-            variant="h6"
+            variant='h6'
             gutterBottom
             sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
           >
             <LanguageIcon /> {t('settings.language.title')}
           </Typography>
-          <FormControl fullWidth sx={{ mt: 2 }}>
-            <InputLabel id="language-select-label">
-              {t('settings.language.selectLanguage')}
-            </InputLabel>
+          <FormControl
+            fullWidth
+            sx={{ mt: 2 }}
+          >
+            <InputLabel id='language-select-label'>{t('settings.language.selectLanguage')}</InputLabel>
             <Select
-              labelId="language-select-label"
+              labelId='language-select-label'
               value={i18n.language}
               label={t('settings.language.selectLanguage')}
-              onChange={(e) => handleLanguageChange(e.target.value)}
+              onChange={e => handleLanguageChange(e.target.value)}
             >
-              <MenuItem value="en">
-                🇺🇸 {t('settings.language.english')}
-              </MenuItem>
-              <MenuItem value="uk">
-                🇺🇦 {t('settings.language.ukrainian')}
-              </MenuItem>
+              <MenuItem value='en'>🇺🇸 {t('settings.language.english')}</MenuItem>
+              <MenuItem value='uk'>🇺🇦 {t('settings.language.ukrainian')}</MenuItem>
             </Select>
           </FormControl>
         </CardContent>
@@ -80,7 +81,7 @@ export const SettingsPage = () => {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography
-            variant="h6"
+            variant='h6'
             gutterBottom
             sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
           >
@@ -90,17 +91,17 @@ export const SettingsPage = () => {
             control={
               <Switch
                 checked={settings.useMultipleChoice}
-                onChange={(e) =>
-                  handleSettingChange('useMultipleChoice', e.target.checked)
-                }
+                onChange={e => handleSettingChange('useMultipleChoice', e.target.checked)}
               />
             }
-            label="Multiple Choice Buttons"
+            label='Multiple Choice Buttons'
           />
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-            {settings.useMultipleChoice
-              ? '✨ Click on answer buttons'
-              : '⌨️ Type your answer'}
+          <Typography
+            variant='body2'
+            color='text.secondary'
+            sx={{ mt: 1 }}
+          >
+            {settings.useMultipleChoice ? '✨ Click on answer buttons' : '⌨️ Type your answer'}
           </Typography>
         </CardContent>
       </Card>
@@ -109,7 +110,7 @@ export const SettingsPage = () => {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography
-            variant="h6"
+            variant='h6'
             gutterBottom
             sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
           >
@@ -120,20 +121,22 @@ export const SettingsPage = () => {
             {/* Addition & Subtraction */}
             <Box>
               <Typography
-                variant="subtitle1"
+                variant='subtitle1'
                 gutterBottom
                 sx={{ fontWeight: 600 }}
               >
                 ➕ ➖ Addition & Subtraction
               </Typography>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
+              <Typography
+                variant='body2'
+                color='text.secondary'
+                gutterBottom
+              >
                 Numbers up to: {settings.maxNumber}
               </Typography>
               <Slider
                 value={settings.maxNumber}
-                onChange={(_, value) =>
-                  handleSettingChange('maxNumber', value as number)
-                }
+                onChange={(_, value) => handleSettingChange('maxNumber', value as number)}
                 min={5}
                 max={100}
                 step={5}
@@ -144,7 +147,7 @@ export const SettingsPage = () => {
                   { value: 50, label: '50' },
                   { value: 100, label: '100' },
                 ]}
-                valueLabelDisplay="auto"
+                valueLabelDisplay='auto'
                 sx={{ mt: 2, mb: 1 }}
               />
             </Box>
@@ -154,21 +157,22 @@ export const SettingsPage = () => {
             {/* Multiplication */}
             <Box>
               <Typography
-                variant="subtitle1"
+                variant='subtitle1'
                 gutterBottom
                 sx={{ fontWeight: 600 }}
               >
                 ✖️ Multiplication Tables
               </Typography>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
-                Practice up to: {settings.maxMultiplicationTable} ×{' '}
-                {settings.maxMultiplicationTable}
+              <Typography
+                variant='body2'
+                color='text.secondary'
+                gutterBottom
+              >
+                Practice up to: {settings.maxMultiplicationTable} × {settings.maxMultiplicationTable}
               </Typography>
               <Slider
                 value={settings.maxMultiplicationTable}
-                onChange={(_, value) =>
-                  handleSettingChange('maxMultiplicationTable', value as number)
-                }
+                onChange={(_, value) => handleSettingChange('maxMultiplicationTable', value as number)}
                 min={5}
                 max={12}
                 step={1}
@@ -177,7 +181,7 @@ export const SettingsPage = () => {
                   { value: 10, label: '10' },
                   { value: 12, label: '12' },
                 ]}
-                valueLabelDisplay="auto"
+                valueLabelDisplay='auto'
                 sx={{ mt: 2, mb: 1 }}
               />
             </Box>
@@ -187,20 +191,22 @@ export const SettingsPage = () => {
             {/* Division */}
             <Box>
               <Typography
-                variant="subtitle1"
+                variant='subtitle1'
                 gutterBottom
                 sx={{ fontWeight: 600 }}
               >
                 ➗ Division
               </Typography>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
+              <Typography
+                variant='body2'
+                color='text.secondary'
+                gutterBottom
+              >
                 Numbers up to: {settings.maxDivisionNumber}
               </Typography>
               <Slider
                 value={settings.maxDivisionNumber}
-                onChange={(_, value) =>
-                  handleSettingChange('maxDivisionNumber', value as number)
-                }
+                onChange={(_, value) => handleSettingChange('maxDivisionNumber', value as number)}
                 min={10}
                 max={100}
                 step={10}
@@ -209,7 +215,7 @@ export const SettingsPage = () => {
                   { value: 50, label: '50' },
                   { value: 100, label: '100' },
                 ]}
-                valueLabelDisplay="auto"
+                valueLabelDisplay='auto'
                 sx={{ mt: 2, mb: 1 }}
               />
             </Box>
@@ -219,20 +225,22 @@ export const SettingsPage = () => {
             {/* Missing Number */}
             <Box>
               <Typography
-                variant="subtitle1"
+                variant='subtitle1'
                 gutterBottom
                 sx={{ fontWeight: 600 }}
               >
                 ⁉️ Missing Number
               </Typography>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
+              <Typography
+                variant='body2'
+                color='text.secondary'
+                gutterBottom
+              >
                 Numbers up to: {settings.maxMissingNumber}
               </Typography>
               <Slider
                 value={settings.maxMissingNumber}
-                onChange={(_, value) =>
-                  handleSettingChange('maxMissingNumber', value as number)
-                }
+                onChange={(_, value) => handleSettingChange('maxMissingNumber', value as number)}
                 min={10}
                 max={50}
                 step={5}
@@ -241,7 +249,7 @@ export const SettingsPage = () => {
                   { value: 20, label: '20' },
                   { value: 50, label: '50' },
                 ]}
-                valueLabelDisplay="auto"
+                valueLabelDisplay='auto'
                 sx={{ mt: 2, mb: 1 }}
               />
             </Box>
@@ -251,20 +259,22 @@ export const SettingsPage = () => {
             {/* True or False */}
             <Box>
               <Typography
-                variant="subtitle1"
+                variant='subtitle1'
                 gutterBottom
                 sx={{ fontWeight: 600 }}
               >
                 ✅ True or False
               </Typography>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
+              <Typography
+                variant='body2'
+                color='text.secondary'
+                gutterBottom
+              >
                 Numbers up to: {settings.maxTrueFalseNumber}
               </Typography>
               <Slider
                 value={settings.maxTrueFalseNumber}
-                onChange={(_, value) =>
-                  handleSettingChange('maxTrueFalseNumber', value as number)
-                }
+                onChange={(_, value) => handleSettingChange('maxTrueFalseNumber', value as number)}
                 min={10}
                 max={50}
                 step={5}
@@ -273,7 +283,7 @@ export const SettingsPage = () => {
                   { value: 20, label: '20' },
                   { value: 50, label: '50' },
                 ]}
-                valueLabelDisplay="auto"
+                valueLabelDisplay='auto'
                 sx={{ mt: 2, mb: 1 }}
               />
             </Box>
@@ -283,20 +293,22 @@ export const SettingsPage = () => {
             {/* Number Sequence */}
             <Box>
               <Typography
-                variant="subtitle1"
+                variant='subtitle1'
                 gutterBottom
                 sx={{ fontWeight: 600 }}
               >
                 🔢 Number Sequence
               </Typography>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
+              <Typography
+                variant='body2'
+                color='text.secondary'
+                gutterBottom
+              >
                 Numbers up to: {settings.maxSequenceNumber}
               </Typography>
               <Slider
                 value={settings.maxSequenceNumber}
-                onChange={(_, value) =>
-                  handleSettingChange('maxSequenceNumber', value as number)
-                }
+                onChange={(_, value) => handleSettingChange('maxSequenceNumber', value as number)}
                 min={20}
                 max={100}
                 step={10}
@@ -305,12 +317,12 @@ export const SettingsPage = () => {
                   { value: 50, label: '50' },
                   { value: 100, label: '100' },
                 ]}
-                valueLabelDisplay="auto"
+                valueLabelDisplay='auto'
                 sx={{ mt: 2, mb: 1 }}
               />
               <Typography
-                variant="body2"
-                color="text.secondary"
+                variant='body2'
+                color='text.secondary'
                 gutterBottom
                 sx={{ mt: 2 }}
               >
@@ -318,9 +330,7 @@ export const SettingsPage = () => {
               </Typography>
               <Slider
                 value={settings.sequenceLength}
-                onChange={(_, value) =>
-                  handleSettingChange('sequenceLength', value as number)
-                }
+                onChange={(_, value) => handleSettingChange('sequenceLength', value as number)}
                 min={3}
                 max={7}
                 step={1}
@@ -329,7 +339,7 @@ export const SettingsPage = () => {
                   { value: 5, label: '5' },
                   { value: 7, label: '7' },
                 ]}
-                valueLabelDisplay="auto"
+                valueLabelDisplay='auto'
                 sx={{ mt: 2, mb: 1 }}
               />
             </Box>
@@ -341,7 +351,7 @@ export const SettingsPage = () => {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography
-            variant="h6"
+            variant='h6'
             gutterBottom
             sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
           >
@@ -353,24 +363,24 @@ export const SettingsPage = () => {
               control={
                 <Switch
                   checked={settings.enableTimer}
-                  onChange={(e) =>
-                    handleSettingChange('enableTimer', e.target.checked)
-                  }
+                  onChange={e => handleSettingChange('enableTimer', e.target.checked)}
                 />
               }
-              label="Enable Timer"
+              label='Enable Timer'
             />
 
             {settings.enableTimer && (
               <Box sx={{ ml: 4 }}>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
+                <Typography
+                  variant='body2'
+                  color='text.secondary'
+                  gutterBottom
+                >
                   Time per question: {settings.timePerQuestion} seconds
                 </Typography>
                 <Slider
                   value={settings.timePerQuestion}
-                  onChange={(_, value) =>
-                    handleSettingChange('timePerQuestion', value as number)
-                  }
+                  onChange={(_, value) => handleSettingChange('timePerQuestion', value as number)}
                   min={10}
                   max={60}
                   step={5}
@@ -379,24 +389,23 @@ export const SettingsPage = () => {
                     { value: 30, label: '30s' },
                     { value: 60, label: '60s' },
                   ]}
-                  valueLabelDisplay="auto"
+                  valueLabelDisplay='auto'
                   sx={{ mt: 2 }}
                 />
               </Box>
             )}
 
             <Box>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
-                Questions per session:{' '}
-                {settings.questionsPerSession === 0
-                  ? 'Unlimited'
-                  : settings.questionsPerSession}
+              <Typography
+                variant='body2'
+                color='text.secondary'
+                gutterBottom
+              >
+                Questions per session: {settings.questionsPerSession === 0 ? 'Unlimited' : settings.questionsPerSession}
               </Typography>
               <Slider
                 value={settings.questionsPerSession}
-                onChange={(_, value) =>
-                  handleSettingChange('questionsPerSession', value as number)
-                }
+                onChange={(_, value) => handleSettingChange('questionsPerSession', value as number)}
                 min={0}
                 max={50}
                 step={5}
@@ -406,7 +415,7 @@ export const SettingsPage = () => {
                   { value: 20, label: '20' },
                   { value: 50, label: '50' },
                 ]}
-                valueLabelDisplay="auto"
+                valueLabelDisplay='auto'
                 sx={{ mt: 2 }}
               />
             </Box>
@@ -418,7 +427,7 @@ export const SettingsPage = () => {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography
-            variant="h6"
+            variant='h6'
             gutterBottom
             sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
           >
@@ -430,28 +439,28 @@ export const SettingsPage = () => {
               control={
                 <Switch
                   checked={settings.enableSoundEffects}
-                  onChange={(e) =>
-                    handleSettingChange('enableSoundEffects', e.target.checked)
-                  }
+                  onChange={e => handleSettingChange('enableSoundEffects', e.target.checked)}
                 />
               }
-              label="Sound Effects"
+              label='Sound Effects'
             />
 
             <FormControlLabel
               control={
                 <Switch
                   checked={settings.enableCelebrations}
-                  onChange={(e) =>
-                    handleSettingChange('enableCelebrations', e.target.checked)
-                  }
+                  onChange={e => handleSettingChange('enableCelebrations', e.target.checked)}
                 />
               }
-              label="Celebrations & Animations"
+              label='Celebrations & Animations'
             />
 
             <Box>
-              <Typography variant="body2" gutterBottom sx={{ mb: 1 }}>
+              <Typography
+                variant='body2'
+                gutterBottom
+                sx={{ mb: 1 }}
+              >
                 Encouragement Level:
               </Typography>
               <ToggleButtonGroup
@@ -465,15 +474,16 @@ export const SettingsPage = () => {
                 fullWidth
                 sx={{ mb: 1 }}
               >
-                <ToggleButton value="low">Low</ToggleButton>
-                <ToggleButton value="medium">Medium</ToggleButton>
-                <ToggleButton value="high">High</ToggleButton>
+                <ToggleButton value='low'>Low</ToggleButton>
+                <ToggleButton value='medium'>Medium</ToggleButton>
+                <ToggleButton value='high'>High</ToggleButton>
               </ToggleButtonGroup>
-              <Typography variant="caption" color="text.secondary">
-                {settings.encouragementLevel === 'high' &&
-                  '🌟 Lots of positive messages!'}
-                {settings.encouragementLevel === 'medium' &&
-                  '👍 Some encouraging words'}
+              <Typography
+                variant='caption'
+                color='text.secondary'
+              >
+                {settings.encouragementLevel === 'high' && '🌟 Lots of positive messages!'}
+                {settings.encouragementLevel === 'medium' && '👍 Some encouraging words'}
                 {settings.encouragementLevel === 'low' && '✓ Just the basics'}
               </Typography>
             </Box>
@@ -485,7 +495,7 @@ export const SettingsPage = () => {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography
-            variant="h6"
+            variant='h6'
             gutterBottom
             sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
           >
@@ -498,21 +508,27 @@ export const SettingsPage = () => {
                 control={
                   <Switch
                     checked={settings.practiceMode}
-                    onChange={(e) =>
-                      handleSettingChange('practiceMode', e.target.checked)
-                    }
+                    onChange={e => handleSettingChange('practiceMode', e.target.checked)}
                   />
                 }
                 label={
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     Practice Mode
                     {settings.practiceMode && (
-                      <Chip label="Active" size="small" color="success" />
+                      <Chip
+                        label='Active'
+                        size='small'
+                        color='success'
+                      />
                     )}
                   </Box>
                 }
               />
-              <Typography variant="body2" color="text.secondary" sx={{ ml: 4 }}>
+              <Typography
+                variant='body2'
+                color='text.secondary'
+                sx={{ ml: 4 }}
+              >
                 No timer, extra help available
               </Typography>
             </Box>
@@ -521,39 +537,30 @@ export const SettingsPage = () => {
               control={
                 <Switch
                   checked={settings.enableHints}
-                  onChange={(e) =>
-                    handleSettingChange('enableHints', e.target.checked)
-                  }
+                  onChange={e => handleSettingChange('enableHints', e.target.checked)}
                 />
               }
-              label="Show Hints"
+              label='Show Hints'
             />
 
             <FormControlLabel
               control={
                 <Switch
                   checked={settings.showProgress}
-                  onChange={(e) =>
-                    handleSettingChange('showProgress', e.target.checked)
-                  }
+                  onChange={e => handleSettingChange('showProgress', e.target.checked)}
                 />
               }
-              label="Show Score & Progress"
+              label='Show Score & Progress'
             />
 
             <FormControlLabel
               control={
                 <Switch
                   checked={settings.autoAdvanceOnCorrect}
-                  onChange={(e) =>
-                    handleSettingChange(
-                      'autoAdvanceOnCorrect',
-                      e.target.checked
-                    )
-                  }
+                  onChange={e => handleSettingChange('autoAdvanceOnCorrect', e.target.checked)}
                 />
               }
-              label="Auto-advance after correct answer"
+              label='Auto-advance after correct answer'
             />
           </Stack>
         </CardContent>
@@ -563,7 +570,7 @@ export const SettingsPage = () => {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Typography
-            variant="h6"
+            variant='h6'
             gutterBottom
             sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
           >
@@ -575,36 +582,30 @@ export const SettingsPage = () => {
               control={
                 <Switch
                   checked={settings.largeText}
-                  onChange={(e) =>
-                    handleSettingChange('largeText', e.target.checked)
-                  }
+                  onChange={e => handleSettingChange('largeText', e.target.checked)}
                 />
               }
-              label="Large Text"
+              label='Large Text'
             />
 
             <FormControlLabel
               control={
                 <Switch
                   checked={settings.highContrast}
-                  onChange={(e) =>
-                    handleSettingChange('highContrast', e.target.checked)
-                  }
+                  onChange={e => handleSettingChange('highContrast', e.target.checked)}
                 />
               }
-              label="High Contrast Colors"
+              label='High Contrast Colors'
             />
 
             <FormControlLabel
               control={
                 <Switch
                   checked={settings.reduceMotion}
-                  onChange={(e) =>
-                    handleSettingChange('reduceMotion', e.target.checked)
-                  }
+                  onChange={e => handleSettingChange('reduceMotion', e.target.checked)}
                 />
               }
-              label="Reduce Motion & Animations"
+              label='Reduce Motion & Animations'
             />
           </Stack>
         </CardContent>

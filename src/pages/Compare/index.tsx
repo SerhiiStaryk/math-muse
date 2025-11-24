@@ -34,11 +34,7 @@ export const ComparePage = () => {
         (num1 === num2 && answer === 'equal');
 
       setIsCorrect(correctAnswer);
-      recordAttempt(
-        `${num1} ${symbol} ${num2}`,
-        correctAnswer,
-        GameType.compare
-      );
+      recordAttempt(`${num1} ${symbol} ${num2}`, correctAnswer, GameType.compare);
     },
     [num1, num2, setIsCorrect]
   );
@@ -55,50 +51,56 @@ export const ComparePage = () => {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
+      <Typography
+        variant='h4'
+        gutterBottom
+      >
         Compare the Numbers!
       </Typography>
       <Card>
         <CardContent>
           <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
             mt={3}
           >
-            <Typography variant="h2">{num1}</Typography>
+            <Typography variant='h2'>{num1}</Typography>
             <Box
               width={50}
               height={50}
               border={2}
               mx={2}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
+              display='flex'
+              alignItems='center'
+              justifyContent='center'
             >
-              <Typography variant="h2">{selectedSymbol}</Typography>
+              <Typography variant='h2'>{selectedSymbol}</Typography>
             </Box>
-            <Typography variant="h2">{num2}</Typography>
+            <Typography variant='h2'>{num2}</Typography>
           </Box>
-          <Box mt={3} textAlign="center">
+          <Box
+            mt={3}
+            textAlign='center'
+          >
             <Button
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               onClick={() => handleAnswer('greater', '>')}
             >
               &gt;
             </Button>
             <Button
-              variant="contained"
-              color="secondary"
+              variant='contained'
+              color='secondary'
               onClick={() => handleAnswer('less', '<')}
               sx={{ mx: 2 }}
             >
               &lt;
             </Button>
             <Button
-              variant="contained"
-              color="success"
+              variant='contained'
+              color='success'
               onClick={() => handleAnswer('equal', '=')}
             >
               =

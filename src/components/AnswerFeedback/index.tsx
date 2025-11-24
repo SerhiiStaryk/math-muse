@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import { motion } from 'framer-motion';
 import { Typography, Box } from '@mui/material';
 import { useSettings } from '@/context/SettingsContext';
@@ -21,13 +22,7 @@ const ENCOURAGEMENT_MESSAGES = {
       "You're a genius! 🧠",
       'Excellent! Keep it up! 🎊',
     ],
-    medium: [
-      'Correct! 🎉',
-      'Great job! ✨',
-      'Well done! 👍',
-      'Nice work! 🌟',
-      "That's right! ✓",
-    ],
+    medium: ['Correct! 🎉', 'Great job! ✨', 'Well done! 👍', 'Nice work! 🌟', "That's right! ✓"],
     low: ['Correct! ✓', 'Right! 👍', 'Good! ✓'],
   },
   incorrect: {
@@ -38,11 +33,7 @@ const ENCOURAGEMENT_MESSAGES = {
       "Don't give up! Every mistake helps you learn! 📚",
       "Try again! You're getting better! 🌟",
     ],
-    medium: [
-      'Try again! 💭',
-      'Not quite - give it another shot! 🎯',
-      'Keep trying! ✨',
-    ],
+    medium: ['Try again! 💭', 'Not quite - give it another shot! 🎯', 'Keep trying! ✨'],
     low: ['Try again ❌', 'Not correct ✗'],
   },
 };
@@ -98,9 +89,7 @@ export const AnswerFeedback = ({ isCorrect }: AnswerFeedbackProps) => {
         sx={{
           color: isCorrect ? 'success.main' : 'error.main',
           fontWeight: 700,
-          textShadow: settings.highContrast
-            ? '2px 2px 4px rgba(0,0,0,0.3)'
-            : 'none',
+          textShadow: settings.highContrast ? '2px 2px 4px rgba(0,0,0,0.3)' : 'none',
         }}
       >
         {message}

@@ -1,15 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Typography,
-  Card,
-  CardContent,
-  Grid,
-  Container,
-  Stack,
-  Chip,
-} from '@mui/material';
+import { Box, Button, Typography, Card, CardContent, Grid, Container, Stack, Chip } from '@mui/material';
 import {
   PATH_ADD,
   PATH_SUBTRACT,
@@ -131,19 +121,17 @@ const UTILITY_CARDS = [
 
 export const HomePage = () => {
   const { settings } = useSettings();
-  const [gameStats, setGameStats] = useState<
-    Record<string, { total: number; mastered: number }>
-  >({});
+  const [gameStats, setGameStats] = useState<Record<string, { total: number; mastered: number }>>({});
 
   useEffect(() => {
     const stats: Record<string, { total: number; mastered: number }> = {};
 
-    GAME_CARDS.forEach((game) => {
+    GAME_CARDS.forEach(game => {
       if (game.gameType) {
         const results = loadResults(game.gameType);
         const resultsArray = Object.values(results);
         const total = resultsArray.length;
-        const mastered = resultsArray.filter((r) => r.correct >= 5).length;
+        const mastered = resultsArray.filter(r => r.correct >= 5).length;
         stats[game.gameType] = { total, mastered };
       }
     });
@@ -152,15 +140,14 @@ export const HomePage = () => {
   }, []);
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth='lg'>
       <Box sx={{ textAlign: 'center', mb: 6, mt: 2 }}>
         <Typography
           variant={settings.largeText ? 'h2' : 'h3'}
           gutterBottom
           sx={{
             fontWeight: 800,
-            background:
-              'linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 50%, #6C5CE7 100%)',
+            background: 'linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 50%, #6C5CE7 100%)',
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -171,22 +158,34 @@ export const HomePage = () => {
         </Typography>
         <Typography
           variant={settings.largeText ? 'h5' : 'h6'}
-          color="text.secondary"
+          color='text.secondary'
           sx={{ mb: 1, fontWeight: 500 }}
         >
           Learn math through fun and colorful games!
         </Typography>
         <Stack
-          direction="row"
+          direction='row'
           spacing={1}
-          justifyContent="center"
-          flexWrap="wrap"
+          justifyContent='center'
+          flexWrap='wrap'
           sx={{ mt: 2 }}
         >
-          <Chip label="🌟 Fun Games" color="primary" />
-          <Chip label="🎯 Track Progress" color="secondary" />
-          <Chip label="🏆 Earn Achievements" color="success" />
-          <Chip label="📚 Learn & Grow" color="info" />
+          <Chip
+            label='🌟 Fun Games'
+            color='primary'
+          />
+          <Chip
+            label='🎯 Track Progress'
+            color='secondary'
+          />
+          <Chip
+            label='🏆 Earn Achievements'
+            color='success'
+          />
+          <Chip
+            label='📚 Learn & Grow'
+            color='info'
+          />
         </Stack>
       </Box>
 
@@ -199,12 +198,22 @@ export const HomePage = () => {
         >
           🎮 Choose Your Game
         </Typography>
-        <Grid container spacing={3}>
-          {GAME_CARDS.map((game) => {
+        <Grid
+          container
+          spacing={3}
+        >
+          {GAME_CARDS.map(game => {
             const stats = game.gameType ? gameStats[game.gameType] : null;
 
             return (
-              <Grid item xs={12} sm={6} md={4} key={game.path}>
+              <Grid
+                size={{
+                  xs: 12,
+                  sm: 6,
+                  md: 4,
+                }}
+                key={game.path}
+              >
                 <Card
                   component={RouterLink}
                   to={game.path}
@@ -216,9 +225,7 @@ export const HomePage = () => {
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     cursor: 'pointer',
                     '&:hover': {
-                      transform: settings.reduceMotion
-                        ? 'none'
-                        : 'translateY(-8px) scale(1.02)',
+                      transform: settings.reduceMotion ? 'none' : 'translateY(-8px) scale(1.02)',
                       boxShadow: `0px 12px 40px ${game.color}40`,
                     },
                     '&::before': {
@@ -234,13 +241,11 @@ export const HomePage = () => {
                 >
                   <CardContent sx={{ textAlign: 'center', py: 4 }}>
                     <Typography
-                      variant="h1"
+                      variant='h1'
                       sx={{
                         fontSize: settings.largeText ? '5rem' : '4rem',
                         mb: 2,
-                        filter: settings.reduceMotion
-                          ? 'none'
-                          : 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))',
+                        filter: settings.reduceMotion ? 'none' : 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))',
                       }}
                     >
                       {game.emoji}
@@ -253,8 +258,8 @@ export const HomePage = () => {
                       {game.title}
                     </Typography>
                     <Typography
-                      variant="body2"
-                      color="text.secondary"
+                      variant='body2'
+                      color='text.secondary'
                       sx={{ mb: 2, minHeight: settings.largeText ? 60 : 40 }}
                     >
                       {game.description}
@@ -262,14 +267,14 @@ export const HomePage = () => {
 
                     {stats && stats.total > 0 && (
                       <Stack
-                        direction="row"
+                        direction='row'
                         spacing={1}
-                        justifyContent="center"
+                        justifyContent='center'
                         sx={{ mt: 2 }}
                       >
                         <Chip
                           label={`${stats.total} played`}
-                          size="small"
+                          size='small'
                           sx={{
                             backgroundColor: `${game.color}20`,
                             color: game.color,
@@ -279,15 +284,15 @@ export const HomePage = () => {
                         {stats.mastered > 0 && (
                           <Chip
                             label={`⭐ ${stats.mastered}`}
-                            size="small"
-                            color="success"
+                            size='small'
+                            color='success'
                           />
                         )}
                       </Stack>
                     )}
 
                     <Button
-                      variant="contained"
+                      variant='contained'
                       fullWidth
                       size={settings.largeText ? 'large' : 'medium'}
                       sx={{
@@ -319,9 +324,19 @@ export const HomePage = () => {
         >
           🔧 Tools & Settings
         </Typography>
-        <Grid container spacing={3}>
-          {UTILITY_CARDS.map((card) => (
-            <Grid item xs={12} sm={6} key={card.path}>
+        <Grid
+          container
+          spacing={3}
+        >
+          {UTILITY_CARDS.map(card => (
+            <Grid
+              size={{
+                xs: 12,
+                sm: 6,
+                md: 4,
+              }}
+              key={card.path}
+            >
               <Card
                 component={RouterLink}
                 to={card.path}
@@ -331,16 +346,12 @@ export const HomePage = () => {
                   transition: 'all 0.3s ease',
                   cursor: 'pointer',
                   '&:hover': {
-                    transform: settings.reduceMotion
-                      ? 'none'
-                      : 'translateY(-4px)',
+                    transform: settings.reduceMotion ? 'none' : 'translateY(-4px)',
                     boxShadow: `0px 8px 24px ${card.color}40`,
                   },
                 }}
               >
-                <CardContent
-                  sx={{ display: 'flex', alignItems: 'center', gap: 3, py: 3 }}
-                >
+                <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 3, py: 3 }}>
                   <Box
                     sx={{
                       fontSize: settings.largeText ? '4rem' : '3.5rem',
@@ -357,11 +368,17 @@ export const HomePage = () => {
                     >
                       {card.title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                      variant='body2'
+                      color='text.secondary'
+                    >
                       {card.description}
                     </Typography>
                   </Box>
-                  <Typography variant="h4" color="text.disabled">
+                  <Typography
+                    variant='h4'
+                    color='text.disabled'
+                  >
                     →
                   </Typography>
                 </CardContent>
@@ -379,8 +396,7 @@ export const HomePage = () => {
           px: 3,
           mb: 3,
           borderRadius: 4,
-          background:
-            'linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%)',
+          background: 'linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%)',
         }}
       >
         <Typography
@@ -389,7 +405,10 @@ export const HomePage = () => {
         >
           🚀 Ready to become a math champion?
         </Typography>
-        <Typography variant="body1" color="text.secondary">
+        <Typography
+          variant='body1'
+          color='text.secondary'
+        >
           Choose a game above and start your amazing math journey!
         </Typography>
       </Box>

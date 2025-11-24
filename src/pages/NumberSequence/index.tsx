@@ -1,16 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
-  Box,
-  Typography,
-  Button,
-  Card,
-  CardContent,
-  TextField,
-  Stack,
-  Chip,
-  Alert,
-  Grid,
-} from '@mui/material';
+import { Box, Typography, Button, Card, CardContent, TextField, Stack, Chip, Alert, Grid } from '@mui/material';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
@@ -29,9 +18,7 @@ export const NumberSequencePage = () => {
   const { t } = useTranslation();
   const [question, setQuestion] = useState<Question | null>(null);
   const [userAnswer, setUserAnswer] = useState('');
-  const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(
-    null
-  );
+  const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const [score, setScore] = useState(0);
   const [attempts, setAttempts] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -50,20 +37,15 @@ export const NumberSequencePage = () => {
     const fullSequence = Array.from({ length }, (_, i) => start + step * i);
 
     // Make sure all numbers are positive and within reasonable range
-    if (fullSequence.some((n) => n < 0 || n > settings.maxSequenceNumber)) {
+    if (fullSequence.some(n => n < 0 || n > settings.maxSequenceNumber)) {
       // Try again with a different start
-      const newStart =
-        step > 0
-          ? Math.floor(Math.random() * 20) + 1
-          : Math.floor(Math.random() * 50) + 50;
+      const newStart = step > 0 ? Math.floor(Math.random() * 20) + 1 : Math.floor(Math.random() * 50) + 50;
       const newSequence = Array.from({ length }, (_, i) => newStart + step * i);
 
-      if (newSequence.every((n) => n >= 0 && n <= settings.maxSequenceNumber)) {
+      if (newSequence.every(n => n >= 0 && n <= settings.maxSequenceNumber)) {
         const missingIndex = Math.floor(Math.random() * 3) + 1; // Don't hide first or last
         const answer = newSequence[missingIndex];
-        const sequence = newSequence.map((n, i) =>
-          i === missingIndex ? null : n
-        );
+        const sequence = newSequence.map((n, i) => (i === missingIndex ? null : n));
 
         setQuestion({ sequence, step, answer, missingIndex });
         setUserAnswer('');
@@ -75,9 +57,7 @@ export const NumberSequencePage = () => {
     // Choose which number to hide (not first or last to make it easier)
     const missingIndex = Math.floor(Math.random() * 3) + 1;
     const answer = fullSequence[missingIndex];
-    const sequence = fullSequence.map((n, i) =>
-      i === missingIndex ? null : n
-    );
+    const sequence = fullSequence.map((n, i) => (i === missingIndex ? null : n));
 
     setQuestion({ sequence, step, answer, missingIndex });
     setUserAnswer('');
@@ -93,15 +73,15 @@ export const NumberSequencePage = () => {
 
     const isCorrect = parseInt(userAnswer) === question.answer;
     setFeedback(isCorrect ? 'correct' : 'incorrect');
-    setAttempts((prev) => prev + 1);
+    setAttempts(prev => prev + 1);
 
     // Record the attempt for statistics
     const taskDescription = `Sequence with step ${question.step > 0 ? '+' : ''}${question.step}`;
     recordAttempt(taskDescription, isCorrect, GameType.numberSequence);
 
     if (isCorrect) {
-      setScore((prev) => prev + 1);
-      setStreak((prev) => prev + 1);
+      setScore(prev => prev + 1);
+      setStreak(prev => prev + 1);
       setTimeout(() => {
         generateQuestion();
       }, 1500);
@@ -110,7 +90,7 @@ export const NumberSequencePage = () => {
     }
   };
 
-  const handleKeyPress = (e: any) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSubmit();
     }
@@ -128,31 +108,47 @@ export const NumberSequencePage = () => {
   return (
     <Box sx={{ maxWidth: 900, mx: 'auto' }}>
       <Typography
-        variant="h4"
+        variant='h4'
         gutterBottom
         sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
       >
         <FormatListNumberedIcon /> {t('games.numberSequence')}
       </Typography>
 
-      <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
+      <Stack
+        direction='row'
+        spacing={2}
+        sx={{ mb: 3 }}
+      >
         <Chip
           label={`${t('common.score')}: ${score}/${attempts}`}
-          color="primary"
+          color='primary'
         />
-        <Chip label={`${t('common.streak')}: ${streak}`} color="secondary" />
+        <Chip
+          label={`${t('common.streak')}: ${streak}`}
+          color='secondary'
+        />
       </Stack>
 
       {question && (
         <Card sx={{ mb: 3 }}>
           <CardContent sx={{ textAlign: 'center', py: 6 }}>
-            <Typography variant="h6" gutterBottom color="text.secondary">
+            <Typography
+              variant='h6'
+              gutterBottom
+              color='text.secondary'
+            >
               Find the missing number in the sequence:
             </Typography>
 
-            <Grid container spacing={2} justifyContent="center" sx={{ my: 4 }}>
+            <Grid
+              container
+              spacing={2}
+              justifyContent='center'
+              sx={{ my: 4 }}
+            >
               {question.sequence.map((num, index) => (
-                <Grid item key={index}>
+                <Grid key={index}>
                   {num === null ? (
                     <Box
                       sx={{
@@ -198,8 +194,8 @@ export const NumberSequencePage = () => {
 
             {settings.enableHints && feedback === null && (
               <Typography
-                variant="body2"
-                color="text.secondary"
+                variant='body2'
+                color='text.secondary'
                 sx={{ mb: 3, fontStyle: 'italic' }}
               >
                 💡 Hint: {getPatternHint()}
@@ -217,10 +213,10 @@ export const NumberSequencePage = () => {
             >
               <TextField
                 value={userAnswer}
-                onChange={(e) => setUserAnswer(e.target.value)}
+                onChange={e => setUserAnswer(e.target.value)}
                 onKeyPress={handleKeyPress}
-                type="number"
-                placeholder="?"
+                type='number'
+                placeholder='?'
                 autoFocus
                 disabled={feedback === 'correct'}
                 sx={{
@@ -234,8 +230,8 @@ export const NumberSequencePage = () => {
               />
 
               <Button
-                variant="contained"
-                size="large"
+                variant='contained'
+                size='large'
                 onClick={handleSubmit}
                 disabled={userAnswer === '' || feedback === 'correct'}
                 sx={{ minWidth: 200 }}
@@ -245,15 +241,20 @@ export const NumberSequencePage = () => {
             </Box>
 
             {feedback === 'correct' && (
-              <Alert severity="success" sx={{ mt: 3 }}>
+              <Alert
+                severity='success'
+                sx={{ mt: 3 }}
+              >
                 {t('feedback.correct')} Great pattern recognition! 🎉
               </Alert>
             )}
 
             {feedback === 'incorrect' && (
-              <Alert severity="error" sx={{ mt: 3 }}>
-                {t('feedback.incorrect')} The answer is {question.answer}.{' '}
-                {getPatternHint()}.
+              <Alert
+                severity='error'
+                sx={{ mt: 3 }}
+              >
+                {t('feedback.incorrect')} The answer is {question.answer}. {getPatternHint()}.
               </Alert>
             )}
           </CardContent>

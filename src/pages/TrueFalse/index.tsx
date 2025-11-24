@@ -1,14 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
-  Box,
-  Typography,
-  Button,
-  Card,
-  CardContent,
-  Stack,
-  Chip,
-  Alert,
-} from '@mui/material';
+import { Box, Typography, Button, Card, CardContent, Stack, Chip, Alert } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -33,9 +24,7 @@ export const TrueFalsePage = () => {
   const { settings } = useSettings();
   const { t } = useTranslation();
   const [question, setQuestion] = useState<Question | null>(null);
-  const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(
-    null
-  );
+  const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const [score, setScore] = useState(0);
   const [attempts, setAttempts] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -77,10 +66,7 @@ export const TrueFalsePage = () => {
     const showCorrectAnswer = Math.random() > 0.5;
     const displayedResult = showCorrectAnswer
       ? correctResult
-      : correctResult +
-        (Math.random() > 0.5
-          ? Math.floor(Math.random() * 5) + 1
-          : -Math.floor(Math.random() * 5) - 1);
+      : correctResult + (Math.random() > 0.5 ? Math.floor(Math.random() * 5) + 1 : -Math.floor(Math.random() * 5) - 1);
 
     setQuestion({
       num1,
@@ -102,15 +88,15 @@ export const TrueFalsePage = () => {
 
     const isCorrect = userSaysTrue === question.isCorrect;
     setFeedback(isCorrect ? 'correct' : 'incorrect');
-    setAttempts((prev) => prev + 1);
+    setAttempts(prev => prev + 1);
 
     // Record the attempt for statistics
     const taskDescription = `${question.num1} ${question.operation} ${question.num2} = ${question.displayedResult}`;
     recordAttempt(taskDescription, isCorrect, GameType.trueFalse);
 
     if (isCorrect) {
-      setScore((prev) => prev + 1);
-      setStreak((prev) => prev + 1);
+      setScore(prev => prev + 1);
+      setStreak(prev => prev + 1);
     } else {
       setStreak(0);
     }
@@ -127,25 +113,36 @@ export const TrueFalsePage = () => {
   return (
     <Box sx={{ maxWidth: 800, mx: 'auto' }}>
       <Typography
-        variant="h4"
+        variant='h4'
         gutterBottom
         sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
       >
         <CheckCircleOutlineIcon /> {t('games.trueFalse')}
       </Typography>
 
-      <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
+      <Stack
+        direction='row'
+        spacing={2}
+        sx={{ mb: 3 }}
+      >
         <Chip
           label={`${t('common.score')}: ${score}/${attempts}`}
-          color="primary"
+          color='primary'
         />
-        <Chip label={`${t('common.streak')}: ${streak}`} color="secondary" />
+        <Chip
+          label={`${t('common.streak')}: ${streak}`}
+          color='secondary'
+        />
       </Stack>
 
       {question && (
         <Card sx={{ mb: 3 }}>
           <CardContent sx={{ textAlign: 'center', py: 6 }}>
-            <Typography variant="h6" gutterBottom color="text.secondary">
+            <Typography
+              variant='h6'
+              gutterBottom
+              color='text.secondary'
+            >
               Is this equation correct?
             </Typography>
 
@@ -160,28 +157,37 @@ export const TrueFalsePage = () => {
                 my: 4,
               }}
             >
-              <Typography variant="h1" component="span">
+              <Typography
+                variant='h1'
+                component='span'
+              >
                 {question.num1}
               </Typography>
-              <Typography variant="h1" component="span" color="secondary.main">
+              <Typography
+                variant='h1'
+                component='span'
+                color='secondary.main'
+              >
                 {getOperationSymbol(question.operation)}
               </Typography>
-              <Typography variant="h1" component="span">
+              <Typography
+                variant='h1'
+                component='span'
+              >
                 {question.num2}
               </Typography>
-              <Typography variant="h1" component="span" color="text.secondary">
+              <Typography
+                variant='h1'
+                component='span'
+                color='text.secondary'
+              >
                 =
               </Typography>
               <Typography
-                variant="h1"
-                component="span"
+                variant='h1'
+                component='span'
                 sx={{
-                  color:
-                    feedback === null
-                      ? 'text.primary'
-                      : feedback === 'correct'
-                      ? 'success.main'
-                      : 'error.main',
+                  color: feedback === null ? 'text.primary' : feedback === 'correct' ? 'success.main' : 'error.main',
                   fontWeight: 800,
                 }}
               >
@@ -191,15 +197,15 @@ export const TrueFalsePage = () => {
 
             {feedback === null && (
               <Stack
-                direction="row"
+                direction='row'
                 spacing={3}
-                justifyContent="center"
+                justifyContent='center'
                 sx={{ mt: 4 }}
               >
                 <Button
-                  variant="contained"
-                  size="large"
-                  color="success"
+                  variant='contained'
+                  size='large'
+                  color='success'
                   startIcon={<ThumbUpIcon />}
                   onClick={() => handleAnswer(true)}
                   sx={{
@@ -211,9 +217,9 @@ export const TrueFalsePage = () => {
                   True ✓
                 </Button>
                 <Button
-                  variant="contained"
-                  size="large"
-                  color="error"
+                  variant='contained'
+                  size='large'
+                  color='error'
                   startIcon={<ThumbDownIcon />}
                   onClick={() => handleAnswer(false)}
                   sx={{
@@ -229,7 +235,7 @@ export const TrueFalsePage = () => {
 
             {feedback === 'correct' && (
               <Alert
-                severity="success"
+                severity='success'
                 sx={{ mt: 3 }}
                 icon={<CheckCircleOutlineIcon />}
               >
@@ -238,9 +244,12 @@ export const TrueFalsePage = () => {
             )}
 
             {feedback === 'incorrect' && (
-              <Alert severity="error" sx={{ mt: 3 }} icon={<CancelIcon />}>
-                {t('feedback.incorrect')} The correct answer is{' '}
-                {question.correctResult}
+              <Alert
+                severity='error'
+                sx={{ mt: 3 }}
+                icon={<CancelIcon />}
+              >
+                {t('feedback.incorrect')} The correct answer is {question.correctResult}
               </Alert>
             )}
           </CardContent>

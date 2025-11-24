@@ -3,7 +3,6 @@ import {
   Box,
   Typography,
   Button,
-  Grid,
   Card,
   CardContent,
   LinearProgress,
@@ -16,6 +15,7 @@ import {
   DialogContent,
   DialogActions,
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { loadResults, clearResults } from '@/helpers';
 import { GameType, type ResultsData, type ResultRecord } from '@/types';
 import { GameResult } from '@/components/GameResult';
@@ -71,10 +71,10 @@ export const DashboardPage = () => {
   const [confirmReset, setConfirmReset] = useState(false);
 
   useEffect(() => {
-    Object.values(GameType).forEach((type) => {
+    Object.values(GameType).forEach(type => {
       const res = loadResults(type);
 
-      setResults((prev) => ({
+      setResults(prev => ({
         ...prev,
         [type]: res ?? {},
       }));
@@ -85,10 +85,7 @@ export const DashboardPage = () => {
     let totalCorrect = 0;
     let totalAttempts = 0;
     let totalMastered = 0;
-    const gameStats: Record<
-      GameType,
-      { correct: number; attempts: number; mastered: number }
-    > = {
+    const gameStats: Record<GameType, { correct: number; attempts: number; mastered: number }> = {
       add: { correct: 0, attempts: 0, mastered: 0 },
       subtract: { correct: 0, attempts: 0, mastered: 0 },
       multiply: { correct: 0, attempts: 0, mastered: 0 },
@@ -101,23 +98,20 @@ export const DashboardPage = () => {
     };
 
     Object.entries(results).forEach(([gameType, records]) => {
-      Object.values(records as Record<string, ResultRecord>).forEach(
-        (record) => {
-          totalCorrect += record.correct;
-          totalAttempts += record.attempts;
-          gameStats[gameType as GameType].correct += record.correct;
-          gameStats[gameType as GameType].attempts += record.attempts;
+      Object.values(records as Record<string, ResultRecord>).forEach(record => {
+        totalCorrect += record.correct;
+        totalAttempts += record.attempts;
+        gameStats[gameType as GameType].correct += record.correct;
+        gameStats[gameType as GameType].attempts += record.attempts;
 
-          if (record.correct >= 5) {
-            totalMastered += 1;
-            gameStats[gameType as GameType].mastered += 1;
-          }
+        if (record.correct >= 5) {
+          totalMastered += 1;
+          gameStats[gameType as GameType].mastered += 1;
         }
-      );
+      });
     });
 
-    const accuracy =
-      totalAttempts > 0 ? Math.round((totalCorrect / totalAttempts) * 100) : 0;
+    const accuracy = totalAttempts > 0 ? Math.round((totalCorrect / totalAttempts) * 100) : 0;
 
     return {
       totalCorrect,
@@ -138,9 +132,7 @@ export const DashboardPage = () => {
   }, [stats.totalCorrect]);
 
   const nextBadge = useMemo(() => {
-    return ACHIEVEMENT_BADGES.find(
-      (badge) => stats.totalCorrect < badge.threshold
-    );
+    return ACHIEVEMENT_BADGES.find(badge => stats.totalCorrect < badge.threshold);
   }, [stats.totalCorrect]);
 
   const handleReset = () => {
@@ -170,8 +162,8 @@ export const DashboardPage = () => {
         </Typography>
         {hasAnyResults && (
           <Button
-            variant="outlined"
-            color="error"
+            variant='outlined'
+            color='error'
             onClick={() => setConfirmReset(true)}
             size={settings.largeText ? 'large' : 'medium'}
           >
@@ -182,11 +174,11 @@ export const DashboardPage = () => {
 
       {!hasAnyResults ? (
         <Alert
-          severity="info"
+          severity='info'
           sx={{ mb: 3, fontSize: settings.largeText ? '1.2rem' : '1rem' }}
         >
-          🎯 Start playing games to see your progress here! Your achievements,
-          statistics, and mastered problems will appear on this dashboard.
+          🎯 Start playing games to see your progress here! Your achievements, statistics, and mastered problems will
+          appear on this dashboard.
         </Alert>
       ) : (
         <>
@@ -194,21 +186,21 @@ export const DashboardPage = () => {
           <Card
             sx={{
               mb: 3,
-              background: `linear-gradient(135deg, ${
+              background: `linear-gradient(135deg, ${currentBadge?.color || '#4ECDC4'}22 0%, ${
                 currentBadge?.color || '#4ECDC4'
-              }22 0%, ${currentBadge?.color || '#4ECDC4'}11 100%)`,
+              }11 100%)`,
             }}
           >
             <CardContent>
               <Stack
-                direction="row"
+                direction='row'
                 spacing={3}
-                alignItems="center"
-                flexWrap="wrap"
+                alignItems='center'
+                flexWrap='wrap'
               >
                 <Box sx={{ textAlign: 'center', minWidth: 120 }}>
                   <Typography
-                    variant="h1"
+                    variant='h1'
                     sx={{ fontSize: settings.largeText ? '5rem' : '4rem' }}
                   >
                     {currentBadge?.emoji || '🎮'}
@@ -227,27 +219,24 @@ export const DashboardPage = () => {
                 </Box>
                 <Box sx={{ flex: 1 }}>
                   <Typography
-                    variant="h6"
+                    variant='h6'
                     gutterBottom
                     sx={{ fontWeight: 600 }}
                   >
-                    {currentBadge
-                      ? `Current Level: ${currentBadge.title}`
-                      : 'Start Your Journey!'}
+                    {currentBadge ? `Current Level: ${currentBadge.title}` : 'Start Your Journey!'}
                   </Typography>
                   {nextBadge && (
                     <>
                       <Typography
-                        variant="body2"
-                        color="text.secondary"
+                        variant='body2'
+                        color='text.secondary'
                         gutterBottom
                       >
-                        Next: {nextBadge.emoji} {nextBadge.title} (
-                        {stats.totalCorrect}/{nextBadge.threshold} correct
+                        Next: {nextBadge.emoji} {nextBadge.title} ({stats.totalCorrect}/{nextBadge.threshold} correct
                         answers)
                       </Typography>
                       <LinearProgress
-                        variant="determinate"
+                        variant='determinate'
                         value={(stats.totalCorrect / nextBadge.threshold) * 100}
                         sx={{
                           height: 12,
@@ -263,8 +252,8 @@ export const DashboardPage = () => {
                   )}
                   {!nextBadge && (
                     <Typography
-                      variant="body1"
-                      color="success.main"
+                      variant='body1'
+                      color='success.main'
                       sx={{ fontWeight: 600 }}
                     >
                       🎉 Maximum level achieved! You're a true Math Master!
@@ -276,66 +265,106 @@ export const DashboardPage = () => {
           </Card>
 
           {/* Overall Statistics */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={12} sm={6} md={3}>
+          <Grid
+            container
+            spacing={2}
+            sx={{ mb: 3 }}
+          >
+            <Grid
+              size={{
+                xs: 12,
+                sm: 6,
+                md: 3,
+              }}
+            >
               <Card sx={{ textAlign: 'center', height: '100%' }}>
                 <CardContent>
                   <Typography
-                    variant="h3"
-                    color="primary"
+                    variant='h3'
+                    color='primary'
                     sx={{ fontWeight: 700 }}
                   >
                     {stats.totalCorrect}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    variant='body2'
+                    color='text.secondary'
+                  >
                     ✅ Correct Answers
                   </Typography>
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid
+              size={{
+                xs: 12,
+                sm: 6,
+                md: 3,
+              }}
+            >
               <Card sx={{ textAlign: 'center', height: '100%' }}>
                 <CardContent>
                   <Typography
-                    variant="h3"
-                    color="secondary"
+                    variant='h3'
+                    color='secondary'
                     sx={{ fontWeight: 700 }}
                   >
                     {stats.totalAttempts}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    variant='body2'
+                    color='text.secondary'
+                  >
                     📝 Total Attempts
                   </Typography>
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid
+              size={{
+                xs: 12,
+                sm: 6,
+                md: 3,
+              }}
+            >
               <Card sx={{ textAlign: 'center', height: '100%' }}>
                 <CardContent>
                   <Typography
-                    variant="h3"
-                    color="success.main"
+                    variant='h3'
+                    color='success.main'
                     sx={{ fontWeight: 700 }}
                   >
                     {stats.accuracy}%
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    variant='body2'
+                    color='text.secondary'
+                  >
                     🎯 Accuracy
                   </Typography>
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid
+              size={{
+                xs: 12,
+                sm: 6,
+                md: 3,
+              }}
+            >
               <Card sx={{ textAlign: 'center', height: '100%' }}>
                 <CardContent>
                   <Typography
-                    variant="h3"
-                    color="info.main"
+                    variant='h3'
+                    color='info.main'
                     sx={{ fontWeight: 700 }}
                   >
                     {stats.totalMastered}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography
+                    variant='body2'
+                    color='text.secondary'
+                  >
                     ⭐ Mastered Problems
                   </Typography>
                 </CardContent>
@@ -347,35 +376,44 @@ export const DashboardPage = () => {
           <Card sx={{ mb: 3 }}>
             <CardContent>
               <Typography
-                variant="h6"
+                variant='h6'
                 gutterBottom
                 sx={{ fontWeight: 600, mb: 2 }}
               >
                 🎮 Game Breakdown
               </Typography>
-              <Grid container spacing={2}>
-                {gameKeys.map((gameType) => {
+              <Grid
+                container
+                spacing={2}
+              >
+                {gameKeys.map(gameType => {
                   const gameStat = stats.gameStats[gameType];
                   const gameAccuracy =
-                    gameStat.attempts > 0
-                      ? Math.round((gameStat.correct / gameStat.attempts) * 100)
-                      : 0;
+                    gameStat.attempts > 0 ? Math.round((gameStat.correct / gameStat.attempts) * 100) : 0;
 
                   return (
-                    <Grid item xs={12} sm={6} md={4} key={gameType}>
-                      <Card variant="outlined" sx={{ height: '100%' }}>
+                    <Grid
+                      size={{
+                        xs: 12,
+                        sm: 6,
+                        md: 4,
+                      }}
+                      key={gameType}
+                    >
+                      <Card
+                        variant='outlined'
+                        sx={{ height: '100%' }}
+                      >
                         <CardContent>
                           <Stack
-                            direction="row"
+                            direction='row'
                             spacing={1}
-                            alignItems="center"
+                            alignItems='center'
                             sx={{ mb: 1 }}
                           >
-                            <Typography variant="h5">
-                              {GAME_EMOJIS[gameType]}
-                            </Typography>
+                            <Typography variant='h5'>{GAME_EMOJIS[gameType]}</Typography>
                             <Typography
-                              variant="subtitle1"
+                              variant='subtitle1'
                               sx={{ fontWeight: 600 }}
                             >
                               {GAME_NAMES[gameType]}
@@ -385,15 +423,15 @@ export const DashboardPage = () => {
                           {gameStat.attempts === 0 ? (
                             <Box sx={{ textAlign: 'center', py: 2 }}>
                               <Typography
-                                variant="body2"
-                                color="text.secondary"
+                                variant='body2'
+                                color='text.secondary'
                                 sx={{ fontStyle: 'italic' }}
                               >
                                 Not played yet
                               </Typography>
                               <Typography
-                                variant="caption"
-                                color="text.secondary"
+                                variant='caption'
+                                color='text.secondary'
                               >
                                 Start playing to see stats!
                               </Typography>
@@ -407,13 +445,13 @@ export const DashboardPage = () => {
                                 }}
                               >
                                 <Typography
-                                  variant="body2"
-                                  color="text.secondary"
+                                  variant='body2'
+                                  color='text.secondary'
                                 >
                                   Correct:
                                 </Typography>
                                 <Typography
-                                  variant="body2"
+                                  variant='body2'
                                   sx={{ fontWeight: 600 }}
                                 >
                                   {gameStat.correct} / {gameStat.attempts}
@@ -426,21 +464,15 @@ export const DashboardPage = () => {
                                 }}
                               >
                                 <Typography
-                                  variant="body2"
-                                  color="text.secondary"
+                                  variant='body2'
+                                  color='text.secondary'
                                 >
                                   Accuracy:
                                 </Typography>
                                 <Chip
                                   label={`${gameAccuracy}%`}
-                                  size="small"
-                                  color={
-                                    gameAccuracy >= 80
-                                      ? 'success'
-                                      : gameAccuracy >= 60
-                                      ? 'primary'
-                                      : 'warning'
-                                  }
+                                  size='small'
+                                  color={gameAccuracy >= 80 ? 'success' : gameAccuracy >= 60 ? 'primary' : 'warning'}
                                 />
                               </Box>
                               <Box
@@ -450,13 +482,13 @@ export const DashboardPage = () => {
                                 }}
                               >
                                 <Typography
-                                  variant="body2"
-                                  color="text.secondary"
+                                  variant='body2'
+                                  color='text.secondary'
                                 >
                                   Mastered:
                                 </Typography>
                                 <Typography
-                                  variant="body2"
+                                  variant='body2'
                                   sx={{ fontWeight: 600 }}
                                 >
                                   ⭐ {gameStat.mastered}
@@ -476,29 +508,26 @@ export const DashboardPage = () => {
           {/* Motivational Messages */}
           {stats.accuracy >= 90 && (
             <Alert
-              severity="success"
+              severity='success'
               sx={{ mb: 3, fontSize: settings.largeText ? '1.2rem' : '1rem' }}
             >
-              🌟 Outstanding! Your accuracy is excellent! Keep up the amazing
-              work!
+              🌟 Outstanding! Your accuracy is excellent! Keep up the amazing work!
             </Alert>
           )}
           {stats.accuracy >= 70 && stats.accuracy < 90 && (
             <Alert
-              severity="info"
+              severity='info'
               sx={{ mb: 3, fontSize: settings.largeText ? '1.2rem' : '1rem' }}
             >
-              👍 Great job! You're doing really well! Keep practicing to improve
-              even more!
+              👍 Great job! You're doing really well! Keep practicing to improve even more!
             </Alert>
           )}
           {stats.totalMastered >= 20 && (
             <Alert
-              severity="success"
+              severity='success'
               sx={{ mb: 3, fontSize: settings.largeText ? '1.2rem' : '1rem' }}
             >
-              🏆 Wow! You've mastered {stats.totalMastered} problems! You're
-              becoming a math expert!
+              🏆 Wow! You've mastered {stats.totalMastered} problems! You're becoming a math expert!
             </Alert>
           )}
         </>
@@ -507,32 +536,54 @@ export const DashboardPage = () => {
       {/* Detailed Results Tables */}
       {hasAnyResults && (
         <Box sx={{ mt: 4 }}>
-          <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
+          <Typography
+            variant='h5'
+            gutterBottom
+            sx={{ fontWeight: 600, mb: 2 }}
+          >
             📋 Detailed Results
           </Typography>
-          {gameKeys.map((key) => (
-            <GameResult key={key} type={key} items={results[key]} />
+          {gameKeys.map(key => (
+            <GameResult
+              key={key}
+              type={key}
+              items={results[key]}
+            />
           ))}
         </Box>
       )}
 
       {/* Reset Confirmation Dialog */}
-      <Dialog open={confirmReset} onClose={() => setConfirmReset(false)}>
+      <Dialog
+        open={confirmReset}
+        onClose={() => setConfirmReset(false)}
+      >
         <DialogTitle>⚠️ Reset All Results?</DialogTitle>
         <DialogContent>
-          <Typography variant="body1">
-            Are you sure you want to reset all your progress? This will delete
-            all your statistics, achievements, and mastered problems.
+          <Typography variant='body1'>
+            Are you sure you want to reset all your progress? This will delete all your statistics, achievements, and
+            mastered problems.
           </Typography>
-          <Typography variant="body2" color="error" sx={{ mt: 2 }}>
+          <Typography
+            variant='body2'
+            color='error'
+            sx={{ mt: 2 }}
+          >
             This action cannot be undone!
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setConfirmReset(false)} variant="outlined">
+          <Button
+            onClick={() => setConfirmReset(false)}
+            variant='outlined'
+          >
             Cancel
           </Button>
-          <Button onClick={handleReset} variant="contained" color="error">
+          <Button
+            onClick={handleReset}
+            variant='contained'
+            color='error'
+          >
             Reset Everything
           </Button>
         </DialogActions>

@@ -7,11 +7,7 @@ type GameProgressProps = {
   streak?: number;
 };
 
-export const GameProgress = ({
-  correctCount,
-  totalCount,
-  streak = 0,
-}: GameProgressProps) => {
+export const GameProgress = ({ correctCount, totalCount, streak = 0 }: GameProgressProps) => {
   const { settings } = useSettings();
 
   if (!settings.showProgress) {
@@ -32,50 +28,54 @@ export const GameProgress = ({
       }}
     >
       <Stack
-        direction="row"
+        direction='row'
         spacing={2}
-        alignItems="center"
-        justifyContent="space-between"
-        flexWrap="wrap"
+        alignItems='center'
+        justifyContent='space-between'
+        flexWrap='wrap'
       >
         <Box sx={{ flex: 1, minWidth: 200 }}>
-          <Typography variant="body2" color="text.secondary" gutterBottom>
+          <Typography
+            variant='body2'
+            color='text.secondary'
+            gutterBottom
+          >
             Progress
           </Typography>
           <LinearProgress
-            variant="determinate"
+            variant='determinate'
             value={percentage}
             sx={{ height: 10, borderRadius: 5, mb: 1 }}
-            color={
-              accuracy >= 80
-                ? 'success'
-                : accuracy >= 60
-                ? 'primary'
-                : 'warning'
-            }
+            color={accuracy >= 80 ? 'success' : accuracy >= 60 ? 'primary' : 'warning'}
           />
-          <Typography variant="caption" color="text.secondary">
+          <Typography
+            variant='caption'
+            color='text.secondary'
+          >
             {correctCount} / {totalCount} correct ({accuracy}%)
           </Typography>
         </Box>
 
-        <Stack direction="row" spacing={1}>
+        <Stack
+          direction='row'
+          spacing={1}
+        >
           <Chip
             label={`Score: ${correctCount}`}
-            color="primary"
+            color='primary'
             size={settings.largeText ? 'medium' : 'small'}
           />
           {streak > 0 && (
             <Chip
               label={`🔥 Streak: ${streak}`}
-              color="success"
+              color='success'
               size={settings.largeText ? 'medium' : 'small'}
             />
           )}
           {settings.questionsPerSession > 0 && (
             <Chip
               label={`${totalCount} / ${settings.questionsPerSession}`}
-              variant="outlined"
+              variant='outlined'
               size={settings.largeText ? 'medium' : 'small'}
             />
           )}

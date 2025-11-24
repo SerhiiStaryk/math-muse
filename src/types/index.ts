@@ -7,8 +7,14 @@ export type HistoryEntry = {
 
 export const GameType = {
   multiply: 'multiply',
-  divde: 'divide',
+  divide: 'divide',
   compare: 'compare',
+  add: 'add',
+  subtract: 'subtract',
+  missingNumber: 'missingNumber',
+  trueFalse: 'trueFalse',
+  numberSequence: 'numberSequence',
+  timeChallenge: 'timeChallenge',
 } as const;
 
 export type GameType = (typeof GameType)[keyof typeof GameType];
