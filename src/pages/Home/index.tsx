@@ -168,7 +168,7 @@ export const HomePage = () => {
           spacing={1}
           justifyContent='center'
           flexWrap='wrap'
-          sx={{ mt: 2 }}
+          gap={2}
         >
           <Chip
             label='🌟 Fun Games'
