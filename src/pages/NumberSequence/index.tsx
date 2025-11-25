@@ -152,8 +152,8 @@ export const NumberSequencePage = () => {
                   {num === null ? (
                     <Box
                       sx={{
-                        width: 100,
-                        height: 100,
+                        width: { xs: 50, sm: 100 },
+                        height: { xs: 50, sm: 100 },
                         border: '4px dashed',
                         borderColor: 'primary.main',
                         borderRadius: 2,
@@ -161,7 +161,7 @@ export const NumberSequencePage = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         backgroundColor: 'primary.light',
-                        fontSize: '3rem',
+                        fontSize: { xs: '2rem', sm: '3rem' },
                         fontWeight: 700,
                         color: 'white',
                       }}
@@ -171,8 +171,8 @@ export const NumberSequencePage = () => {
                   ) : (
                     <Box
                       sx={{
-                        width: 100,
-                        height: 100,
+                        width: { xs: 50, sm: 100 },
+                        height: { xs: 50, sm: 100 },
                         border: '3px solid',
                         borderColor: 'secondary.main',
                         borderRadius: 2,
@@ -180,7 +180,7 @@ export const NumberSequencePage = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         backgroundColor: 'secondary.light',
-                        fontSize: '2.5rem',
+                        fontSize: { xs: '1.5rem', sm: '2.5rem' },
                         fontWeight: 700,
                         color: 'white',
                       }}

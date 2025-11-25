@@ -119,9 +119,13 @@ export const AddPage = () => {
       >
         <DialogTitle>Try Again!</DialogTitle>
         <DialogContent>
-          <DialogContentText>The correct answer was {correctAnswer}. Keep practicing!</DialogContentText>
+          <DialogContentText sx={{ textAlign: 'center' }}>
+            The correct answer was
+            <Typography variant='h1'>{correctAnswer}</Typography>
+            <br /> Keep practicing!
+          </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ justifyContent: 'center' }}>
           <Button
             onClick={handleClosePopup}
             color='primary'

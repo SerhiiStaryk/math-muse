@@ -108,21 +108,25 @@ export const MissingNumberPage = () => {
     const result =
       operation === '+' ? num1 + num2 : operation === '-' ? num1 - num2 : operation === '×' ? num1 * num2 : num1 / num2;
 
+    const size = { xs: 60, sm: 100 };
+    const fontSize = { xs: '3rem', sm: '4rem' };
+
     return (
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
           gap: 2,
-          fontSize: '3rem',
+          fontSize: fontSize,
           fontWeight: 700,
+          justifyContent: 'center',
         }}
       >
         {missingPosition === 'first' ? (
           <Box
             sx={{
-              width: 100,
-              height: 100,
+              width: size,
+              height: size,
               border: '4px dashed',
               borderColor: 'primary.main',
               borderRadius: 2,
@@ -133,13 +137,13 @@ export const MissingNumberPage = () => {
               color: 'white',
             }}
           >
-            <HelpOutlineIcon sx={{ fontSize: '4rem' }} />
+            <HelpOutlineIcon sx={{ fontSize }} />
           </Box>
         ) : (
           <Typography
             variant='h2'
             component='span'
-            sx={{ minWidth: 100, textAlign: 'center' }}
+            sx={{ minWidth: size, textAlign: 'center' }}
           >
             {num1}
           </Typography>
@@ -156,8 +160,8 @@ export const MissingNumberPage = () => {
         {missingPosition === 'second' ? (
           <Box
             sx={{
-              width: 100,
-              height: 100,
+              width: size,
+              height: size,
               border: '4px dashed',
               borderColor: 'primary.main',
               borderRadius: 2,
@@ -168,13 +172,13 @@ export const MissingNumberPage = () => {
               color: 'white',
             }}
           >
-            <HelpOutlineIcon sx={{ fontSize: '4rem' }} />
+            <HelpOutlineIcon sx={fontSize} />
           </Box>
         ) : (
           <Typography
             variant='h2'
             component='span'
-            sx={{ minWidth: 100, textAlign: 'center' }}
+            sx={{ minWidth: size, textAlign: 'center' }}
           >
             {num2}
           </Typography>
@@ -191,8 +195,8 @@ export const MissingNumberPage = () => {
         {missingPosition === 'result' ? (
           <Box
             sx={{
-              width: 100,
-              height: 100,
+              width: size,
+              height: size,
               border: '4px dashed',
               borderColor: 'primary.main',
               borderRadius: 2,
@@ -203,13 +207,13 @@ export const MissingNumberPage = () => {
               color: 'white',
             }}
           >
-            <HelpOutlineIcon sx={{ fontSize: '4rem' }} />
+            <HelpOutlineIcon sx={fontSize} />
           </Box>
         ) : (
           <Typography
             variant='h2'
             component='span'
-            sx={{ minWidth: 100, textAlign: 'center' }}
+            sx={{ minWidth: size, textAlign: 'center' }}
           >
             {result}
           </Typography>
@@ -281,7 +285,6 @@ export const MissingNumberPage = () => {
                 width: 200,
               }}
             />
-
             <Button
               variant='contained'
               size='large'

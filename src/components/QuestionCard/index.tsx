@@ -1,5 +1,16 @@
 import { useState, memo, useCallback, useEffect } from 'react';
-import { Card, CardContent, Typography, Box, Button, TextField, LinearProgress, Chip, Alert } from '@mui/material';
+import {
+  Card,
+  CardContent,
+  Typography,
+  Box,
+  Button,
+  TextField,
+  LinearProgress,
+  Chip,
+  Alert,
+  Grid,
+} from '@mui/material';
 import { AnswerFeedback } from '../AnswerFeedback';
 import { useSettings } from '@/context/SettingsContext';
 
@@ -18,6 +29,30 @@ export const QuestionCard = memo(
     const [timeLeft, setTimeLeft] = useState<number | null>(null);
     const [showHint, setShowHint] = useState(false);
     const { settings } = useSettings();
+
+    const handleInputSubmit = useCallback(() => {
+      const value = parseInt(inputValue, 10);
+
+      if (!isNaN(value)) {
+        onAnswer(value);
+        setInputValue('');
+        setShowHint(false);
+      }
+    }, [inputValue, onAnswer]);
+
+    const handleKeyPress = useCallback(
+      (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter') {
+          handleInputSubmit();
+        }
+      },
+      [handleInputSubmit]
+    );
+
+    const timePercentage =
+      timeLeft !== null && settings.timePerQuestion > 0 ? (timeLeft / settings.timePerQuestion) * 100 : 100;
+
+    const isTimeCritical = timeLeft !== null && timeLeft <= 5;
 
     // Timer logic
     useEffect(() => {
@@ -50,30 +85,6 @@ export const QuestionCard = memo(
       inputValue,
       useMultipleChoice,
     ]);
-
-    const handleInputSubmit = useCallback(() => {
-      const value = parseInt(inputValue, 10);
-
-      if (!isNaN(value)) {
-        onAnswer(value);
-        setInputValue('');
-        setShowHint(false);
-      }
-    }, [inputValue, onAnswer]);
-
-    const handleKeyPress = useCallback(
-      (event: React.KeyboardEvent) => {
-        if (event.key === 'Enter') {
-          handleInputSubmit();
-        }
-      },
-      [handleInputSubmit]
-    );
-
-    const timePercentage =
-      timeLeft !== null && settings.timePerQuestion > 0 ? (timeLeft / settings.timePerQuestion) * 100 : 100;
-
-    const isTimeCritical = timeLeft !== null && timeLeft <= 5;
 
     return (
       <>
@@ -155,32 +166,33 @@ export const QuestionCard = memo(
             )}
 
             {useMultipleChoice && answers ? (
-              <Box
-                sx={{
-                  display: 'flex',
-                  gap: 2,
-                  flexWrap: 'wrap',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
+              <Grid
+                container
+                spacing={2}
+                justifyContent='center'
               >
                 {answers.map(a => (
-                  <Button
+                  <Grid
+                    size={{ sm: 3, xs: 6 }}
                     key={a}
-                    variant='contained'
-                    color='primary'
-                    onClick={() => onAnswer(a)}
-                    disabled={isCorrect !== null}
-                    sx={{
-                      minWidth: settings.largeText ? 100 : 80,
-                      fontSize: settings.largeText ? '1.5rem' : '1rem',
-                      py: settings.largeText ? 2 : 1,
-                    }}
                   >
-                    {a}
-                  </Button>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={() => onAnswer(a)}
+                      disabled={isCorrect !== null}
+                      sx={{
+                        width: '100%',
+                        minWidth: settings.largeText ? 100 : 80,
+                        fontSize: settings.largeText ? '1.5rem' : '1rem',
+                        py: settings.largeText ? 2 : 1,
+                      }}
+                    >
+                      {a}
+                    </Button>
+                  </Grid>
                 ))}
-              </Box>
+              </Grid>
             ) : (
               <Box
                 sx={{

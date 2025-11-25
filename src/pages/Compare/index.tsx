@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Button, Typography, Box, Card, CardContent } from '@mui/material';
+import { Button, Typography, Box, Card, CardContent, useTheme } from '@mui/material';
 import { AnswerFeedback } from '@/components';
 import { getRandomNumber, recordAttempt } from '@/helpers';
 import { useHistory } from '@/hooks';
@@ -9,6 +9,8 @@ import { COMPARE_MAX_NUMBER, FEEDBACK_DISPLAY_DURATION } from '@/constants';
 export const ComparePage = () => {
   const [num1, setNum1] = useState<number>(getRandomNumber(COMPARE_MAX_NUMBER));
   const [num2, setNum2] = useState<number>(getRandomNumber(COMPARE_MAX_NUMBER));
+
+  const theme = useTheme();
 
   const [selectedSymbol, setSelectedSymbol] = useState<string>('');
 
@@ -70,12 +72,19 @@ export const ComparePage = () => {
               width={50}
               height={50}
               border={2}
+              borderColor={theme.palette.secondary.main}
               mx={2}
               display='flex'
               alignItems='center'
               justifyContent='center'
             >
-              <Typography variant='h2'>{selectedSymbol}</Typography>
+              <Typography
+                variant='h2'
+                color={theme.palette.info.main}
+                pb={1}
+              >
+                {selectedSymbol}
+              </Typography>
             </Box>
             <Typography variant='h2'>{num2}</Typography>
           </Box>

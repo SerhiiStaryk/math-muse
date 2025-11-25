@@ -158,33 +158,33 @@ export const TrueFalsePage = () => {
               }}
             >
               <Typography
-                variant='h1'
+                variant='h2'
                 component='span'
               >
                 {question.num1}
               </Typography>
               <Typography
-                variant='h1'
+                variant='h2'
                 component='span'
                 color='secondary.main'
               >
                 {getOperationSymbol(question.operation)}
               </Typography>
               <Typography
-                variant='h1'
+                variant='h2'
                 component='span'
               >
                 {question.num2}
               </Typography>
               <Typography
-                variant='h1'
+                variant='h2'
                 component='span'
                 color='text.secondary'
               >
                 =
               </Typography>
               <Typography
-                variant='h1'
+                variant='h2'
                 component='span'
                 sx={{
                   color: feedback === null ? 'text.primary' : feedback === 'correct' ? 'success.main' : 'error.main',
@@ -209,7 +209,7 @@ export const TrueFalsePage = () => {
                   startIcon={<ThumbUpIcon />}
                   onClick={() => handleAnswer(true)}
                   sx={{
-                    minWidth: 200,
+                    minWidth: { xs: 100, sm: 200 },
                     py: 2,
                     fontSize: '1.2rem',
                   }}
@@ -223,7 +223,7 @@ export const TrueFalsePage = () => {
                   startIcon={<ThumbDownIcon />}
                   onClick={() => handleAnswer(false)}
                   sx={{
-                    minWidth: 200,
+                    minWidth: { xs: 100, sm: 200 },
                     py: 2,
                     fontSize: '1.2rem',
                   }}
