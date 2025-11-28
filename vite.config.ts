@@ -13,29 +13,62 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      devOptions: {
+        enabled: true, // ← ключове для dev
+      },
       manifest: {
-        name: 'Kids Number Game',
-        short_name: 'Number Game',
-        description: 'A fun game to compare numbers for kids',
+        name: 'Math muse - Number Game for Kids',
+        short_name: 'Math muse',
+        description: 'An engaging number game designed to make learning math fun for kids.',
         start_url: '/math-muse/',
         display: 'standalone',
         background_color: '#ffffff',
         theme_color: '#1976d2',
         icons: [
           {
-            src: 'vite.svg',
+            src: 'logo-192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: 'vite.svg',
+            src: 'logo-512.png',
             sizes: '512x512',
             type: 'image/png',
           },
         ],
+        screenshots: [
+          {
+            src: 'screenshot-mobile.png',
+            sizes: '1170x2080',
+            type: 'image/png',
+            form_factor: 'narrow',
+            label: 'Main game screen',
+          },
+          {
+            src: 'screenshot-desktop.png',
+            sizes: '1171x1892',
+            type: 'image/png',
+            form_factor: 'wide',
+            label: 'Desktop game screen',
+          },
+        ],
       },
+      registerType: 'autoUpdate',
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webmanifest}'],
+        runtimeCaching: [
+          {
+            urlPattern: ({ request }) =>
+              request.destination === 'document' || // HTML
+              request.destination === 'script' || // JS
+              request.destination === 'style', // CSS
+            handler: 'NetworkFirst',
+            options: {
+              networkTimeoutSeconds: 3,
+              cacheName: 'app-cache',
+            },
+          },
+        ],
       },
     }),
   ],

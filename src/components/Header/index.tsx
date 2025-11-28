@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   AppBar as MuiAppBar,
   Toolbar,
-  Typography,
   Button,
   Box,
   IconButton,
@@ -50,32 +49,7 @@ export const Header = () => {
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between', py: 0.5 }}>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 1.5,
-            transition: 'transform 0.2s',
-            '&:hover': {
-              transform: 'scale(1.05)',
-            },
-          }}
-        >
-          <Logo size={40} />
-          <Typography
-            variant='h6'
-            noWrap
-            component='div'
-            sx={{
-              fontWeight: 700,
-              letterSpacing: 0.5,
-              textShadow: '0 2px 4px rgba(0,0,0,0.1)',
-            }}
-          >
-            {t('app.name')}
-          </Typography>
-        </Box>
-
+        <Logo size={40} />
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
           {navItems.map(item => (
             <Button
