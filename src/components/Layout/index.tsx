@@ -1,4 +1,4 @@
-import { Container, Toolbar } from '@mui/material';
+import { Container } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { Header } from '@/components';
 
@@ -10,7 +10,6 @@ export const Layout = () => (
       maxWidth='lg'
       sx={{ py: 4, flex: 1 }}
     >
-      <Toolbar />
       <Outlet />
     </Container>
   </>

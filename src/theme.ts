@@ -176,6 +176,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          padding: 32,
+        },
+      },
+    },
     MuiPaper: {
       styleOverrides: {
         root: {

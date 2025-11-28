@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/math-muse/dev-sw.js?dev-sw', { scope: '/math-muse/', type: 'classic' })

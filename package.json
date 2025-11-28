@@ -13,7 +13,9 @@
     "test:ui": "jest --watch",
     "test:run": "jest --runInBand",
     "deploy": "npm run build && gh-pages -d dist",
-    "predeploy": "npm run build"
+    "predeploy": "npm run build",
+    "compile": "tsc --noEmit",
+    "compile:watch": "tsc --noEmit --watch"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
