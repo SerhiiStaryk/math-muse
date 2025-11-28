@@ -11,10 +11,10 @@ import {
   PATH_NUMBER_SEQUENCE,
   PATH_TIME_CHALLENGE,
 } from '@/constants';
-import type { GameCard } from './types';
+import type { GameCardType } from '@/types';
 import { GameType } from '@/types';
 
-export const GAME_CARDS: GameCard[] = [
+export const GAME_CARDS: GameCardType[] = [
   {
     path: PATH_ADD,
     title: 'games.addition',
