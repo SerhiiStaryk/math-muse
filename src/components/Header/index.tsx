@@ -179,9 +179,9 @@ export const Header = () => {
           aria-label='open drawer'
           sx={{
             display: { xs: 'flex', md: 'none' },
-            transition: 'transform 0.2s',
+            transition: 'scale 0.2s',
             '&:hover': {
-              transform: 'rotate(90deg)',
+              transform: 'scale(1.1)',
               backgroundColor: 'rgba(255, 255, 255, 0.15)',
             },
           }}

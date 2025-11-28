@@ -132,5 +132,8 @@
     "correctAnswer": "Correct Answer",
     "timeUp": "Time's Up!",
     "progress": "Progress"
+  },
+  "button": {
+    "playNow": "Play Now"
   }
 }

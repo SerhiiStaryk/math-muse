@@ -28,3 +28,14 @@ export type ResultRecord = {
 export type ResultsRecord = Record<string, ResultRecord>;
 
 export type ResultsData = Record<GameType, ResultsRecord>;
+
+export type GameCardType = {
+  path: string;
+  title: string;
+  emoji: string;
+  description: string;
+  color: string;
+  gameType?: GameType;
+};
+
+export type GameStats = Record<string, { total: number; mastered: number }>;
