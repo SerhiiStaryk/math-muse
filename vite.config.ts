@@ -13,10 +13,11 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      devOptions: {
-        enabled: true, // ← ключове для dev
-      },
+      registerType: 'autoUpdate',
+      devOptions: { enabled: true },
+      includeAssets: ['logo-512.png', 'logo-192.png'],
       manifest: {
+        id: 'math-muse-pwa',
         name: 'Math muse - Number Game for Kids',
         short_name: 'Math muse',
         description: 'An engaging number game designed to make learning math fun for kids.',
@@ -53,7 +54,6 @@ export default defineConfig({
           },
         ],
       },
-      registerType: 'autoUpdate',
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webmanifest}'],
         runtimeCaching: [
