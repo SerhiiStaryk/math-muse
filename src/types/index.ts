@@ -42,3 +42,18 @@ export interface GameCardType extends CardType {
 }
 
 export type GameStats = Record<string, { total: number; mastered: number }>;
+
+export type Stats = {
+  totalCorrect: number;
+  totalAttempts: number;
+  totalMastered: number;
+  accuracy: number;
+  gameStats: Record<
+    GameType,
+    {
+      correct: number;
+      attempts: number;
+      mastered: number;
+    }
+  >;
+};
