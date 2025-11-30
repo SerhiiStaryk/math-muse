@@ -14,6 +14,7 @@ import { GameType } from '@/types';
 import { useGameQuestion } from '@/hooks';
 import { useSettings } from '@/context/SettingsContext';
 import { FEEDBACK_DISPLAY_DURATION } from '@/constants';
+import { IncorrectAnswerDialog } from '@/components/IncorrectAnswerDialog';
 
 export const AddPage = () => {
   const { settings } = useSettings();
@@ -113,28 +114,11 @@ export const AddPage = () => {
       />
 
       {/* Incorrect Answer Dialog */}
-      <Dialog
+      <IncorrectAnswerDialog
         open={showPopup}
+        correctAnswer={correctAnswer}
         onClose={handleClosePopup}
-      >
-        <DialogTitle>Try Again!</DialogTitle>
-        <DialogContent>
-          <DialogContentText sx={{ textAlign: 'center' }}>
-            The correct answer was
-            <Typography variant='h1'>{correctAnswer}</Typography>
-            <br /> Keep practicing!
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: 'center' }}>
-          <Button
-            onClick={handleClosePopup}
-            color='primary'
-            variant='contained'
-          >
-            Next Question
-          </Button>
-        </DialogActions>
-      </Dialog>
+      />
 
       {/* Session Complete Dialog */}
       <Dialog

@@ -6,6 +6,7 @@ import { useGameQuestion } from '@/hooks';
 import { FEEDBACK_DISPLAY_DURATION } from '@/constants';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { useSettings } from '@/context/SettingsContext';
+import { IncorrectAnswerDialog } from '@/components/IncorrectAnswerDialog';
 
 export const MultiplyPage = () => {
   const { settings } = useSettings();
@@ -104,24 +105,11 @@ export const MultiplyPage = () => {
         useMultipleChoice={useMultipleChoice}
       />
 
-      <Dialog
+      <IncorrectAnswerDialog
         open={showPopup}
+        correctAnswer={correctAnswer}
         onClose={handleClosePopup}
-      >
-        <DialogTitle>Try Again!</DialogTitle>
-        <DialogContent>
-          <DialogContentText>The correct answer was {correctAnswer}. Keep practicing!</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleClosePopup}
-            color='primary'
-            variant='contained'
-          >
-            Next Question
-          </Button>
-        </DialogActions>
-      </Dialog>
+      />
 
       <Dialog
         open={sessionComplete}
