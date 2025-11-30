@@ -4,9 +4,9 @@ import { QuestionCard, GameProgress } from '@/components';
 import { GameType } from '@/types';
 import { useGameQuestion } from '@/hooks';
 import { FEEDBACK_DISPLAY_DURATION } from '@/constants';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
 import { useSettings } from '@/context/SettingsContext';
 import { IncorrectAnswerDialog } from '@/components/IncorrectAnswerDialog';
+import { SessionCompleteDialog } from '@/components/SessionCompleteDialog';
 
 export const MultiplyPage = () => {
   const { settings } = useSettings();
@@ -111,45 +111,13 @@ export const MultiplyPage = () => {
         onClose={handleClosePopup}
       />
 
-      <Dialog
-        open={sessionComplete}
-        onClose={handleResetSession}
-      >
-        <DialogTitle>🎉 Session Complete!</DialogTitle>
-        <DialogContent>
-          <Typography
-            variant='body1'
-            gutterBottom
-          >
-            Great job! You completed {settings.questionsPerSession} questions!
-          </Typography>
-          <Typography
-            variant='h6'
-            color='primary'
-            sx={{ mt: 2 }}
-          >
-            Score: {correctCount} / {totalCount} ({Math.round((correctCount / totalCount) * 100)}%)
-          </Typography>
-          {streak > 3 && (
-            <Typography
-              variant='body2'
-              color='success.main'
-              sx={{ mt: 1 }}
-            >
-              🔥 Best streak: {streak} in a row!
-            </Typography>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleResetSession}
-            variant='contained'
-            color='primary'
-          >
-            Play Again
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <SessionCompleteDialog
+        correctCount={correctCount}
+        totalCount={totalCount}
+        streak={streak}
+        sessionComplete={sessionComplete}
+        handleResetSession={handleResetSession}
+      />
     </Box>
   );
 };
