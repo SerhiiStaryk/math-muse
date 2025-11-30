@@ -4,7 +4,7 @@ import { QuestionCard, GameProgress } from '@/components';
 import { GameType } from '@/types';
 import { useGameQuestion } from '@/hooks';
 import { FEEDBACK_DISPLAY_DURATION } from '@/constants';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from '@mui/material';
 import { useSettings } from '@/context/SettingsContext';
 import { IncorrectAnswerDialog } from '@/components/IncorrectAnswerDialog';
 

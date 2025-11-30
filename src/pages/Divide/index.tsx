@@ -1,14 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
-  Box,
-  Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  DialogContentText,
-} from '@mui/material';
+import { Box, Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import { QuestionCard, GameProgress } from '@/components';
 import { GameType } from '@/types';
 import { useGameQuestion } from '@/hooks';
