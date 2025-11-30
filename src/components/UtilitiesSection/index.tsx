@@ -1,5 +1,6 @@
-import { Box, Typography, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { useSettings } from '@/context/SettingsContext';
+import { StyledUtilitiesSectionTitle } from './styles';
 import { UtilityCard } from './UtilityCard';
 import { UTILITY_CARDS } from './constants';
 
@@ -8,13 +9,12 @@ export const UtilitiesSection = () => {
 
   return (
     <Box sx={{ mb: 4 }}>
-      <Typography
+      <StyledUtilitiesSectionTitle
         variant={settings.largeText ? 'h4' : 'h5'}
         gutterBottom
-        sx={{ fontWeight: 700, mb: 3 }}
       >
         🔧 Tools & Settings
-      </Typography>
+      </StyledUtilitiesSectionTitle>
       <Grid
         container
         spacing={3}
