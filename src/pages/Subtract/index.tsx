@@ -14,6 +14,7 @@ import { GameType } from '@/types';
 import { useGameQuestion } from '@/hooks';
 import { useSettings } from '@/context/SettingsContext';
 import { FEEDBACK_DISPLAY_DURATION } from '@/constants';
+import { IncorrectAnswerDialog } from '@/components/IncorrectAnswerDialog';
 
 export const SubtractPage = () => {
   const { settings } = useSettings();
@@ -112,24 +113,11 @@ export const SubtractPage = () => {
       />
 
       {/* Incorrect Answer Dialog */}
-      <Dialog
+      <IncorrectAnswerDialog
         open={showPopup}
+        correctAnswer={correctAnswer}
         onClose={handleClosePopup}
-      >
-        <DialogTitle>Try Again!</DialogTitle>
-        <DialogContent>
-          <DialogContentText>The correct answer was {correctAnswer}. Keep practicing!</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleClosePopup}
-            color='primary'
-            variant='contained'
-          >
-            Next Question
-          </Button>
-        </DialogActions>
-      </Dialog>
+      />
 
       <Dialog
         open={sessionComplete}

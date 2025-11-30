@@ -4,8 +4,6 @@ import {
   PATH_MULTIPLY,
   PATH_DIVIDE,
   PATH_COMPARE,
-  PATH_DASHBOARD,
-  PATH_SETTINGS,
   PATH_MISSING_NUMBER,
   PATH_TRUE_FALSE,
   PATH_NUMBER_SEQUENCE,
@@ -86,22 +84,5 @@ export const GAME_CARDS: GameCardType[] = [
     description: 'Read clocks and master time calculations!',
     color: '#E74C3C',
     gameType: GameType.timeChallenge,
-  },
-];
-
-export const UTILITY_CARDS = [
-  {
-    path: PATH_DASHBOARD,
-    title: 'nav.dashboard',
-    emoji: '📊',
-    description: 'See your progress and achievements!',
-    color: '#FF6B9D',
-  },
-  {
-    path: PATH_SETTINGS,
-    title: 'nav.settings',
-    emoji: '⚙️',
-    description: 'Customize your learning experience',
-    color: '#A8E6CF',
   },
 ];

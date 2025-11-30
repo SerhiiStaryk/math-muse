@@ -67,13 +67,10 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-7a5e81cd'], (function (workbox) { 'use strict';
+define(['./workbox-be266a9d'], (function (workbox) { 'use strict';
 
-  self.addEventListener('message', event => {
-    if (event.data && event.data.type === 'SKIP_WAITING') {
-      self.skipWaiting();
-    }
-  });
+  self.skipWaiting();
+  workbox.clientsClaim();
 
   /**
    * The precacheAndRoute() method efficiently caches and responds to
@@ -85,11 +82,22 @@ define(['./workbox-7a5e81cd'], (function (workbox) { 'use strict';
     "revision": "e43b5503af02cc753663da62f68728ca"
   }, {
     "url": "index.html",
-    "revision": "0.n7nvsargg0g"
+    "revision": "0.os1i24hgc8o"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
     allowlist: [/^\/$/]
   }));
+  workbox.registerRoute(({
+    request
+  }) => request.destination === "document" ||
+  // HTML
+  request.destination === "script" ||
+  // JS
+  request.destination === "style", new workbox.NetworkFirst({
+    "networkTimeoutSeconds": 3,
+    "cacheName": "app-cache",
+    plugins: []
+  }), 'GET');
 
 }));

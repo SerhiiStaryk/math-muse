@@ -29,13 +29,16 @@ export type ResultsRecord = Record<string, ResultRecord>;
 
 export type ResultsData = Record<GameType, ResultsRecord>;
 
-export type GameCardType = {
+export interface CardType {
   path: string;
   title: string;
   emoji: string;
   description: string;
   color: string;
+}
+
+export interface GameCardType extends CardType {
   gameType?: GameType;
-};
+}
 
 export type GameStats = Record<string, { total: number; mastered: number }>;
