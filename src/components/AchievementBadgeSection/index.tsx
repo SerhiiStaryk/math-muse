@@ -1,4 +1,4 @@
-import { Box, Typography, Card, CardContent, LinearProgress, Chip, Stack, Alert } from '@mui/material';
+import { Box, Typography, Card, CardContent, LinearProgress, Chip, Stack } from '@mui/material';
 import { ACHIEVEMENT_BADGES } from './constants';
 import { useMemo } from 'react';
 import type { GameType } from '@/types';
