@@ -56,7 +56,7 @@ export const UtilityCard = ({ card }: UtilityCardProps) => {
               variant='body2'
               color='text.secondary'
             >
-              {card.description}
+              {t(card.description)}
             </Typography>
           </Box>
           <Typography

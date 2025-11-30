@@ -1,8 +1,9 @@
-import { Button, Typography, Card, CardContent, Grid, Stack, Chip } from '@mui/material';
+import { Button, Typography, CardContent, Grid, Stack, Chip } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import type { GameCardType, GameStats } from '@/types';
 import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
+import { StyledCard } from './styles';
 
 type GameCard = {
   game: GameCardType;
@@ -11,7 +12,6 @@ type GameCard = {
 
 export const GameCard = ({ game, gameStats }: GameCard) => {
   const { settings } = useSettings();
-
   const { t } = useTranslation();
 
   const stats = game.gameType ? gameStats[game.gameType] : null;
@@ -25,30 +25,11 @@ export const GameCard = ({ game, gameStats }: GameCard) => {
       }}
       key={game.path}
     >
-      <Card
+      <StyledCard
         component={RouterLink}
         to={game.path}
-        sx={{
-          height: '100%',
-          textDecoration: 'none',
-          position: 'relative',
-          overflow: 'hidden',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          cursor: 'pointer',
-          '&:hover': {
-            transform: settings.reduceMotion ? 'none' : 'translateY(-8px) scale(1.02)',
-            boxShadow: `0px 12px 40px ${game.color}40`,
-          },
-          '&::before': {
-            content: '""',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: '6px',
-            background: game.color,
-          },
-        }}
+        game={game}
+        settings={settings}
       >
         <CardContent sx={{ textAlign: 'center', py: 4 }}>
           <Typography
@@ -73,7 +54,7 @@ export const GameCard = ({ game, gameStats }: GameCard) => {
             color='text.secondary'
             sx={{ mb: 2, minHeight: settings.largeText ? 60 : 40 }}
           >
-            {game.description}
+            {t(game.description)}!
           </Typography>
 
           {stats && stats.total > 0 && (
@@ -119,7 +100,7 @@ export const GameCard = ({ game, gameStats }: GameCard) => {
             {t('button.playNow')}!
           </Button>
         </CardContent>
-      </Card>
+      </StyledCard>
     </Grid>
   );
 };

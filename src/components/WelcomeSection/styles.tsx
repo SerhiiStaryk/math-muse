@@ -1,4 +1,4 @@
-import { Box, styled, Typography } from '@mui/material';
+import { Box, Stack, styled, Typography } from '@mui/material';
 
 export const StyledWelcomeSectionContainer = styled(Box)(({ theme }) => ({
   textAlign: 'center',
@@ -19,4 +19,11 @@ export const StyledWelcomeSectionSubtitle = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(1),
   fontWeight: 500,
   color: theme.palette.text.secondary,
+}));
+
+export const StyledChipContainer = styled(Stack)(({ theme }) => ({
+  flexDirection: 'row',
+  justifyContent: 'center',
+  flexWrap: 'wrap',
+  gap: theme.spacing(2),
 }));

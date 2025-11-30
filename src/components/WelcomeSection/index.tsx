@@ -1,9 +1,11 @@
 import { useSettings } from '@/context/SettingsContext';
 import { ChipList } from './ChipList';
 import { StyledWelcomeSectionContainer, StyledWelcomeSectionSubtitle, StyledWelcomeSectionTitle } from './styles';
+import { useTranslation } from 'react-i18next';
 
 export const WelcomeSection = () => {
   const { settings } = useSettings();
+  const { t } = useTranslation();
 
   return (
     <StyledWelcomeSectionContainer>
@@ -11,10 +13,10 @@ export const WelcomeSection = () => {
         gutterBottom
         variant={settings.largeText ? 'h2' : 'h3'}
       >
-        🎉 Welcome to Math Muse!
+        🎉 {t('home.welcome')}
       </StyledWelcomeSectionTitle>
       <StyledWelcomeSectionSubtitle variant={settings.largeText ? 'h5' : 'h6'}>
-        Learn math through fun and colorful games!
+        {t('home.welcomeSectionSubtitle')}!
       </StyledWelcomeSectionSubtitle>
       <ChipList />
     </StyledWelcomeSectionContainer>

@@ -6,19 +6,30 @@
   "nav": {
     "home": "Home",
     "dashboard": "Dashboard",
+    "dashboardDescription": "See your progress and achievements",
     "settings": "Settings",
+    "settingsDescription": "Customize your learning experience",
     "games": "Games"
   },
   "games": {
     "addition": "Addition",
+    "additionDescription": "Add numbers together and become a math star",
     "subtraction": "Subtraction",
+    "subtractionDescription": "Take away numbers and solve fun puzzles",
     "multiply": "Multiply",
+    "multiplyDescription": "Master your times tables with exciting challenges",
     "divide": "Divide",
+    "divideDescription": "Share and divide numbers like a pro",
     "compare": "Compare",
+    "compareDescription": "Find which number is bigger or smaller",
     "missingNumber": "Missing Number",
+    "missingNumberDescription": "Find the mystery number hiding in the equation",
     "trueFalse": "True or False",
+    "trueFalseDescription": "Check if the math equation is correct or wrong",
     "numberSequence": "Number Sequence",
-    "timeChallenge": "Time Challenge"
+    "numberSequenceDescription": "Spot the pattern and complete the sequence",
+    "timeChallenge": "Time Challenge",
+    "timeChallengeDescription": "Read clocks and master time calculations"
   },
   "common": {
     "score": "Score",
@@ -120,7 +131,12 @@
     "welcome": "Welcome to Math Muse!",
     "description": "Choose a game to start practicing your math skills",
     "getStarted": "Get Started",
-    "chooseGame": "Choose a Game"
+    "chooseGame": "Choose a Game",
+    "toolsSettings": "Tools & Settings",
+    "welcomeSectionSubtitle": "Learn math through fun and colorful games",
+    "gameSectionTitle": "Choose Your Game",
+    "motivationalFooterTitle": "Ready to become a math champion",
+    "motivationalFooterSubtitle": "Choose a game above and start your amazing math journey"
   },
   "game": {
     "loading": "Loading...",
@@ -135,5 +151,11 @@
   },
   "button": {
     "playNow": "Play Now"
+  },
+  "chip": {
+    "funGames": "Fun Games",
+    "trackProgress": "Track Progress",
+    "earnAchievements": "Earn Achievements",
+    "learnAndGrow": "Learn & Grow"
   }
 }
