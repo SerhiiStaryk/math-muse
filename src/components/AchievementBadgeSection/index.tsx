@@ -1,24 +1,11 @@
 import { Box, Typography, Card, CardContent, LinearProgress, Chip, Stack } from '@mui/material';
 import { ACHIEVEMENT_BADGES } from './constants';
 import { useMemo } from 'react';
-import type { GameType } from '@/types';
+import type { Stats } from '@/types';
 import { useSettings } from '@/context/SettingsContext';
 
 type AchievementBadgeSectionProps = {
-  stats: {
-    totalCorrect: number;
-    totalAttempts: number;
-    totalMastered: number;
-    accuracy: number;
-    gameStats: Record<
-      GameType,
-      {
-        correct: number;
-        attempts: number;
-        mastered: number;
-      }
-    >;
-  };
+  stats: Stats;
 };
 
 export const AchievementBadgeSection = ({ stats }: AchievementBadgeSectionProps) => {

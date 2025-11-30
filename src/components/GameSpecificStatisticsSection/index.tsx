@@ -1,23 +1,10 @@
 import { Typography, Card, CardContent, Grid } from '@mui/material';
-import type { GameType, ResultsData } from '@/types';
+import type { GameType, Stats, ResultsData } from '@/types';
 import { GameStatCard } from './GameStatCard';
 
 export type GameSpecificStatisticsSectionProps = {
   results: ResultsData;
-  stats: {
-    totalCorrect: number;
-    totalAttempts: number;
-    totalMastered: number;
-    accuracy: number;
-    gameStats: Record<
-      GameType,
-      {
-        correct: number;
-        attempts: number;
-        mastered: number;
-      }
-    >;
-  };
+  stats: Stats;
 };
 
 export const GameSpecificStatisticsSection = ({ results, stats }: GameSpecificStatisticsSectionProps) => {

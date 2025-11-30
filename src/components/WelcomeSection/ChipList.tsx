@@ -1,30 +1,20 @@
-import { Stack, Chip } from '@mui/material';
+import { Chip } from '@mui/material';
+import { StyledChipContainer } from './styles';
+import { CHIP_DATA } from './constants';
+import { useTranslation } from 'react-i18next';
 
 export const ChipList = () => {
+  const { t } = useTranslation();
+
   return (
-    <Stack
-      direction='row'
-      spacing={1}
-      justifyContent='center'
-      flexWrap='wrap'
-      gap={2}
-    >
-      <Chip
-        label='🌟 Fun Games'
-        color='primary'
-      />
-      <Chip
-        label='🎯 Track Progress'
-        color='secondary'
-      />
-      <Chip
-        label='🏆 Earn Achievements'
-        color='success'
-      />
-      <Chip
-        label='📚 Learn & Grow'
-        color='info'
-      />
-    </Stack>
+    <StyledChipContainer>
+      {CHIP_DATA.map(chip => (
+        <Chip
+          key={chip.label}
+          label={`${chip.icon} ${t(chip.label)}`}
+          color={chip.color as 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error'}
+        />
+      ))}
+    </StyledChipContainer>
   );
 };

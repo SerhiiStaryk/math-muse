@@ -1,22 +1,9 @@
 import { useSettings } from '@/context/SettingsContext';
-import type { GameType } from '@/types';
+import type { Stats } from '@/types';
 import { Alert } from '@mui/material';
 
 type MotivationalMessagesProps = {
-  stats: {
-    totalCorrect: number;
-    totalAttempts: number;
-    totalMastered: number;
-    accuracy: number;
-    gameStats: Record<
-      GameType,
-      {
-        correct: number;
-        attempts: number;
-        mastered: number;
-      }
-    >;
-  };
+  stats: Stats;
 };
 
 export const MotivationalMessages = ({ stats }: MotivationalMessagesProps) => {

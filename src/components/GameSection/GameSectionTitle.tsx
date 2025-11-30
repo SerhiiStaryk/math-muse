@@ -1,8 +1,10 @@
 import { useSettings } from '@/context/SettingsContext';
 import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 export const GameSectionTitle = () => {
   const { settings } = useSettings();
+  const { t } = useTranslation();
 
   return (
     <Typography
@@ -10,7 +12,7 @@ export const GameSectionTitle = () => {
       gutterBottom
       sx={{ fontWeight: 700, mb: 3 }}
     >
-      🎮 Choose Your Game
+      🎮 {t('home.gameSectionTitle')}
     </Typography>
   );
 };

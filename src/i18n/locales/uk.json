@@ -5,20 +5,31 @@
   },
   "nav": {
     "home": "Головна",
-    "dashboard": "Панель",
+    "dashboard": "Панель прогресу",
+    "dashboardDescription": "Переглядай свій прогрес і досягнення",
     "settings": "Налаштування",
+    "settingsDescription": "Налаштовуй свій досвід навчання",
     "games": "Ігри"
   },
   "games": {
     "addition": "Додавання",
+    "additionDescription": "Додавай числа разом та стань зіркою математики",
     "subtraction": "Віднімання",
+    "subtractionDescription": "Віднімай числа та розв’язуй цікаві головоломки",
     "multiply": "Множення",
+    "multiplyDescription": "Опановуй таблицю множення з захопливими викликами",
     "divide": "Ділення",
+    "divideDescription": "Діли числа легко, мов професіонал",
     "compare": "Порівняння",
-    "missingNumber": "Знайди число",
-    "trueFalse": "Правда чи брехня",
-    "numberSequence": "Послідовність чисел",
-    "timeChallenge": "Виклик часу"
+    "compareDescription": "Знайди, яке число більше або менше",
+    "missingNumber": "Пропущене число",
+    "missingNumberDescription": "Знайди таємниче число, що сховалося в рівнянні",
+    "trueFalse": "Правда чи неправда",
+    "trueFalseDescription": "Перевір, чи правильне математичне рівняння",
+    "numberSequence": "Числова послідовність",
+    "numberSequenceDescription": "Впізнай закономірність і доповни послідовність",
+    "timeChallenge": "Часовий виклик",
+    "timeChallengeDescription": "Читай годинники та опановуй обчислення часу"
   },
   "common": {
     "score": "Рахунок",
@@ -118,9 +129,14 @@
   },
   "home": {
     "welcome": "Ласкаво просимо до Math Muse!",
-    "description": "Виберіть гру, щоб почати практикувати свої математичні навички",
-    "getStarted": "Розпочати",
-    "chooseGame": "Виберіть гру"
+    "description": "Обери гру, щоб почати тренувати свої математичні навички",
+    "getStarted": "Почати",
+    "chooseGame": "Обрати гру",
+    "toolsSettings": "Інструменти та налаштування",
+    "welcomeSectionSubtitle": "Вивчай математику через веселі та яскраві ігри",
+    "gameSectionTitle": "Обери свою гру",
+    "motivationalFooterTitle": "Готовий стати чемпіоном з математики",
+    "motivationalFooterSubtitle": "Обери гру вище та розпочни свою неймовірну математичну пригоду"
   },
   "game": {
     "loading": "Завантаження...",
@@ -135,5 +151,11 @@
   },
   "button": {
     "playNow": "Почати Гру"
+  },
+  "chip": {
+    "funGames": "Веселі ігри",
+    "trackProgress": "Відстежуй прогрес",
+    "earnAchievements": "Заробляй досягнення",
+    "learnAndGrow": "Вчися та розвивайся"
   }
 }

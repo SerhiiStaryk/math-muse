@@ -1,22 +1,9 @@
-import type { GameType } from '@/types';
+import type { Stats } from '@/types';
 import { Typography, Card, CardContent } from '@mui/material';
 import Grid from '@mui/material/Grid';
 
 type OverallStatisticsSectionProps = {
-  stats: {
-    totalCorrect: number;
-    totalAttempts: number;
-    totalMastered: number;
-    accuracy: number;
-    gameStats: Record<
-      GameType,
-      {
-        correct: number;
-        attempts: number;
-        mastered: number;
-      }
-    >;
-  };
+  stats: Stats;
 };
 
 export const OverallStatisticsSection = ({ stats }: OverallStatisticsSectionProps) => {
