@@ -13,13 +13,13 @@ export const GAME_EMOJIS: Record<GameType, string> = {
 };
 
 export const GAME_NAMES: Record<GameType, string> = {
-  add: 'Addition',
-  subtract: 'Subtraction',
-  multiply: 'Multiplication',
-  divide: 'Division',
-  compare: 'Comparison',
-  missingNumber: 'Missing Number',
-  trueFalse: 'True or False',
-  numberSequence: 'Number Sequence',
-  timeChallenge: 'Time Challenge',
+  add: 'games.addition',
+  subtract: 'games.subtraction',
+  multiply: 'games.multiply',
+  divide: 'games.divide',
+  compare: 'games.compare',
+  missingNumber: 'games.missingNumber',
+  trueFalse: 'games.trueFalse',
+  numberSequence: 'games.numberSequence',
+  timeChallenge: 'games.timeChallenge',
 };

@@ -125,7 +125,12 @@
     "totalGames": "Всього ігор",
     "accuracy": "Точність",
     "averageTime": "Середній час",
-    "bestScore": "Найкращий результат"
+    "bestScore": "Найкращий результат",
+    "gameBreakdown": "Розбір гри",
+    "detailedRusults": "Детальні результати",
+    "startYourJourney": "Почни свою подорож",
+    "yourProgressDashboard": "Панель прогресу",
+    "resetAllResults": "Скинути всі результати"
   },
   "home": {
     "welcome": "Ласкаво просимо до Math Muse!",
@@ -147,7 +152,8 @@
     "yourAnswer": "Ваша відповідь",
     "correctAnswer": "Правильна відповідь",
     "timeUp": "Час вийшов!",
-    "progress": "Прогрес"
+    "progress": "Прогрес",
+    "played": "зіграно ігор"
   },
   "button": {
     "playNow": "Почати Гру"
@@ -157,5 +163,28 @@
     "trackProgress": "Відстежуй прогрес",
     "earnAchievements": "Заробляй досягнення",
     "learnAndGrow": "Вчися та розвивайся"
+  },
+  "statistics": {
+    "totalCorrect": "Правильні відповіді",
+    "totalAttempts": "Усього спроб",
+    "accuracy": "Точність",
+    "totalMastered": "Засвоєні завдання"
+  },
+  "gameStatCard": {
+    "correct": "Правильно",
+    "accuracy": "Точність",
+    "mastered": "Засвоєно"
+  },
+  "resultsTable": {
+    "problem": "Завдання",
+    "correct": "Правильно",
+    "attempts": "Спроби",
+    "accuracy": "Точність",
+    "status": "Статус",
+    "chips": {
+      "mastered": "Засвоєно",
+      "learning": "Вивчається",
+      "practice": "Практика"
+    }
   }
 }

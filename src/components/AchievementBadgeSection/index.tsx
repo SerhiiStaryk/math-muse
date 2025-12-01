@@ -3,6 +3,7 @@ import { ACHIEVEMENT_BADGES } from './constants';
 import { useMemo } from 'react';
 import type { Stats } from '@/types';
 import { useSettings } from '@/context/SettingsContext';
+import { useTranslation } from 'react-i18next';
 
 type AchievementBadgeSectionProps = {
   stats: Stats;
@@ -10,6 +11,7 @@ type AchievementBadgeSectionProps = {
 
 export const AchievementBadgeSection = ({ stats }: AchievementBadgeSectionProps) => {
   const { settings } = useSettings();
+  const { t } = useTranslation();
 
   const currentBadge = useMemo(() => {
     for (let i = ACHIEVEMENT_BADGES.length - 1; i >= 0; i--) {
@@ -65,7 +67,7 @@ export const AchievementBadgeSection = ({ stats }: AchievementBadgeSectionProps)
               gutterBottom
               sx={{ fontWeight: 600 }}
             >
-              {currentBadge ? `Current Level: ${currentBadge.title}` : 'Start Your Journey!'}
+              {currentBadge ? `Current Level: ${currentBadge.title}` : `${t('dashboard.startYourJourney')}!`}
             </Typography>
             {nextBadge && (
               <>

@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { useSettings } from '@/context/SettingsContext';
+import { useTranslation } from 'react-i18next';
 
 type GameResultProps = {
   type: GameType;
@@ -23,15 +24,15 @@ type GameResultProps = {
 };
 
 const GAME_NAMES: Record<GameType, string> = {
-  add: 'Addition',
-  subtract: 'Subtraction',
-  multiply: 'Multiplication',
-  divide: 'Division',
-  compare: 'Comparison',
-  missingNumber: 'Missing Number',
-  trueFalse: 'True or False',
-  numberSequence: 'Number Sequence',
-  timeChallenge: 'Time Challenge',
+  add: 'games.addition',
+  subtract: 'games.subtraction',
+  multiply: 'games.multiply',
+  divide: 'games.divide',
+  compare: 'games.compare',
+  missingNumber: 'games.missingNumber',
+  trueFalse: 'games.trueFalse',
+  numberSequence: 'games.numberSequence',
+  timeChallenge: 'games.timeChallenge',
 };
 
 const GAME_EMOJIS: Record<GameType, string> = {
@@ -49,6 +50,8 @@ const GAME_EMOJIS: Record<GameType, string> = {
 export const GameResult = ({ type, items }: GameResultProps) => {
   const { settings } = useSettings();
   const [expanded, setExpanded] = useState(false);
+  const { t } = useTranslation();
+
   const itemsArray = Object.values(items);
 
   if (itemsArray.length === 0) {
@@ -86,7 +89,7 @@ export const GameResult = ({ type, items }: GameResultProps) => {
               variant='h6'
               sx={{ fontWeight: 600 }}
             >
-              {GAME_EMOJIS[type]} {GAME_NAMES[type]}
+              {GAME_EMOJIS[type]} {t(GAME_NAMES[type])}
             </Typography>
             <Chip
               label={`${totalCorrect} / ${totalAttempts}`}
@@ -119,30 +122,30 @@ export const GameResult = ({ type, items }: GameResultProps) => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 700 }}>Problem</TableCell>
+                  <TableCell sx={{ fontWeight: 700 }}>{t('resultsTable.problem')}</TableCell>
                   <TableCell
                     align='center'
                     sx={{ fontWeight: 700 }}
                   >
-                    Correct
+                    {t('resultsTable.correct')}
                   </TableCell>
                   <TableCell
                     align='center'
                     sx={{ fontWeight: 700 }}
                   >
-                    Attempts
+                    {t('resultsTable.attempts')}
                   </TableCell>
                   <TableCell
                     align='center'
                     sx={{ fontWeight: 700 }}
                   >
-                    Accuracy
+                    {t('resultsTable.accuracy')}
                   </TableCell>
                   <TableCell
                     align='center'
                     sx={{ fontWeight: 700 }}
                   >
-                    Status
+                    {t('resultsTable.status')}
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -210,19 +213,19 @@ export const GameResult = ({ type, items }: GameResultProps) => {
                       <TableCell align='center'>
                         {isMastered ? (
                           <Chip
-                            label='⭐ Mastered'
+                            label={`⭐ ${t('resultsTable.chips.mastered')}`}
                             size='small'
                             color='success'
                           />
                         ) : entry.correct >= 3 ? (
                           <Chip
-                            label='📚 Learning'
+                            label={`📚 ${t('resultsTable.chips.learning')}`}
                             size='small'
                             color='primary'
                           />
                         ) : (
                           <Chip
-                            label='🎯 Practice'
+                            label={`🎯 ${t('resultsTable.chips.practice')}`}
                             size='small'
                             color='default'
                           />

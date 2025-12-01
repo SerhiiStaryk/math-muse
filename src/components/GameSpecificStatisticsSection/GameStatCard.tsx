@@ -1,6 +1,7 @@
 import { Box, Typography, Card, CardContent, Chip, Stack, Divider, Grid } from '@mui/material';
 import { GAME_EMOJIS, GAME_NAMES } from './constants';
 import type { GameType } from '@/types';
+import { t } from 'i18next';
 
 export type GameStatCardProps = {
   gameAccuracy: number;
@@ -37,7 +38,7 @@ export const GameStatCard = ({ gameAccuracy, gameType, gameStat }: GameStatCardP
               variant='subtitle1'
               sx={{ fontWeight: 600 }}
             >
-              {GAME_NAMES[gameType]}
+              {t(GAME_NAMES[gameType])}
             </Typography>
           </Stack>
           <Divider sx={{ my: 1 }} />
@@ -69,7 +70,7 @@ export const GameStatCard = ({ gameAccuracy, gameType, gameStat }: GameStatCardP
                   variant='body2'
                   color='text.secondary'
                 >
-                  Correct:
+                  {t('gameStatCard.correct')}:
                 </Typography>
                 <Typography
                   variant='body2'
@@ -88,7 +89,7 @@ export const GameStatCard = ({ gameAccuracy, gameType, gameStat }: GameStatCardP
                   variant='body2'
                   color='text.secondary'
                 >
-                  Accuracy:
+                  {t('gameStatCard.accuracy')}:
                 </Typography>
                 <Chip
                   label={`${gameAccuracy}%`}
@@ -106,7 +107,7 @@ export const GameStatCard = ({ gameAccuracy, gameType, gameStat }: GameStatCardP
                   variant='body2'
                   color='text.secondary'
                 >
-                  Mastered:
+                  {t('gameStatCard.mastered')}:
                 </Typography>
                 <Typography
                   variant='body2'
