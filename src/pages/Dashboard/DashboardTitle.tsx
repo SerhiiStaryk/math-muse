@@ -1,6 +1,7 @@
 import { useSettings } from '@/context/SettingsContext';
 import { Box, Typography, Button } from '@mui/material';
 import { ResetConfirmationDialog } from './ResetConfirmationDialog';
+import { useTranslation } from 'react-i18next';
 
 type DashboardTitleProps = {
   hasAnyResults: boolean;
@@ -11,6 +12,7 @@ type DashboardTitleProps = {
 
 export const DashboardTitle = ({ hasAnyResults, setConfirmReset, confirmReset, handleReset }: DashboardTitleProps) => {
   const { settings } = useSettings();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -26,7 +28,7 @@ export const DashboardTitle = ({ hasAnyResults, setConfirmReset, confirmReset, h
           variant={settings.largeText ? 'h3' : 'h4'}
           sx={{ fontWeight: 700 }}
         >
-          📊 Your Progress Dashboard
+          📊 {t('dashboard.yourProgressDashboard')}
         </Typography>
         {hasAnyResults && (
           <Button
@@ -35,7 +37,7 @@ export const DashboardTitle = ({ hasAnyResults, setConfirmReset, confirmReset, h
             onClick={() => setConfirmReset(true)}
             size={settings.largeText ? 'large' : 'medium'}
           >
-            Reset All Results
+            {t('dashboard.resetAllResults')}
           </Button>
         )}
       </Box>

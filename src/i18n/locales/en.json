@@ -125,7 +125,12 @@
     "totalGames": "Total Games",
     "accuracy": "Accuracy",
     "averageTime": "Average Time",
-    "bestScore": "Best Score"
+    "bestScore": "Best Score",
+    "gameBreakdown": "Game Breakdown",
+    "detailedRusults": "Detailed Results",
+    "startYourJourney": "Start Your Journey",
+    "yourProgressDashboard": "Your Progress Dashboard",
+    "resetAllResults": "Reset All Results"
   },
   "home": {
     "welcome": "Welcome to Math Muse!",
@@ -147,7 +152,8 @@
     "yourAnswer": "Your Answer",
     "correctAnswer": "Correct Answer",
     "timeUp": "Time's Up!",
-    "progress": "Progress"
+    "progress": "Progress",
+    "played": "played"
   },
   "button": {
     "playNow": "Play Now"
@@ -157,5 +163,28 @@
     "trackProgress": "Track Progress",
     "earnAchievements": "Earn Achievements",
     "learnAndGrow": "Learn & Grow"
+  },
+  "statistics": {
+    "totalCorrect": "Correct Answers",
+    "totalAttempts": "Total Attempts",
+    "accuracy": "Accuracy",
+    "totalMastered": "Mastered Problems"
+  },
+  "gameStatCard": {
+    "correct": "Correct",
+    "accuracy": "Accuracy",
+    "mastered": "Mastered"
+  },
+  "resultsTable": {
+    "problem": "Problem",
+    "correct": "Correct",
+    "attempts": "Attempts",
+    "accuracy": "Accuracy",
+    "status": "Status",
+    "chips": {
+      "mastered": "Mastered",
+      "learning": "Learning",
+      "practice": "Practice"
+    }
   }
 }

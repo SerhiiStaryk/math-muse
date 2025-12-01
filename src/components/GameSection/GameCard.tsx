@@ -65,7 +65,7 @@ export const GameCard = ({ game, gameStats }: GameCard) => {
               sx={{ mt: 2 }}
             >
               <Chip
-                label={`${stats.total} played`}
+                label={`${stats.total} ${t('game.played')}`}
                 size='small'
                 sx={{
                   backgroundColor: `${game.color}20`,

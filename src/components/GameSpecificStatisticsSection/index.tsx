@@ -1,6 +1,7 @@
 import { Typography, Card, CardContent, Grid } from '@mui/material';
 import type { GameType, Stats, ResultsData } from '@/types';
 import { GameStatCard } from './GameStatCard';
+import { useTranslation } from 'react-i18next';
 
 export type GameSpecificStatisticsSectionProps = {
   results: ResultsData;
@@ -8,6 +9,8 @@ export type GameSpecificStatisticsSectionProps = {
 };
 
 export const GameSpecificStatisticsSection = ({ results, stats }: GameSpecificStatisticsSectionProps) => {
+  const { t } = useTranslation();
+
   const gameKeys = Object.keys(results) as GameType[];
 
   return (
@@ -18,7 +21,7 @@ export const GameSpecificStatisticsSection = ({ results, stats }: GameSpecificSt
           gutterBottom
           sx={{ fontWeight: 600, mb: 2 }}
         >
-          🎮 Game Breakdown
+          🎮 {t('dashboard.gameBreakdown')}
         </Typography>
         <Grid
           container
