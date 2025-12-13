@@ -7,3 +7,4 @@ export { QuestionCard } from './QuestionCard';
 export { Score } from './Score';
 export { SideBar } from './SideBar';
 export { Logo } from './Logo';
+export { CustomNumericKeyboard } from './CustomNumericKeyboard';
