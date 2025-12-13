@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Box, Typography, Button, Card, CardContent, TextField, Stack, Chip, Alert, Grid } from '@mui/material';
+import { Box, Typography, Card, CardContent, TextField, Stack, Chip, Alert, Grid } from '@mui/material';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
 import { recordAttempt } from '@/helpers';
 import { GameType } from '@/types';
+import { CustomNumericKeyboard } from '@/components';
 
 interface Question {
   sequence: (number | null)[];
@@ -214,30 +215,46 @@ export const NumberSequencePage = () => {
               <TextField
                 value={userAnswer}
                 onChange={e => setUserAnswer(e.target.value)}
-                onKeyPress={handleKeyPress}
-                type='number'
+                onKeyDown={handleKeyPress}
+                type='text' // Changed from number to allow inputMode none effect if needed, but readOnly handles it
                 placeholder='?'
                 autoFocus
                 disabled={feedback === 'correct'}
+                slotProps={{
+                  htmlInput: {
+                    readOnly: true, // Prevent native keyboard
+                    inputMode: 'none',
+                  },
+                }}
                 sx={{
                   '& input': {
                     fontSize: '2rem',
                     textAlign: 'center',
                     fontWeight: 700,
+                    caretColor: 'transparent', // Hide cursor content
                   },
                   width: 200,
                 }}
               />
 
-              <Button
-                variant='contained'
-                size='large'
-                onClick={handleSubmit}
-                disabled={userAnswer === '' || feedback === 'correct'}
-                sx={{ minWidth: 200 }}
-              >
-                {t('common.submit')}
-              </Button>
+              <Box sx={{ mt: 2, width: '100%', maxWidth: 400 }}>
+                <CustomNumericKeyboard
+                  onInput={num => {
+                    if (userAnswer.length < 5) { // Limit length
+                      setUserAnswer(prev => prev + num.toString());
+                    }
+                  }}
+                  onBackspace={() => setUserAnswer(prev => prev.slice(0, -1))}
+                  onToggleSign={() => {
+                    setUserAnswer(prev => {
+                      if (prev.startsWith('-')) return prev.slice(1);
+                      return '-' + prev;
+                    });
+                  }}
+                  onSubmit={handleSubmit}
+                  disabled={feedback === 'correct'}
+                />
+              </Box>
             </Box>
 
             {feedback === 'correct' && (
