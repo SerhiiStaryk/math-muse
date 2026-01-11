@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { AnswerFeedback } from '../AnswerFeedback';
 import { useSettings } from '@/context/SettingsContext';
+import { CustomNumericKeyboard } from '../CustomNumericKeyboard';
 
 type QuestionCardProps = {
   question: string;
@@ -84,6 +85,7 @@ export const QuestionCard = memo(
       isCorrect,
       inputValue,
       useMultipleChoice,
+      handleInputSubmit,
     ]);
 
     return (
@@ -136,6 +138,8 @@ export const QuestionCard = memo(
               variant={settings.largeText ? 'h3' : 'h5'}
               gutterBottom
               sx={{
+                // fontSize: settings.largeText ? '2.5rem' : '1.5rem',
+                fontSize: '2rem',
                 fontWeight: 600,
                 color: settings.highContrast ? 'text.primary' : 'inherit',
               }}
@@ -196,40 +200,60 @@ export const QuestionCard = memo(
             ) : (
               <Box
                 sx={{
+                  mt: 4,
                   display: 'flex',
-                  gap: 2,
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  gap: 2,
                 }}
               >
                 <TextField
-                  type='number'
+                  type='text'
                   value={inputValue}
                   onChange={e => setInputValue(e.target.value)}
                   onKeyDown={handleKeyPress}
-                  placeholder='Enter your answer'
                   variant='outlined'
+                  placeholder='?'
+                  autoFocus
                   size={settings.largeText ? 'medium' : 'small'}
                   disabled={isCorrect !== null}
                   sx={{
                     minWidth: 150,
                     '& input': {
-                      fontSize: settings.largeText ? '1.5rem' : '1rem',
+                      maxWidth: 360,
+                      fontWeight: 700,
+                      textAlign: 'center',
+                      // fontSize: settings.largeText ? '1.5rem' : '1rem',
+                      fontSize: '2rem',
+                      caretColor: 'transparent', // Hide cursor content
+                    },
+                  }}
+                  slotProps={{
+                    htmlInput: {
+                      readOnly: true, // Prevent native keyboard
+                      inputMode: 'none',
                     },
                   }}
                 />
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={handleInputSubmit}
-                  disabled={!inputValue.trim() || isCorrect !== null}
-                  sx={{
-                    fontSize: settings.largeText ? '1.25rem' : '1rem',
-                    py: settings.largeText ? 1.5 : 1,
-                  }}
-                >
-                  Submit
-                </Button>
+                <Box sx={{ mt: 2, width: '100%', maxWidth: 400 }}>
+                  <CustomNumericKeyboard
+                    onInput={num => {
+                      if (inputValue.length < 5) {
+                        // Limit length
+                        setInputValue(prev => prev + num.toString());
+                      }
+                    }}
+                    onBackspace={() => setInputValue(prev => prev.slice(0, -1))}
+                    onToggleSign={() => {
+                      setInputValue(prev => {
+                        if (prev.startsWith('-')) return prev.slice(1);
+                        return '-' + prev;
+                      });
+                    }}
+                    onSubmit={handleInputSubmit}
+                    // disabled={feedback === 'correct'}
+                  />
+                </Box>
               </Box>
             )}
           </CardContent>
@@ -239,5 +263,3 @@ export const QuestionCard = memo(
     );
   }
 );
-
-QuestionCard.displayName = 'QuestionCard';

@@ -6,6 +6,13 @@ import { useHistory } from '@/hooks';
 import { GameType } from '@/types';
 import { COMPARE_MAX_NUMBER, FEEDBACK_DISPLAY_DURATION } from '@/constants';
 
+const buttonStyle = {
+  fontSize: '1.5rem',
+  fontWeight: 500,
+  p: 0,
+  pb: 0.5,
+};
+
 export const ComparePage = () => {
   const [num1, setNum1] = useState<number>(getRandomNumber(COMPARE_MAX_NUMBER));
   const [num2, setNum2] = useState<number>(getRandomNumber(COMPARE_MAX_NUMBER));
@@ -72,7 +79,8 @@ export const ComparePage = () => {
               width={50}
               height={50}
               border={2}
-              borderColor={theme.palette.secondary.main}
+              borderColor={theme.palette.primary.main}
+              borderRadius={0.5}
               mx={2}
               display='flex'
               alignItems='center'
@@ -90,9 +98,12 @@ export const ComparePage = () => {
           </Box>
           <Box
             mt={3}
-            textAlign='center'
+            display='flex'
+            justifyContent='center'
+            gap={2}
           >
             <Button
+              sx={buttonStyle}
               variant='contained'
               color='primary'
               onClick={() => handleAnswer('greater', '>')}
@@ -100,14 +111,15 @@ export const ComparePage = () => {
               &gt;
             </Button>
             <Button
+              sx={buttonStyle}
               variant='contained'
               color='secondary'
               onClick={() => handleAnswer('less', '<')}
-              sx={{ mx: 2 }}
             >
               &lt;
             </Button>
             <Button
+              sx={buttonStyle}
               variant='contained'
               color='success'
               onClick={() => handleAnswer('equal', '=')}
