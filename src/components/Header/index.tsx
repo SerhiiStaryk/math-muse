@@ -43,10 +43,6 @@ export const Header = () => {
       position='sticky'
       component='nav'
       elevation={2}
-      sx={{
-        backdropFilter: 'blur(8px)',
-        backgroundColor: 'rgba(255, 107, 107, 0.95)',
-      }}
     >
       <Toolbar sx={{ justifyContent: 'space-between', py: 0.5 }}>
         <Logo size={40} />

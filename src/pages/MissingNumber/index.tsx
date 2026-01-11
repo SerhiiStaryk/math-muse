@@ -5,6 +5,7 @@ import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
 import { recordAttempt } from '@/helpers';
 import { GameType } from '@/types';
+import { CustomNumericKeyboard } from '@/components';
 
 type Position = 'first' | 'second' | 'result';
 type Operation = '+' | '-' | '×' | '÷';
@@ -271,29 +272,45 @@ export const MissingNumberPage = () => {
             <TextField
               value={userAnswer}
               onChange={e => setUserAnswer(e.target.value)}
-              onKeyPress={handleKeyPress}
-              type='number'
+              onKeyDown={handleKeyPress}
+              type='text'
               placeholder='?'
               autoFocus
               disabled={feedback === 'correct'}
+              slotProps={{
+                htmlInput: {
+                  readOnly: true,
+                  inputMode: 'none',
+                },
+              }}
               sx={{
                 '& input': {
                   fontSize: '2rem',
                   textAlign: 'center',
                   fontWeight: 700,
+                  caretColor: 'transparent',
                 },
-                width: 200,
+                maxWidth: 400,
               }}
             />
-            <Button
-              variant='contained'
-              size='large'
-              onClick={handleSubmit}
-              disabled={userAnswer === '' || feedback === 'correct'}
-              sx={{ minWidth: 200 }}
-            >
-              {t('common.submit')}
-            </Button>
+            <Box sx={{ mt: 2, width: '100%', maxWidth: 400 }}>
+              <CustomNumericKeyboard
+                onInput={num => {
+                  if (userAnswer.length < 5) {
+                    setUserAnswer(prev => prev + num.toString());
+                  }
+                }}
+                onBackspace={() => setUserAnswer(prev => prev.slice(0, -1))}
+                onToggleSign={() => {
+                  setUserAnswer(prev => {
+                    if (prev.startsWith('-')) return prev.slice(1);
+                    return '-' + prev;
+                  });
+                }}
+                onSubmit={handleSubmit}
+                disabled={feedback === 'correct'}
+              />
+            </Box>
           </Box>
 
           {feedback === 'correct' && (

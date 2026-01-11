@@ -36,11 +36,6 @@ export const components: Components<Theme> = {
       root: {
         borderRadius: 24,
         boxShadow: '0px 8px 24px rgba(78, 205, 196, 0.2)',
-        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-        '&:hover': {
-          transform: 'translateY(-4px)',
-          boxShadow: '0px 16px 40px rgba(78, 205, 196, 0.3)',
-        },
       },
     },
   },
@@ -54,7 +49,6 @@ export const components: Components<Theme> = {
   MuiPaper: {
     styleOverrides: {
       root: {
-        borderRadius: 20,
         backgroundImage: 'none',
       },
       elevation1: {

@@ -216,13 +216,13 @@ export const NumberSequencePage = () => {
                 value={userAnswer}
                 onChange={e => setUserAnswer(e.target.value)}
                 onKeyDown={handleKeyPress}
-                type='text' // Changed from number to allow inputMode none effect if needed, but readOnly handles it
+                type='text'
                 placeholder='?'
                 autoFocus
                 disabled={feedback === 'correct'}
                 slotProps={{
                   htmlInput: {
-                    readOnly: true, // Prevent native keyboard
+                    readOnly: true,
                     inputMode: 'none',
                   },
                 }}
@@ -231,16 +231,17 @@ export const NumberSequencePage = () => {
                     fontSize: '2rem',
                     textAlign: 'center',
                     fontWeight: 700,
-                    caretColor: 'transparent', // Hide cursor content
+                    caretColor: 'transparent',
                   },
-                  width: 200,
+                  maxWidth: 400,
                 }}
               />
 
               <Box sx={{ mt: 2, width: '100%', maxWidth: 400 }}>
                 <CustomNumericKeyboard
                   onInput={num => {
-                    if (userAnswer.length < 5) { // Limit length
+                    if (userAnswer.length < 5) {
+                      // Limit length
                       setUserAnswer(prev => prev + num.toString());
                     }
                   }}
