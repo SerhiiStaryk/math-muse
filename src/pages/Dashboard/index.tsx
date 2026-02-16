@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { Box } from '@mui/material';
 import { GameType } from '@/types';
 import { useGameStats } from '@/hooks';
-import { GameSpecificStatisticsSection } from '@/components/GameSpecificStatisticsSection';
-import { MotivationalMessages } from '@/components/MotivationalMessages';
-import { DetailedResultsTablesSection } from '@/components/DetailedResultsTablesSection';
-import { OverallStatisticsSection } from '@/components/OverallStatisticsSection';
-import { DashboardTitle } from './DashboardTitle';
-import { NoResults } from './NoResults';
-import { AchievementBadgeSection } from '@/components/AchievementBadgeSection';
+import {
+  GameSpecificStatisticsSection,
+  MotivationalMessages,
+  DetailedResultsTablesSection,
+  OverallStatisticsSection,
+  AchievementBadgeSection,
+} from '@/components';
 
 export const DashboardPage = () => {
   const { results, stats, clearResults } = useGameStats();
