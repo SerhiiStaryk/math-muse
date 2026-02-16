@@ -45,26 +45,66 @@ export type Settings = {
 
 const PREFIX = 'FunMathame_v1.';
 
+// In-memory cache to avoid frequent LocalStorage reads
+const resultsCache: Record<string, Record<string, ResultRecord>> = {};
+const saveTimers: Record<string, any> = {};
+
 export const loadResults = (type: GameType): Record<string, ResultRecord> => {
+  if (resultsCache[type]) {
+    return resultsCache[type];
+  }
+
   const raw = localStorage.getItem(PREFIX + type);
 
-  if (!raw) return {};
+  if (!raw) {
+    resultsCache[type] = {};
+    return {};
+  }
 
   try {
-    return JSON.parse(raw);
+    const data = JSON.parse(raw);
+    resultsCache[type] = data;
+    return data;
   } catch (e) {
     console.error('Failed to parse results', e);
+    resultsCache[type] = {};
     return {};
   }
 };
 
 const saveResults = (data: Record<string, ResultRecord>, type: GameType) => {
-  localStorage.setItem(PREFIX + type, JSON.stringify(data));
+  resultsCache[type] = data;
+
+  // Debounce saving to LocalStorage (e.g., wait 2 seconds after the last change)
+  if (saveTimers[type]) {
+    clearTimeout(saveTimers[type]);
+  }
+
+  saveTimers[type] = setTimeout(() => {
+    localStorage.setItem(PREFIX + type, JSON.stringify(resultsCache[type]));
+    delete saveTimers[type];
+  }, 2000);
 };
 
 export const clearResults = () => {
   Object.values(GameType).forEach(type => {
     localStorage.removeItem(PREFIX + type);
+    delete resultsCache[type];
+    if (saveTimers[type]) {
+      clearTimeout(saveTimers[type]);
+      delete saveTimers[type];
+    }
+  });
+};
+
+export const flushResults = () => {
+  Object.keys(saveTimers).forEach(type => {
+    const gameType = type as GameType;
+    if (saveTimers[gameType]) {
+      clearTimeout(saveTimers[gameType]);
+      localStorage.setItem(PREFIX + gameType, JSON.stringify(resultsCache[gameType]));
+      delete saveTimers[gameType];
+    }
   });
 };
 
@@ -74,10 +114,9 @@ export const recordAttempt = (task: string, correct: boolean, type: GameType) =>
   const r = all[task] || { task, correct: 0, attempts: 0 };
 
   r.attempts += 1;
-
   if (correct) r.correct += 1;
 
-  all[task] = r;
+  all[task] = { ...r }; // Create a new object to be sure
 
   saveResults(all, type);
 };

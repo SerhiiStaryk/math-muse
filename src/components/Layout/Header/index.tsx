@@ -1,5 +1,6 @@
 import { useState, type MouseEvent } from 'react';
-import { Logo, SideBar } from '@/components';
+import { Logo } from '../Logo';
+import { SideBar } from '../SideBar';
 import { Link, useLocation } from 'react-router-dom';
 import {
   AppBar as MuiAppBar,

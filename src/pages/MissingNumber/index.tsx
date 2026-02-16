@@ -1,14 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Box, Typography, Card, CardContent, TextField, Stack, Chip, Alert } from '@mui/material';
+import { Box, Typography, Card, CardContent, TextField, Stack, Chip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
-import { recordAttempt } from '@/helpers';
+import { recordAttempt, masteredTasks } from '@/helpers';
 import { GameType } from '@/types';
-import { CustomNumericKeyboard } from '@/components';
+import { CustomNumericKeyboard, AnswerFeedback, ResponsiveBox } from '@/components';
 
 type Position = 'first' | 'second' | 'result';
-type Operation = '+' | '-' | '×' | '÷';
+type Operation = '+' | '-' | 'x' | '÷';
 
 interface Question {
   num1: number;
@@ -29,46 +29,57 @@ export const MissingNumberPage = () => {
   const [streak, setStreak] = useState(0);
 
   const generateQuestion = useCallback(() => {
-    const operations: Operation[] = ['+', '-', '×', '÷'];
-    const operation = operations[Math.floor(Math.random() * operations.length)];
-    const positions: Position[] = ['first', 'second', 'result'];
-    const missingPosition = positions[Math.floor(Math.random() * positions.length)];
+    const mastered = masteredTasks(GameType.missingNumber);
+    let attemptsCount = 0;
+    const MAX_ATTEMPTS = 100;
 
-    let num1: number, num2: number, result: number;
+    while (true) {
+      attemptsCount++;
+      const operations: Operation[] = ['+', '-', 'x', '÷'];
+      const operation = operations[Math.floor(Math.random() * operations.length)];
+      const positions: Position[] = ['first', 'second', 'result'];
+      const missingPosition = positions[Math.floor(Math.random() * positions.length)];
 
-    switch (operation) {
-      case '+':
-        num1 = Math.floor(Math.random() * settings.maxMissingNumber) + 1;
-        num2 = Math.floor(Math.random() * settings.maxMissingNumber) + 1;
-        result = num1 + num2;
-        break;
-      case '-':
-        result = Math.floor(Math.random() * settings.maxMissingNumber) + 1;
-        num2 = Math.floor(Math.random() * result) + 1;
-        num1 = result + num2;
-        break;
-      case '×':
-        num1 = Math.floor(Math.random() * 10) + 1;
-        num2 = Math.floor(Math.random() * 10) + 1;
-        result = num1 * num2;
-        break;
-      case '÷':
-        num2 = Math.floor(Math.random() * 10) + 1;
-        result = Math.floor(Math.random() * 10) + 1;
-        num1 = num2 * result;
-        break;
-      default:
-        num1 = 0;
-        num2 = 0;
-        result = 0;
+      let num1: number, num2: number, result: number;
+
+      switch (operation) {
+        case '+':
+          num1 = Math.floor(Math.random() * settings.maxMissingNumber) + 1;
+          num2 = Math.floor(Math.random() * settings.maxMissingNumber) + 1;
+          result = num1 + num2;
+          break;
+        case '-':
+          result = Math.floor(Math.random() * settings.maxMissingNumber) + 1;
+          num2 = Math.floor(Math.random() * result) + 1;
+          num1 = result + num2;
+          break;
+        case 'x':
+          num1 = Math.floor(Math.random() * settings.maxMultiplicationTable) + 1;
+          num2 = Math.floor(Math.random() * settings.maxMultiplicationTable) + 1;
+          result = num1 * num2;
+          break;
+        case '÷':
+          num2 = Math.floor(Math.random() * settings.maxMultiplicationTable) + 1;
+          result = Math.floor(Math.random() * 10) + 1; // Keeping quotient small for easier division
+          num1 = num2 * result;
+          break;
+        default:
+          num1 = 0;
+          num2 = 0;
+          result = 0;
+      }
+
+      const task = `${num1}${operation}${num2}`;
+      if (mastered.has(task) && attemptsCount < MAX_ATTEMPTS) continue;
+
+      const answer = missingPosition === 'first' ? num1 : missingPosition === 'second' ? num2 : result;
+
+      setQuestion({ num1, num2, operation, missingPosition, answer });
+      setUserAnswer('');
+      setFeedback(null);
+      break;
     }
-
-    const answer = missingPosition === 'first' ? num1 : missingPosition === 'second' ? num2 : result;
-
-    setQuestion({ num1, num2, operation, missingPosition, answer });
-    setUserAnswer('');
-    setFeedback(null);
-  }, [settings.maxMissingNumber]);
+  }, [settings.maxMissingNumber, settings.maxMultiplicationTable]);
 
   useEffect(() => {
     generateQuestion();
@@ -82,7 +93,7 @@ export const MissingNumberPage = () => {
     setAttempts(prev => prev + 1);
 
     // Record the attempt for statistics
-    const taskDescription = `${question.num1} ${question.operation} ${question.num2}`;
+    const taskDescription = `${question.num1}${question.operation}${question.num2}`;
     recordAttempt(taskDescription, isCorrect, GameType.missingNumber);
 
     if (isCorrect) {
@@ -107,44 +118,37 @@ export const MissingNumberPage = () => {
 
     const { num1, num2, operation, missingPosition } = question;
     const result =
-      operation === '+' ? num1 + num2 : operation === '-' ? num1 - num2 : operation === '×' ? num1 * num2 : num1 / num2;
+      operation === '+' ? num1 + num2 : operation === '-' ? num1 - num2 : operation === 'x' ? num1 * num2 : num1 / num2;
 
-    const size = { xs: 60, sm: 100 };
-    const fontSize = { xs: '3rem', sm: '4rem' };
+    const fontSize = { xs: '1.75rem', sm: '2.5rem', md: '4rem' };
 
     return (
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
-          gap: 2,
+          gap: { xs: 0.5, sm: 1, md: 2 },
           fontSize: fontSize,
           fontWeight: 700,
           justifyContent: 'center',
+          flexWrap: 'wrap',
+          px: { xs: 1, sm: 0 },
         }}
       >
         {missingPosition === 'first' ? (
-          <Box
-            sx={{
-              width: size,
-              height: size,
-              border: '4px dashed',
-              borderColor: 'primary.main',
-              borderRadius: 2,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'primary.light',
-              color: 'white',
-            }}
+          <ResponsiveBox
+            size='medium'
+            variant='dashed'
+            highlight={true}
+            color='primary'
           >
             <HelpOutlineIcon sx={{ fontSize }} />
-          </Box>
+          </ResponsiveBox>
         ) : (
           <Typography
             variant='h2'
             component='span'
-            sx={{ minWidth: size, textAlign: 'center' }}
+            sx={{ fontSize, textAlign: 'center', flexShrink: 0 }}
           >
             {num1}
           </Typography>
@@ -154,32 +158,25 @@ export const MissingNumberPage = () => {
           variant='h2'
           component='span'
           color='secondary'
+          sx={{ fontSize, px: { xs: 0.25, sm: 0.5 }, flexShrink: 0 }}
         >
           {operation}
         </Typography>
 
         {missingPosition === 'second' ? (
-          <Box
-            sx={{
-              width: size,
-              height: size,
-              border: '4px dashed',
-              borderColor: 'primary.main',
-              borderRadius: 2,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'primary.light',
-              color: 'white',
-            }}
+          <ResponsiveBox
+            size='medium'
+            variant='dashed'
+            highlight={true}
+            color='primary'
           >
-            <HelpOutlineIcon sx={fontSize} />
-          </Box>
+            <HelpOutlineIcon sx={{ fontSize }} />
+          </ResponsiveBox>
         ) : (
           <Typography
             variant='h2'
             component='span'
-            sx={{ minWidth: size, textAlign: 'center' }}
+            sx={{ fontSize, textAlign: 'center', flexShrink: 0 }}
           >
             {num2}
           </Typography>
@@ -189,32 +186,25 @@ export const MissingNumberPage = () => {
           variant='h2'
           component='span'
           color='text.secondary'
+          sx={{ fontSize, px: { xs: 0.25, sm: 0.5 }, flexShrink: 0 }}
         >
           =
         </Typography>
 
         {missingPosition === 'result' ? (
-          <Box
-            sx={{
-              width: size,
-              height: size,
-              border: '4px dashed',
-              borderColor: 'primary.main',
-              borderRadius: 2,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'primary.light',
-              color: 'white',
-            }}
+          <ResponsiveBox
+            size='medium'
+            variant='dashed'
+            highlight={true}
+            color='primary'
           >
-            <HelpOutlineIcon sx={fontSize} />
-          </Box>
+            <HelpOutlineIcon sx={{ fontSize }} />
+          </ResponsiveBox>
         ) : (
           <Typography
             variant='h2'
             component='span'
-            sx={{ minWidth: size, textAlign: 'center' }}
+            sx={{ fontSize, textAlign: 'center', flexShrink: 0 }}
           >
             {result}
           </Typography>
@@ -248,25 +238,33 @@ export const MissingNumberPage = () => {
         />
       </Stack>
 
-      <Card sx={{ mb: 3 }}>
-        <CardContent sx={{ textAlign: 'center', py: 6 }}>
+      <Card
+        sx={{
+          mb: { xs: 1, md: 3 },
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <CardContent sx={{ textAlign: 'center', py: { xs: 2, sm: 4, md: 6 }, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <Typography
             variant='h6'
             gutterBottom
             color='text.secondary'
+            sx={{ mb: { xs: 1, md: 2 } }}
           >
-            Find the missing number:
+            {t('game.findMissingNumber')}
           </Typography>
 
           {renderEquation()}
 
           <Box
             sx={{
-              mt: 4,
+              mt: { xs: 2, md: 4 },
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: 2,
+              gap: { xs: 1, md: 2 },
             }}
           >
             <TextField
@@ -293,7 +291,7 @@ export const MissingNumberPage = () => {
                 maxWidth: 400,
               }}
             />
-            <Box sx={{ mt: 2, width: '100%', maxWidth: 400 }}>
+            <Box sx={{ mt: { xs: 0, md: 2 }, width: '100%', maxWidth: 400 }}>
               <CustomNumericKeyboard
                 onInput={num => {
                   if (userAnswer.length < 5) {
@@ -313,22 +311,16 @@ export const MissingNumberPage = () => {
             </Box>
           </Box>
 
-          {feedback === 'correct' && (
-            <Alert
-              severity='success'
-              sx={{ mt: 3 }}
-            >
-              {t('feedback.correct')}
-            </Alert>
-          )}
+          <AnswerFeedback isCorrect={feedback === null ? null : feedback === 'correct'} />
 
           {feedback === 'incorrect' && (
-            <Alert
-              severity='error'
-              sx={{ mt: 3 }}
+            <Typography
+              variant='body1'
+              color='error'
+              sx={{ mt: { xs: 1, md: 2 }, fontWeight: 700 }}
             >
-              {t('feedback.incorrect')} The answer is {question?.answer}
-            </Alert>
+              {t('game.theAnswerIs')} {question?.answer}
+            </Typography>
           )}
         </CardContent>
       </Card>

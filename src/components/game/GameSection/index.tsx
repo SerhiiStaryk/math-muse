@@ -33,6 +33,7 @@ export const GameSection = () => {
       >
         {GAME_CARDS.map(game => (
           <GameCard
+            key={game.path}
             game={game}
             gameStats={gameStats}
           />

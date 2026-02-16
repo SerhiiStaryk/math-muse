@@ -1,4 +1,5 @@
 import { MAX_MULTIPLE_VALUE, MULTIPLE_CHOICE_OPTIONS } from '@/constants';
+import { GameType } from '@/types';
 
 export const getRandomNumber = (maxValue: number): number => Math.floor(Math.random() * maxValue) + 1;
 
@@ -21,7 +22,7 @@ export const generateQuestion = ({
 }: {
   mastered: Set<string>;
   useMultipleChoice: boolean;
-  type: 'multiple' | 'divide' | 'add' | 'subtract';
+  type: GameType;
   maxNumber?: number;
   maxMultiplicationTable?: number;
   maxDivisionNumber?: number;
@@ -31,46 +32,58 @@ export const generateQuestion = ({
   const maxDivide = maxDivisionNumber || 50;
   let symbol: string;
 
-  if (type === 'multiple') {
+  if (type === GameType.multiply) {
     symbol = 'x';
-  } else if (type === 'divide') {
+  } else if (type === GameType.divide) {
     symbol = '÷';
-  } else if (type === 'add') {
+  } else if (type === GameType.add) {
     symbol = '+';
-  } else {
+  } else if (type === GameType.subtract) {
     symbol = '-';
+  } else {
+    // Default fallback for other game types not yet fully implemented in this generator
+    symbol = '?';
   }
 
+  let attempts = 0;
+  const MAX_ATTEMPTS = 100;
+
   while (true) {
+    attempts++;
     let a: number;
     let b: number;
     let correct: number;
 
-    if (type === 'multiple') {
+    if (type === GameType.multiply) {
       // Multiplication with configurable table size
       a = getRandomNumber(maxMultiply);
       b = getRandomNumber(maxMultiply);
       correct = a * b;
-    } else if (type === 'divide') {
+    } else if (type === GameType.divide) {
       // Division with configurable max number, ensuring whole number results
       b = getRandomNumber(Math.min(12, maxMultiply)); // divisor
       const maxQuotient = Math.floor(maxDivide / b);
       correct = getRandomNumber(Math.max(1, maxQuotient));
       a = b * correct;
-    } else if (type === 'add') {
+    } else if (type === GameType.add) {
       // Addition: numbers from 0 to maxValue
       a = getRandomNumber(maxValue);
       b = getRandomNumber(maxValue);
       correct = a + b;
-    } else {
+    } else if (type === GameType.subtract) {
       // Subtraction: ensure result is non-negative
       a = getRandomNumber(maxValue);
       b = getRandomNumber(a); // b will be between 1 and a
       correct = a - b;
+    } else {
+      // Basic fallback for unknown types
+      a = getRandomNumber(maxValue);
+      b = getRandomNumber(maxValue);
+      correct = a + b;
     }
 
     const task = `${a}${symbol}${b}`;
-    if (mastered.has(task)) continue;
+    if (mastered.has(task) && attempts < MAX_ATTEMPTS) continue;
 
     let answers: number[] | undefined;
 
@@ -81,7 +94,7 @@ export const generateQuestion = ({
       while (answerSet.size < MULTIPLE_CHOICE_OPTIONS) {
         let wrongAnswer: number;
 
-        if (type === 'multiple' || type === 'divide') {
+        if (type === GameType.multiply || type === GameType.divide) {
           // For multiply/divide: ±1 to ±10 from correct answer
           const offset = Math.floor(Math.random() * 10) + 1;
           wrongAnswer = Math.random() < 0.5 ? correct + offset : correct - offset;

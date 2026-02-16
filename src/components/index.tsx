@@ -1,10 +1,3 @@
-export { AnswerFeedback } from './AnswerFeedback';
-export { GameHistoryTable } from './GameHistoryTable';
-export { GameProgress } from './GameProgress';
-export { Header } from './Header';
-export { Layout } from './Layout';
-export { QuestionCard } from './QuestionCard';
-export { Score } from './Score';
-export { SideBar } from './SideBar';
-export { Logo } from './Logo';
-export { CustomNumericKeyboard } from './CustomNumericKeyboard';
+export * from './ui';
+export * from './game';
+export * from './layout';

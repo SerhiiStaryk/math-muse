@@ -115,10 +115,25 @@ export const GameResult = ({ type, items }: GameResultProps) => {
         </Box>
 
         <Collapse in={expanded}>
-          <TableContainer sx={{ maxHeight: 400, overflowY: 'auto' }}>
+          <TableContainer
+            sx={{
+              maxHeight: 400,
+              overflowY: 'auto',
+              overflowX: 'auto',
+              width: '100%',
+              '&::-webkit-scrollbar': {
+                height: 6,
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: 'rgba(0,0,0,0.1)',
+                borderRadius: 3,
+              },
+            }}
+          >
             <Table
               size={settings.largeText ? 'medium' : 'small'}
               stickyHeader
+              sx={{ minWidth: 500 }}
             >
               <TableHead>
                 <TableRow>

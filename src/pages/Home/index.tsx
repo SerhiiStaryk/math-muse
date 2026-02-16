@@ -1,8 +1,5 @@
 import { Container } from '@mui/material';
-import { GameSection } from '@/components/GameSection';
-import { WelcomeSection } from '@/components/WelcomeSection';
-import { UtilitiesSection } from '@/components/UtilitiesSection';
-import { MotivationalFooter } from '@/components/MotivationalFooter';
+import { GameSection, WelcomeSection, UtilitiesSection, MotivationalFooter } from '@/components';
 
 export const HomePage = () => (
   <Container maxWidth='lg'>
