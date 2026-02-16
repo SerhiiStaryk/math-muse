@@ -8,3 +8,4 @@ export { Score } from './Score';
 export { SideBar } from './SideBar';
 export { Logo } from './Logo';
 export { CustomNumericKeyboard } from './CustomNumericKeyboard';
+export { GamePageLayout } from './GamePageLayout';
