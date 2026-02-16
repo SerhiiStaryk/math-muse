@@ -110,12 +110,50 @@
     }
   },
   "feedback": {
-    "correct": "Correct! Well done! 🎉",
-    "incorrect": "Oops! Try again! 💪",
-    "greatJob": "Great job!",
-    "keepGoing": "Keep going!",
-    "almostThere": "Almost there!",
-    "excellent": "Excellent!"
+    "correct": {
+      "high": [
+        "Amazing! 🌟",
+        "You're a math star! ⭐",
+        "Fantastic work! 🎉",
+        "Perfect! You're brilliant! 💫",
+        "Wow! Incredible! 🚀",
+        "You're on fire! 🔥",
+        "Outstanding! 🏆",
+        "Super job! 💪",
+        "You're a genius! 🧠",
+        "Excellent! Keep it up! 🎊"
+      ],
+      "medium": [
+        "Correct! 🎉",
+        "Great job! ✨",
+        "Well done! 👍",
+        "Nice work! 🌟",
+        "That's right! ✓"
+      ],
+      "low": [
+        "Correct! ✓",
+        "Right! 👍",
+        "Good! ✓"
+      ]
+    },
+    "incorrect": {
+      "high": [
+        "Not quite, but keep trying! You're learning! 💪",
+        "Oops! Try again - you can do it! 🌈",
+        "Almost there! Give it another go! 🎯",
+        "Don't give up! Every mistake helps you learn! 📚",
+        "Try again! You're getting better! 🌟"
+      ],
+      "medium": [
+        "Try again! 💭",
+        "Not quite - give it another shot! 🎯",
+        "Keep trying! ✨"
+      ],
+      "low": [
+        "Try again ❌",
+        "Not correct ✗"
+      ]
+    }
   },
   "dashboard": {
     "title": "Dashboard",
