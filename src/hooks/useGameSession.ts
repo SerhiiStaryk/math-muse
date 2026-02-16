@@ -4,6 +4,8 @@ import { useSettings } from '@/context/SettingsContext';
 import { GameType } from '@/types';
 import { FEEDBACK_DISPLAY_DURATION } from '@/constants';
 
+import { flushResults } from '@/helpers';
+
 interface UseGameSessionProps {
   gameType: GameType;
   questionType: 'multiple' | 'divide' | 'add' | 'subtract';
@@ -75,10 +77,12 @@ export const useGameSession = ({ gameType, questionType }: UseGameSessionProps) 
   useEffect(() => {
     if (settings.questionsPerSession > 0 && totalCount >= settings.questionsPerSession) {
       setSessionComplete(true);
+      flushResults();
     }
   }, [totalCount, settings.questionsPerSession]);
 
   const handleResetSession = useCallback(() => {
+    flushResults();
     setCorrectCount(0);
     setTotalCount(0);
     setStreak(0);
