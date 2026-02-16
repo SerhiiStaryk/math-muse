@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Box, Typography, Card, CardContent, Stack, Chip, Alert, TextField } from '@mui/material';
+import { Box, Typography, Card, CardContent, TextField, Stack, Chip } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { useTranslation } from 'react-i18next';
 import { recordAttempt, masteredTasks } from '@/helpers';
 import { GameType } from '@/types';
-import { CustomNumericKeyboard } from '@/components';
+import { CustomNumericKeyboard, AnswerFeedback } from '@/components';
 
 type QuestionType = 'read-clock' | 'time-difference' | 'add-time';
 
@@ -418,21 +418,16 @@ export const TimeChallengePage = () => {
               </Box>
             </Box>
 
-            {feedback === 'correct' && (
-              <Alert
-                severity='success'
-                sx={{ mt: 3 }}
-              >
-                {t('feedback.correct')} {t('game.greatTimeTelling')}
-              </Alert>
-            )}
+            <AnswerFeedback isCorrect={feedback === null ? null : feedback === 'correct'} />
+
             {feedback === 'incorrect' && (
-              <Alert
-                severity='error'
-                sx={{ mt: 3 }}
+              <Typography
+                variant='body1'
+                color='error'
+                sx={{ mt: 2, fontWeight: 700 }}
               >
-                {t('feedback.incorrect')} {t('game.correctAnswerWas')} {question.answer}
-              </Alert>
+                {t('game.correctAnswerWas')} {question.answer}
+              </Typography>
             )}
           </CardContent>
         </Card>

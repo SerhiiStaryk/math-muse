@@ -110,6 +110,10 @@
     }
   },
   "feedback": {
+    "correct": "Правильно! Чудова робота! 🎉",
+    "incorrect": "Ой! Спробуй ще раз! 💪"
+  },
+  "encouragement": {
     "correct": {
       "high": [
         "Неймовірно! 🌟",

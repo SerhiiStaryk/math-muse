@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Box, Typography, Button, Card, CardContent, Stack, Chip, Alert } from '@mui/material';
+import { Box, Typography, Card, CardContent, Stack, Chip, Button } from '@mui/material';
+import { AnswerFeedback } from '@/components';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -243,24 +244,16 @@ export const TrueFalsePage = () => {
               </Stack>
             )}
 
-            {feedback === 'correct' && (
-              <Alert
-                severity='success'
-                sx={{ mt: 3 }}
-                icon={<CheckCircleOutlineIcon />}
-              >
-                {t('feedback.correct')}
-              </Alert>
-            )}
+            <AnswerFeedback isCorrect={feedback === null ? null : feedback === 'correct'} />
 
             {feedback === 'incorrect' && (
-              <Alert
-                severity='error'
-                sx={{ mt: 3 }}
-                icon={<CancelIcon />}
+              <Typography
+                variant='body1'
+                color='error'
+                sx={{ mt: 2, fontWeight: 700 }}
               >
-                {t('feedback.incorrect')} {t('game.correctAnswerWas')} {question.correctResult}
-              </Alert>
+                {t('game.correctAnswerWas')} {question.correctResult}
+              </Typography>
             )}
           </CardContent>
         </Card>

@@ -110,6 +110,10 @@
     }
   },
   "feedback": {
+    "correct": "Correct! Well done! 🎉",
+    "incorrect": "Oops! Try again! 💪"
+  },
+  "encouragement": {
     "correct": {
       "high": [
         "Amazing! 🌟",

@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Box, Typography, Card, CardContent, TextField, Stack, Chip, Alert } from '@mui/material';
+import { Box, Typography, Card, CardContent, TextField, Stack, Chip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
 import { recordAttempt, masteredTasks } from '@/helpers';
 import { GameType } from '@/types';
-import { CustomNumericKeyboard } from '@/components';
+import { CustomNumericKeyboard, AnswerFeedback } from '@/components';
 
 type Position = 'first' | 'second' | 'result';
 type Operation = '+' | '-' | 'x' | '÷';
@@ -324,22 +324,16 @@ export const MissingNumberPage = () => {
             </Box>
           </Box>
 
-          {feedback === 'correct' && (
-            <Alert
-              severity='success'
-              sx={{ mt: 3 }}
-            >
-              {t('feedback.correct')}
-            </Alert>
-          )}
+          <AnswerFeedback isCorrect={feedback === null ? null : feedback === 'correct'} />
 
           {feedback === 'incorrect' && (
-            <Alert
-              severity='error'
-              sx={{ mt: 3 }}
+            <Typography
+              variant='body1'
+              color='error'
+              sx={{ mt: 2, fontWeight: 700 }}
             >
-              {t('feedback.incorrect')} {t('game.theAnswerIs')} {question?.answer}
-            </Alert>
+              {t('game.theAnswerIs')} {question?.answer}
+            </Typography>
           )}
         </CardContent>
       </Card>

@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Box, Typography, Card, CardContent, TextField, Stack, Chip, Alert, Grid } from '@mui/material';
+import { Box, Typography, Card, CardContent, TextField, Stack, Chip, Grid } from '@mui/material';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
 import { recordAttempt, masteredTasks } from '@/helpers';
 import { GameType } from '@/types';
-import { CustomNumericKeyboard } from '@/components';
+import { CustomNumericKeyboard, AnswerFeedback } from '@/components';
 
 interface Question {
   sequence: (number | null)[];
@@ -256,22 +256,16 @@ export const NumberSequencePage = () => {
               </Box>
             </Box>
 
-            {feedback === 'correct' && (
-              <Alert
-                severity='success'
-                sx={{ mt: 3 }}
-              >
-                {t('feedback.correct')} {t('game.greatRecognition')}
-              </Alert>
-            )}
+            <AnswerFeedback isCorrect={feedback === null ? null : feedback === 'correct'} />
 
             {feedback === 'incorrect' && (
-              <Alert
-                severity='error'
-                sx={{ mt: 3 }}
+              <Typography
+                variant='body1'
+                color='error'
+                sx={{ mt: 2, fontWeight: 700 }}
               >
-                {t('feedback.incorrect')} {t('game.theAnswerIs')} {question.answer}. {getPatternHint()}.
-              </Alert>
+                {t('game.theAnswerIs')} {question.answer}. {getPatternHint()}.
+              </Typography>
             )}
           </CardContent>
         </Card>

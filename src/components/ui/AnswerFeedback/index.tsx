@@ -23,7 +23,7 @@ export const AnswerFeedback = ({ isCorrect }: AnswerFeedbackProps) => {
     }
 
     const type = isCorrect ? 'correct' : 'incorrect';
-    const messages = t(`feedback.${type}.${encouragementLevel}`, { returnObjects: true }) as string[];
+    const messages = t(`encouragement.${type}.${encouragementLevel}`, { returnObjects: true }) as string[];
 
     if (Array.isArray(messages) && messages.length > 0) {
       setMessage(messages[Math.floor(Math.random() * messages.length)]);
