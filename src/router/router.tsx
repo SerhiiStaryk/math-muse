@@ -29,25 +29,30 @@ import {
   TimeChallengePage,
 } from '@/pages';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <Layout />,
+      children: [
+        { path: PATH_ROOT, element: <HomePage /> },
+        { path: PATH_ADD, element: <AddPage /> },
+        { path: PATH_SUBTRACT, element: <SubtractPage /> },
+        { path: PATH_MULTIPLY, element: <MultiplyPage /> },
+        { path: PATH_DIVIDE, element: <DividePage /> },
+        { path: PATH_DASHBOARD, element: <DashboardPage /> },
+        { path: PATH_SETTINGS, element: <SettingsPage /> },
+        { path: PATH_COMPARE, element: <ComparePage /> },
+        { path: PATH_MISSING_NUMBER, element: <MissingNumberPage /> },
+        { path: PATH_TRUE_FALSE, element: <TrueFalsePage /> },
+        { path: PATH_NUMBER_SEQUENCE, element: <NumberSequencePage /> },
+        { path: PATH_TIME_CHALLENGE, element: <TimeChallengePage /> },
+      ],
+    },
+  ],
   {
-    path: '/math-muse/',
-    element: <Layout />,
-    children: [
-      { path: PATH_ROOT, element: <HomePage /> },
-      { path: PATH_ADD, element: <AddPage /> },
-      { path: PATH_SUBTRACT, element: <SubtractPage /> },
-      { path: PATH_MULTIPLY, element: <MultiplyPage /> },
-      { path: PATH_DIVIDE, element: <DividePage /> },
-      { path: PATH_DASHBOARD, element: <DashboardPage /> },
-      { path: PATH_SETTINGS, element: <SettingsPage /> },
-      { path: PATH_COMPARE, element: <ComparePage /> },
-      { path: PATH_MISSING_NUMBER, element: <MissingNumberPage /> },
-      { path: PATH_TRUE_FALSE, element: <TrueFalsePage /> },
-      { path: PATH_NUMBER_SEQUENCE, element: <NumberSequencePage /> },
-      { path: PATH_TIME_CHALLENGE, element: <TimeChallengePage /> },
-    ],
-  },
-]);
+    basename: '/math-muse/',
+  }
+);
 
 export default router;
