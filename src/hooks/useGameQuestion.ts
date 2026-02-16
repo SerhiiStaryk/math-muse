@@ -6,7 +6,7 @@ import { FEEDBACK_DISPLAY_DURATION } from '@/constants';
 
 type UseGameQuestionProps = {
   gameType: GameType;
-  questionType: 'multiple' | 'divide' | 'add' | 'subtract';
+  questionType: GameType;
   autoAdvance?: boolean;
 };
 

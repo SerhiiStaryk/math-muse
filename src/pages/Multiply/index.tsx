@@ -7,7 +7,7 @@ export const MultiplyPage = () => {
   const { t } = useTranslation();
   const session = useGameSession({
     gameType: GameType.multiply,
-    questionType: 'multiple',
+    questionType: GameType.multiply,
   });
 
   return (

@@ -7,7 +7,7 @@ export const SubtractPage = () => {
   const { t } = useTranslation();
   const session = useGameSession({
     gameType: GameType.subtract,
-    questionType: 'subtract',
+    questionType: GameType.subtract,
   });
 
   return (

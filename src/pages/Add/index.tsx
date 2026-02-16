@@ -7,7 +7,7 @@ export const AddPage = () => {
   const { t } = useTranslation();
   const session = useGameSession({
     gameType: GameType.add,
-    questionType: 'add',
+    questionType: GameType.add,
   });
 
   return (

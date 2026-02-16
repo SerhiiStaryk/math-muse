@@ -7,7 +7,7 @@ export const DividePage = () => {
   const { t } = useTranslation();
   const session = useGameSession({
     gameType: GameType.divide,
-    questionType: 'divide',
+    questionType: GameType.divide,
   });
 
   return (

@@ -8,7 +8,7 @@ import { flushResults } from '@/helpers';
 
 interface UseGameSessionProps {
   gameType: GameType;
-  questionType: 'multiple' | 'divide' | 'add' | 'subtract';
+  questionType: GameType;
 }
 
 export const useGameSession = ({ gameType, questionType }: UseGameSessionProps) => {
