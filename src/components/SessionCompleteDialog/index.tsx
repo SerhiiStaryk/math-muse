@@ -1,5 +1,6 @@
 import { useSettings } from '@/context/SettingsContext';
 import { Typography, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 type SessionCompleteDialogProps = {
   correctCount: number;
@@ -17,26 +18,27 @@ export const SessionCompleteDialog = ({
   handleResetSession,
 }: SessionCompleteDialogProps) => {
   const { settings } = useSettings();
+  const { t } = useTranslation();
 
   return (
     <Dialog
       open={sessionComplete}
       onClose={handleResetSession}
     >
-      <DialogTitle>🎉 Session Complete!</DialogTitle>
+      <DialogTitle>🎉 {t('game.sessionComplete')}</DialogTitle>
       <DialogContent>
         <Typography
           variant='body1'
           gutterBottom
         >
-          Great job! You completed {settings.questionsPerSession} questions!
+          {t('game.sessionQuestions', { count: settings.questionsPerSession })}
         </Typography>
         <Typography
           variant='h6'
           color='primary'
           sx={{ mt: 2 }}
         >
-          Score: {correctCount} / {totalCount} ({Math.round((correctCount / totalCount) * 100)}%)
+          {t('common.score')}: {correctCount} / {totalCount} ({Math.round((correctCount / totalCount) * 100)}%)
         </Typography>
         {streak > 3 && (
           <Typography
@@ -44,7 +46,7 @@ export const SessionCompleteDialog = ({
             color='success.main'
             sx={{ mt: 1 }}
           >
-            🔥 Best streak: {streak} in a row!
+            {t('game.bestStreak', { streak })}
           </Typography>
         )}
       </DialogContent>
@@ -54,7 +56,7 @@ export const SessionCompleteDialog = ({
           variant='contained'
           color='primary'
         >
-          Play Again
+          {t('game.playAgain')}
         </Button>
       </DialogActions>
     </Dialog>

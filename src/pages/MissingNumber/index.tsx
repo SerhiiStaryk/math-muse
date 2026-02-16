@@ -255,7 +255,7 @@ export const MissingNumberPage = () => {
             gutterBottom
             color='text.secondary'
           >
-            Find the missing number:
+            {t('game.findMissingNumber')}
           </Typography>
 
           {renderEquation()}
@@ -327,7 +327,7 @@ export const MissingNumberPage = () => {
               severity='error'
               sx={{ mt: 3 }}
             >
-              {t('feedback.incorrect')} The answer is {question?.answer}
+              {t('feedback.incorrect')} {t('game.theAnswerIs')} {question?.answer}
             </Alert>
           )}
         </CardContent>

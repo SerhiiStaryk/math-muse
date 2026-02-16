@@ -5,6 +5,7 @@ import { getRandomNumber, recordAttempt } from '@/helpers';
 import { useHistory } from '@/hooks';
 import { GameType } from '@/types';
 import { COMPARE_MAX_NUMBER, FEEDBACK_DISPLAY_DURATION } from '@/constants';
+import { useTranslation } from 'react-i18next';
 
 const buttonStyle = {
   fontSize: '1.5rem',
@@ -14,6 +15,7 @@ const buttonStyle = {
 };
 
 export const ComparePage = () => {
+  const { t } = useTranslation();
   const [num1, setNum1] = useState<number>(getRandomNumber(COMPARE_MAX_NUMBER));
   const [num2, setNum2] = useState<number>(getRandomNumber(COMPARE_MAX_NUMBER));
 
@@ -64,7 +66,7 @@ export const ComparePage = () => {
         variant='h4'
         gutterBottom
       >
-        Compare the Numbers!
+        {t('games.compare')}
       </Typography>
       <Card>
         <CardContent>

@@ -1,6 +1,7 @@
 import { useSettings } from '@/context/SettingsContext';
 import type { Stats } from '@/types';
 import { Alert } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 type MotivationalMessagesProps = {
   stats: Stats;
@@ -8,6 +9,7 @@ type MotivationalMessagesProps = {
 
 export const MotivationalMessages = ({ stats }: MotivationalMessagesProps) => {
   const { settings } = useSettings();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -16,7 +18,7 @@ export const MotivationalMessages = ({ stats }: MotivationalMessagesProps) => {
           severity='success'
           sx={{ mb: 3, fontSize: settings.largeText ? '1.2rem' : '1rem' }}
         >
-          🌟 Outstanding! Your accuracy is excellent! Keep up the amazing work!
+          {t('dashboard.motivationAccuracyHigh')}
         </Alert>
       )}
       {stats.accuracy >= 70 && stats.accuracy < 90 && (
@@ -24,7 +26,7 @@ export const MotivationalMessages = ({ stats }: MotivationalMessagesProps) => {
           severity='info'
           sx={{ mb: 3, fontSize: settings.largeText ? '1.2rem' : '1rem' }}
         >
-          👍 Great job! You're doing really well! Keep practicing to improve even more!
+          {t('dashboard.motivationAccuracyMedium')}
         </Alert>
       )}
       {stats.totalMastered >= 20 && (
@@ -32,7 +34,7 @@ export const MotivationalMessages = ({ stats }: MotivationalMessagesProps) => {
           severity='success'
           sx={{ mb: 3, fontSize: settings.largeText ? '1.2rem' : '1rem' }}
         >
-          🏆 Wow! You've mastered {stats.totalMastered} problems! You're becoming a math expert!
+          {t('dashboard.motivationMastered', { count: stats.totalMastered })}
         </Alert>
       )}
     </>

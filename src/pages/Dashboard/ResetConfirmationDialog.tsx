@@ -1,4 +1,5 @@
 import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 type ResetConfirmationDialogProps = {
   confirmReset: boolean;
@@ -11,23 +12,22 @@ export const ResetConfirmationDialog = ({
   setConfirmReset,
   handleReset,
 }: ResetConfirmationDialogProps) => {
+  const { t } = useTranslation();
+
   return (
     <Dialog
       open={confirmReset}
       onClose={() => setConfirmReset(false)}
     >
-      <DialogTitle>⚠️ Reset All Results?</DialogTitle>
+      <DialogTitle>{t('dashboard.resetTitle')}</DialogTitle>
       <DialogContent>
-        <Typography variant='body1'>
-          Are you sure you want to reset all your progress? This will delete all your statistics, achievements, and
-          mastered problems.
-        </Typography>
+        <Typography variant='body1'>{t('dashboard.resetWarning')}</Typography>
         <Typography
           variant='body2'
           color='error'
           sx={{ mt: 2 }}
         >
-          This action cannot be undone!
+          {t('dashboard.resetIrreversible')}
         </Typography>
       </DialogContent>
       <DialogActions>
@@ -35,14 +35,14 @@ export const ResetConfirmationDialog = ({
           onClick={() => setConfirmReset(false)}
           variant='outlined'
         >
-          Cancel
+          {t('common.cancel')}
         </Button>
         <Button
           onClick={handleReset}
           variant='contained'
           color='error'
         >
-          Reset Everything
+          {t('dashboard.resetButton')}
         </Button>
       </DialogActions>
     </Dialog>

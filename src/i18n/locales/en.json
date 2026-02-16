@@ -130,7 +130,15 @@
     "detailedRusults": "Detailed Results",
     "startYourJourney": "Start Your Journey",
     "yourProgressDashboard": "Your Progress Dashboard",
-    "resetAllResults": "Reset All Results"
+    "resetAllResults": "Reset All Results",
+    "noResults": "🎯 Start playing games to see your progress here! Your achievements, statistics, and mastered problems will appear on this dashboard.",
+    "resetTitle": "⚠️ Reset All Results?",
+    "resetWarning": "Are you sure you want to reset all your progress? This will delete all your statistics, achievements, and mastered problems.",
+    "resetIrreversible": "This action cannot be undone!",
+    "resetButton": "Reset Everything",
+    "motivationAccuracyHigh": "🌟 Outstanding! Your accuracy is excellent! Keep up the amazing work!",
+    "motivationAccuracyMedium": "👍 Great job! You're doing really well! Keep practicing to improve even more!",
+    "motivationMastered": "🏆 Wow! You've mastered {{count}} problems! You're becoming a math expert!"
   },
   "home": {
     "welcome": "Welcome to Math Muse!",
@@ -153,7 +161,15 @@
     "correctAnswer": "Correct Answer",
     "timeUp": "Time's Up!",
     "progress": "Progress",
-    "played": "played"
+    "played": "played",
+    "tryAgain": "Try Again!",
+    "correctAnswerWas": "The correct answer was",
+    "keepPracticing": "Keep practicing!",
+    "sessionComplete": "Session Complete!",
+    "bestStreak": "🔥 Best streak: {{streak}} in a row!",
+    "sessionQuestions": "Great job! You completed {{count}} questions!",
+    "findMissingNumber": "Find the missing number:",
+    "theAnswerIs": "The answer is"
   },
   "button": {
     "playNow": "Play Now"

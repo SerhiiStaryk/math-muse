@@ -7,6 +7,7 @@ import {
   Button,
   DialogContentText,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 type IncorrectAnswerDialogProps = {
   open: boolean;
@@ -15,17 +16,19 @@ type IncorrectAnswerDialogProps = {
 };
 
 export const IncorrectAnswerDialog = ({ open, correctAnswer, onClose }: IncorrectAnswerDialogProps) => {
+  const { t } = useTranslation();
+
   return (
     <Dialog
       open={open}
       onClose={onClose}
     >
-      <DialogTitle>Try Again!</DialogTitle>
+      <DialogTitle>{t('game.tryAgain')}</DialogTitle>
       <DialogContent>
         <DialogContentText sx={{ textAlign: 'center' }}>
-          The correct answer was
+          {t('game.correctAnswerWas')}
           <Typography variant='h2'>{correctAnswer}</Typography>
-          Keep practicing!
+          {t('game.keepPracticing')}
         </DialogContentText>
       </DialogContent>
       <DialogActions sx={{ justifyContent: 'center' }}>
@@ -34,7 +37,7 @@ export const IncorrectAnswerDialog = ({ open, correctAnswer, onClose }: Incorrec
           color='primary'
           variant='contained'
         >
-          Next Question
+          {t('common.next')}
         </Button>
       </DialogActions>
     </Dialog>
