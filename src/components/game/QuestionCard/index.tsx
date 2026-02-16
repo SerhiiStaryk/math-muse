@@ -11,7 +11,7 @@ import {
   Alert,
   Grid,
 } from '@mui/material';
-import { AnswerFeedback, CustomNumericKeyboard } from '@/components/ui';
+import { AnswerFeedback, CustomNumericKeyboard } from '../../ui';
 import { useSettings } from '@/context/SettingsContext';
 
 type QuestionCardProps = {

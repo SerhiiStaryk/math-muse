@@ -169,7 +169,23 @@
     "bestStreak": "🔥 Best streak: {{streak}} in a row!",
     "sessionQuestions": "Great job! You completed {{count}} questions!",
     "findMissingNumber": "Find the missing number:",
-    "theAnswerIs": "The answer is"
+    "theAnswerIs": "The answer is",
+    "isEquationCorrect": "Is this equation correct?",
+    "trueChoice": "True",
+    "falseChoice": "False",
+    "findSequenceMissing": "Find the missing number in the sequence:",
+    "hint": "Hint",
+    "greatRecognition": "Great pattern recognition! 🎉",
+    "whatTimeIsIt": "What time does the clock show?",
+    "howMuchTimePassed": "How much time passed?",
+    "addTimeMsg": "Add {{hours}} hour(s) and {{minutes}} minutes",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "whatTimeWillItBe": "What time will it be?",
+    "enterTimeHelper": "Enter hours or hours:minutes (e.g., 2 or 2:30)",
+    "greatTimeTelling": "Great time telling! ⏰",
+    "addingMsg": "Adding {{step}} each time",
+    "subtractingMsg": "Subtracting {{step}} each time"
   },
   "button": {
     "playNow": "Play Now"

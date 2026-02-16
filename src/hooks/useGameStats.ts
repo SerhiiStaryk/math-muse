@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { GameType, type ResultsData, type ResultRecord } from '@/types';
 import { loadResults, clearResults as clearStorageResults } from '@/helpers';
+import { MASTERY_THRESHOLD } from '@/constants';
 
 const DEFAULT_RESULTS: ResultsData = {
   multiply: {},
@@ -50,7 +51,7 @@ export const useGameStats = () => {
         gameStats[gameType as GameType].correct += record.correct;
         gameStats[gameType as GameType].attempts += record.attempts;
 
-        if (record.correct >= 5) {
+        if (record.correct >= MASTERY_THRESHOLD) {
           totalMastered += 1;
           gameStats[gameType as GameType].mastered += 1;
         }

@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Button, Typography, Box, Card, CardContent, useTheme } from '@mui/material';
 import { AnswerFeedback } from '@/components';
-import { getRandomNumber, recordAttempt } from '@/helpers';
+import { useSettings } from '@/context/SettingsContext';
+import { getRandomNumber, recordAttempt, masteredTasks } from '@/helpers';
 import { useHistory } from '@/hooks';
 import { GameType } from '@/types';
-import { COMPARE_MAX_NUMBER, FEEDBACK_DISPLAY_DURATION } from '@/constants';
+import { FEEDBACK_DISPLAY_DURATION } from '@/constants';
 import { useTranslation } from 'react-i18next';
 
 const buttonStyle = {
@@ -15,9 +16,10 @@ const buttonStyle = {
 };
 
 export const ComparePage = () => {
+  const { settings } = useSettings();
   const { t } = useTranslation();
-  const [num1, setNum1] = useState<number>(getRandomNumber(COMPARE_MAX_NUMBER));
-  const [num2, setNum2] = useState<number>(getRandomNumber(COMPARE_MAX_NUMBER));
+  const [num1, setNum1] = useState<number>(0);
+  const [num2, setNum2] = useState<number>(0);
 
   const theme = useTheme();
 
@@ -29,11 +31,27 @@ export const ComparePage = () => {
   });
 
   const generateNewNumbers = useCallback((): void => {
-    setNum1(getRandomNumber(COMPARE_MAX_NUMBER));
-    setNum2(getRandomNumber(COMPARE_MAX_NUMBER));
-    setSelectedSymbol('');
-    setIsCorrect(null);
-  }, [setIsCorrect]);
+    const mastered = masteredTasks(GameType.compare);
+    const maxValue = settings.maxNumber;
+    let attempts = 0;
+    const MAX_ATTEMPTS = 100;
+
+    while (true) {
+      attempts++;
+      const n1 = getRandomNumber(maxValue);
+      const n2 = getRandomNumber(maxValue);
+      const symbol = n1 > n2 ? '>' : n1 < n2 ? '<' : '=';
+      const task = `${n1}${symbol}${n2}`;
+
+      if (mastered.has(task) && attempts < MAX_ATTEMPTS) continue;
+
+      setNum1(n1);
+      setNum2(n2);
+      setSelectedSymbol('');
+      setIsCorrect(null);
+      break;
+    }
+  }, [settings.maxNumber, setIsCorrect]);
 
   const handleAnswer = useCallback(
     (answer: 'greater' | 'less' | 'equal', symbol: string): void => {
@@ -45,12 +63,11 @@ export const ComparePage = () => {
         (num1 === num2 && answer === 'equal');
 
       setIsCorrect(correctAnswer);
-      recordAttempt(`${num1} ${symbol} ${num2}`, correctAnswer, GameType.compare);
+      recordAttempt(`${num1}${symbol}${num2}`, correctAnswer, GameType.compare);
     },
     [num1, num2, setIsCorrect]
   );
 
-  // Auto-generate new numbers after correct answer
   useEffect(() => {
     if (isCorrect === true) {
       const timer = setTimeout(() => {
@@ -59,6 +76,10 @@ export const ComparePage = () => {
       return () => clearTimeout(timer);
     }
   }, [isCorrect, generateNewNumbers]);
+
+  useEffect(() => {
+    generateNewNumbers();
+  }, [generateNewNumbers]);
 
   return (
     <Box>

@@ -9,6 +9,8 @@ import {
   OverallStatisticsSection,
   AchievementBadgeSection,
 } from '@/components';
+import { DashboardTitle } from './DashboardTitle';
+import { NoResults } from './NoResults';
 
 export const DashboardPage = () => {
   const { results, stats, clearResults } = useGameStats();

@@ -3,12 +3,12 @@ import { Box, Typography, Card, CardContent, TextField, Stack, Chip, Alert } fro
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
-import { recordAttempt } from '@/helpers';
+import { recordAttempt, masteredTasks } from '@/helpers';
 import { GameType } from '@/types';
 import { CustomNumericKeyboard } from '@/components';
 
 type Position = 'first' | 'second' | 'result';
-type Operation = '+' | '-' | '×' | '÷';
+type Operation = '+' | '-' | 'x' | '÷';
 
 interface Question {
   num1: number;
@@ -29,46 +29,57 @@ export const MissingNumberPage = () => {
   const [streak, setStreak] = useState(0);
 
   const generateQuestion = useCallback(() => {
-    const operations: Operation[] = ['+', '-', '×', '÷'];
-    const operation = operations[Math.floor(Math.random() * operations.length)];
-    const positions: Position[] = ['first', 'second', 'result'];
-    const missingPosition = positions[Math.floor(Math.random() * positions.length)];
+    const mastered = masteredTasks(GameType.missingNumber);
+    let attemptsCount = 0;
+    const MAX_ATTEMPTS = 100;
 
-    let num1: number, num2: number, result: number;
+    while (true) {
+      attemptsCount++;
+      const operations: Operation[] = ['+', '-', 'x', '÷'];
+      const operation = operations[Math.floor(Math.random() * operations.length)];
+      const positions: Position[] = ['first', 'second', 'result'];
+      const missingPosition = positions[Math.floor(Math.random() * positions.length)];
 
-    switch (operation) {
-      case '+':
-        num1 = Math.floor(Math.random() * settings.maxMissingNumber) + 1;
-        num2 = Math.floor(Math.random() * settings.maxMissingNumber) + 1;
-        result = num1 + num2;
-        break;
-      case '-':
-        result = Math.floor(Math.random() * settings.maxMissingNumber) + 1;
-        num2 = Math.floor(Math.random() * result) + 1;
-        num1 = result + num2;
-        break;
-      case '×':
-        num1 = Math.floor(Math.random() * 10) + 1;
-        num2 = Math.floor(Math.random() * 10) + 1;
-        result = num1 * num2;
-        break;
-      case '÷':
-        num2 = Math.floor(Math.random() * 10) + 1;
-        result = Math.floor(Math.random() * 10) + 1;
-        num1 = num2 * result;
-        break;
-      default:
-        num1 = 0;
-        num2 = 0;
-        result = 0;
+      let num1: number, num2: number, result: number;
+
+      switch (operation) {
+        case '+':
+          num1 = Math.floor(Math.random() * settings.maxMissingNumber) + 1;
+          num2 = Math.floor(Math.random() * settings.maxMissingNumber) + 1;
+          result = num1 + num2;
+          break;
+        case '-':
+          result = Math.floor(Math.random() * settings.maxMissingNumber) + 1;
+          num2 = Math.floor(Math.random() * result) + 1;
+          num1 = result + num2;
+          break;
+        case 'x':
+          num1 = Math.floor(Math.random() * settings.maxMultiplicationTable) + 1;
+          num2 = Math.floor(Math.random() * settings.maxMultiplicationTable) + 1;
+          result = num1 * num2;
+          break;
+        case '÷':
+          num2 = Math.floor(Math.random() * settings.maxMultiplicationTable) + 1;
+          result = Math.floor(Math.random() * 10) + 1; // Keeping quotient small for easier division
+          num1 = num2 * result;
+          break;
+        default:
+          num1 = 0;
+          num2 = 0;
+          result = 0;
+      }
+
+      const task = `${num1}${operation}${num2}`;
+      if (mastered.has(task) && attemptsCount < MAX_ATTEMPTS) continue;
+
+      const answer = missingPosition === 'first' ? num1 : missingPosition === 'second' ? num2 : result;
+
+      setQuestion({ num1, num2, operation, missingPosition, answer });
+      setUserAnswer('');
+      setFeedback(null);
+      break;
     }
-
-    const answer = missingPosition === 'first' ? num1 : missingPosition === 'second' ? num2 : result;
-
-    setQuestion({ num1, num2, operation, missingPosition, answer });
-    setUserAnswer('');
-    setFeedback(null);
-  }, [settings.maxMissingNumber]);
+  }, [settings.maxMissingNumber, settings.maxMultiplicationTable]);
 
   useEffect(() => {
     generateQuestion();
@@ -82,7 +93,7 @@ export const MissingNumberPage = () => {
     setAttempts(prev => prev + 1);
 
     // Record the attempt for statistics
-    const taskDescription = `${question.num1} ${question.operation} ${question.num2}`;
+    const taskDescription = `${question.num1}${question.operation}${question.num2}`;
     recordAttempt(taskDescription, isCorrect, GameType.missingNumber);
 
     if (isCorrect) {
@@ -107,7 +118,7 @@ export const MissingNumberPage = () => {
 
     const { num1, num2, operation, missingPosition } = question;
     const result =
-      operation === '+' ? num1 + num2 : operation === '-' ? num1 - num2 : operation === '×' ? num1 * num2 : num1 / num2;
+      operation === '+' ? num1 + num2 : operation === '-' ? num1 - num2 : operation === 'x' ? num1 * num2 : num1 / num2;
 
     const size = { xs: 60, sm: 100 };
     const fontSize = { xs: '3rem', sm: '4rem' };

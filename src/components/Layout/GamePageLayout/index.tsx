@@ -1,7 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import { QuestionCard, GameProgress } from '@/components';
-import { IncorrectAnswerDialog } from '@/components/IncorrectAnswerDialog';
-import { SessionCompleteDialog } from '@/components/SessionCompleteDialog';
+import { QuestionCard, GameProgress, IncorrectAnswerDialog, SessionCompleteDialog } from '../../game';
 import { useGameSession } from '@/hooks';
 
 interface GamePageLayoutProps {

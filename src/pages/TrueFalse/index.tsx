@@ -6,10 +6,10 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
-import { recordAttempt } from '@/helpers';
+import { recordAttempt, masteredTasks } from '@/helpers';
 import { GameType } from '@/types';
 
-type Operation = '+' | '-' | '×' | '÷';
+type Operation = '+' | '-' | 'x' | '÷';
 
 interface Question {
   num1: number;
@@ -30,53 +30,63 @@ export const TrueFalsePage = () => {
   const [streak, setStreak] = useState(0);
 
   const generateQuestion = useCallback(() => {
-    const operations: Operation[] = ['+', '-', '×', '÷'];
-    const operation = operations[Math.floor(Math.random() * operations.length)];
+    const mastered = masteredTasks(GameType.trueFalse);
+    let attemptsCount = 0;
+    const MAX_ATTEMPTS = 100;
 
-    let num1: number, num2: number, correctResult: number;
+    while (true) {
+      attemptsCount++;
+      const operations: Operation[] = ['+', '-', 'x', '÷'];
+      const operation = operations[Math.floor(Math.random() * operations.length)];
 
-    switch (operation) {
-      case '+':
-        num1 = Math.floor(Math.random() * settings.maxTrueFalseNumber) + 1;
-        num2 = Math.floor(Math.random() * settings.maxTrueFalseNumber) + 1;
-        correctResult = num1 + num2;
-        break;
-      case '-':
-        num1 = Math.floor(Math.random() * settings.maxTrueFalseNumber) + 1;
-        num2 = Math.floor(Math.random() * num1) + 1;
-        correctResult = num1 - num2;
-        break;
-      case '×':
-        num1 = Math.floor(Math.random() * 12) + 1;
-        num2 = Math.floor(Math.random() * 12) + 1;
-        correctResult = num1 * num2;
-        break;
-      case '÷':
-        num2 = Math.floor(Math.random() * 12) + 1;
-        correctResult = Math.floor(Math.random() * 12) + 1;
-        num1 = num2 * correctResult;
-        break;
-      default:
-        num1 = 0;
-        num2 = 0;
-        correctResult = 0;
+      let num1: number, num2: number, correctResult: number;
+
+      switch (operation) {
+        case '+':
+          num1 = Math.floor(Math.random() * settings.maxTrueFalseNumber) + 1;
+          num2 = Math.floor(Math.random() * settings.maxTrueFalseNumber) + 1;
+          correctResult = num1 + num2;
+          break;
+        case '-':
+          num1 = Math.floor(Math.random() * settings.maxTrueFalseNumber) + 1;
+          num2 = Math.floor(Math.random() * num1) + 1;
+          correctResult = num1 - num2;
+          break;
+        case 'x':
+          num1 = Math.floor(Math.random() * 12) + 1;
+          num2 = Math.floor(Math.random() * 12) + 1;
+          correctResult = num1 * num2;
+          break;
+        case '÷':
+          num2 = Math.floor(Math.random() * 12) + 1;
+          correctResult = Math.floor(Math.random() * 12) + 1;
+          num1 = num2 * correctResult;
+          break;
+        default:
+          num1 = 0;
+          num2 = 0;
+          correctResult = 0;
+      }
+
+      const showCorrectAnswer = Math.random() > 0.5;
+      const displayedResult = showCorrectAnswer
+        ? correctResult
+        : correctResult + (Math.random() > 0.5 ? Math.floor(Math.random() * 5) + 1 : -Math.floor(Math.random() * 5) - 1);
+
+      const task = `${num1}${operation}${num2}=${displayedResult}`;
+      if (mastered.has(task) && attemptsCount < MAX_ATTEMPTS) continue;
+
+      setQuestion({
+        num1,
+        num2,
+        operation,
+        displayedResult,
+        correctResult,
+        isCorrect: showCorrectAnswer,
+      });
+      setFeedback(null);
+      break;
     }
-
-    // 50% chance to show correct answer, 50% to show wrong answer
-    const showCorrectAnswer = Math.random() > 0.5;
-    const displayedResult = showCorrectAnswer
-      ? correctResult
-      : correctResult + (Math.random() > 0.5 ? Math.floor(Math.random() * 5) + 1 : -Math.floor(Math.random() * 5) - 1);
-
-    setQuestion({
-      num1,
-      num2,
-      operation,
-      displayedResult,
-      correctResult,
-      isCorrect: showCorrectAnswer,
-    });
-    setFeedback(null);
   }, [settings.maxTrueFalseNumber]);
 
   useEffect(() => {
@@ -91,7 +101,7 @@ export const TrueFalsePage = () => {
     setAttempts(prev => prev + 1);
 
     // Record the attempt for statistics
-    const taskDescription = `${question.num1} ${question.operation} ${question.num2} = ${question.displayedResult}`;
+    const taskDescription = `${question.num1}${question.operation}${question.num2}=${question.displayedResult}`;
     recordAttempt(taskDescription, isCorrect, GameType.trueFalse);
 
     if (isCorrect) {
@@ -143,7 +153,7 @@ export const TrueFalsePage = () => {
               gutterBottom
               color='text.secondary'
             >
-              Is this equation correct?
+              {t('game.isEquationCorrect')}
             </Typography>
 
             <Box
@@ -214,7 +224,7 @@ export const TrueFalsePage = () => {
                     fontSize: '1.2rem',
                   }}
                 >
-                  True ✓
+                  {t('game.trueChoice')} ✓
                 </Button>
                 <Button
                   variant='contained'
@@ -228,7 +238,7 @@ export const TrueFalsePage = () => {
                     fontSize: '1.2rem',
                   }}
                 >
-                  False ✗
+                  {t('game.falseChoice')} ✗
                 </Button>
               </Stack>
             )}
@@ -249,7 +259,7 @@ export const TrueFalsePage = () => {
                 sx={{ mt: 3 }}
                 icon={<CancelIcon />}
               >
-                {t('feedback.incorrect')} The correct answer is {question.correctResult}
+                {t('feedback.incorrect')} {t('game.correctAnswerWas')} {question.correctResult}
               </Alert>
             )}
           </CardContent>

@@ -1,6 +1,7 @@
-import { createTheme, Theme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 import baseTheme from './index';
-import { Settings } from '@/helpers';
+import type { Settings } from '@/helpers';
 
 // Define a reusable type for styleOverrides
 type StyleOverrides = {

@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Box, Typography, Button, Card, CardContent, Stack, Chip, Alert, TextField } from '@mui/material';
+import { Box, Typography, Card, CardContent, Stack, Chip, Alert, TextField } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-// import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
-import { recordAttempt } from '@/helpers';
+import { recordAttempt, masteredTasks } from '@/helpers';
 import { GameType } from '@/types';
+import { CustomNumericKeyboard } from '@/components';
 
 type QuestionType = 'read-clock' | 'time-difference' | 'add-time';
 
@@ -99,78 +99,90 @@ const AnalogClock = ({ hours, minutes, size = 200 }: { hours: number; minutes: n
 };
 
 export const TimeChallengePage = () => {
-  // const { settings } = useSettings();
   const { t } = useTranslation();
   const [question, setQuestion] = useState<TimeQuestion | null>(null);
   const [userAnswer, setUserAnswer] = useState('');
   const [userHours, setUserHours] = useState('');
   const [userMinutes, setUserMinutes] = useState('');
+  const [activeField, setActiveField] = useState<'hours' | 'minutes' | 'answer'>('hours');
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const [score, setScore] = useState(0);
   const [attempts, setAttempts] = useState(0);
   const [streak, setStreak] = useState(0);
 
   const generateQuestion = useCallback(() => {
-    const types: QuestionType[] = ['read-clock', 'time-difference', 'add-time'];
-    const type = types[Math.floor(Math.random() * types.length)];
+    const mastered = masteredTasks(GameType.timeChallenge);
+    let attemptsCount = 0;
+    const MAX_ATTEMPTS = 100;
 
-    let hours: number, minutes: number;
-    let hours2: number | undefined, minutes2: number | undefined;
-    let answer: string, displayText: string;
+    while (true) {
+      attemptsCount++;
+      const types: QuestionType[] = ['read-clock', 'time-difference', 'add-time'];
+      const type = types[Math.floor(Math.random() * types.length)];
 
-    switch (type) {
-      case 'read-clock':
-        hours = Math.floor(Math.random() * 12) + 1;
-        minutes = Math.floor(Math.random() * 12) * 5;
-        answer = `${hours}:${minutes.toString().padStart(2, '0')}`;
-        displayText = 'What time does the clock show?';
-        break;
+      let hours: number, minutes: number;
+      let hours2: number | undefined, minutes2: number | undefined;
+      let answer: string, displayText: string;
 
-      case 'time-difference':
-        hours = Math.floor(Math.random() * 12) + 1;
-        minutes = Math.floor(Math.random() * 12) * 5;
-        const addHours = Math.floor(Math.random() * 3) + 1;
-        const addMinutes = Math.floor(Math.random() * 6) * 10;
+      switch (type) {
+        case 'read-clock':
+          hours = Math.floor(Math.random() * 12) + 1;
+          minutes = Math.floor(Math.random() * 12) * 5;
+          answer = `${hours}:${minutes.toString().padStart(2, '0')}`;
+          displayText = t('game.whatTimeIsIt');
+          break;
 
-        const totalMinutes = hours * 60 + minutes + addHours * 60 + addMinutes;
-        hours2 = Math.floor((totalMinutes / 60) % 12) || 12;
-        minutes2 = totalMinutes % 60;
+        case 'time-difference':
+          hours = Math.floor(Math.random() * 12) + 1;
+          minutes = Math.floor(Math.random() * 12) * 5;
+          const addHours = Math.floor(Math.random() * 3) + 1;
+          const addMinutes = Math.floor(Math.random() * 6) * 10;
 
-        const diffHours = Math.floor((addHours * 60 + addMinutes) / 60);
-        const diffMinutes = (addHours * 60 + addMinutes) % 60;
-        answer = diffMinutes === 0 ? `${diffHours}` : `${diffHours}:${diffMinutes.toString().padStart(2, '0')}`;
-        displayText = 'How much time passed?';
-        break;
+          const totalMinutes = hours * 60 + minutes + addHours * 60 + addMinutes;
+          hours2 = Math.floor((totalMinutes / 60) % 12) || 12;
+          minutes2 = totalMinutes % 60;
 
-      case 'add-time':
-        hours = Math.floor(Math.random() * 12) + 1;
-        minutes = Math.floor(Math.random() * 12) * 5;
-        const hoursToAdd = Math.floor(Math.random() * 2) + 1;
-        const minutesToAdd = Math.floor(Math.random() * 6) * 10;
+          const diffHours = Math.floor((addHours * 60 + addMinutes) / 60);
+          const diffMinutes = (addHours * 60 + addMinutes) % 60;
+          answer = diffMinutes === 0 ? `${diffHours}` : `${diffHours}:${diffMinutes.toString().padStart(2, '0')}`;
+          displayText = t('game.howMuchTimePassed');
+          break;
 
-        const newTotalMinutes = hours * 60 + minutes + hoursToAdd * 60 + minutesToAdd;
-        const newHours = Math.floor((newTotalMinutes / 60) % 12) || 12;
-        const newMinutes = newTotalMinutes % 60;
+        case 'add-time':
+          hours = Math.floor(Math.random() * 12) + 1;
+          minutes = Math.floor(Math.random() * 12) * 5;
+          const hoursToAdd = Math.floor(Math.random() * 2) + 1;
+          const minutesToAdd = Math.floor(Math.random() * 6) * 10;
 
-        answer = `${newHours}:${newMinutes.toString().padStart(2, '0')}`;
-        displayText = `Add ${hoursToAdd} hour${hoursToAdd > 1 ? 's' : ''} and ${minutesToAdd} minutes`;
-        hours2 = hoursToAdd;
-        minutes2 = minutesToAdd;
-        break;
+          const newTotalMinutes = hours * 60 + minutes + hoursToAdd * 60 + minutesToAdd;
+          const newHours = Math.floor((newTotalMinutes / 60) % 12) || 12;
+          const newMinutes = newTotalMinutes % 60;
 
-      default:
-        hours = 3;
-        minutes = 0;
-        answer = '3:00';
-        displayText = 'What time does the clock show?';
+          answer = `${newHours}:${newMinutes.toString().padStart(2, '0')}`;
+          displayText = t('game.addTimeMsg', { hours: hoursToAdd, minutes: minutesToAdd });
+          hours2 = hoursToAdd;
+          minutes2 = minutesToAdd;
+          break;
+
+        default:
+          hours = 3;
+          minutes = 0;
+          answer = '3:00';
+          displayText = t('game.whatTimeIsIt');
+      }
+
+      const task = `${type}: ${hours}:${minutes} -> ${hours2}:${minutes2}`;
+      if (mastered.has(task) && attemptsCount < MAX_ATTEMPTS) continue;
+
+      setQuestion({ type, hours, minutes, hours2, minutes2, answer, displayText });
+      setUserAnswer('');
+      setUserHours('');
+      setUserMinutes('');
+      setActiveField(type === 'time-difference' ? 'answer' : 'hours');
+      setFeedback(null);
+      break;
     }
-
-    setQuestion({ type, hours, minutes, hours2, minutes2, answer, displayText });
-    setUserAnswer('');
-    setUserHours('');
-    setUserMinutes('');
-    setFeedback(null);
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     generateQuestion();
@@ -192,7 +204,7 @@ export const TimeChallengePage = () => {
     setFeedback(isCorrect ? 'correct' : 'incorrect');
     setAttempts(prev => prev + 1);
 
-    const taskDescription = `${question.type}: ${question.displayText}`;
+    const taskDescription = `${question.type}: ${question.hours}:${question.minutes} -> ${question.hours2}:${question.minutes2}`;
     recordAttempt(taskDescription, isCorrect, GameType.timeChallenge);
 
     if (isCorrect) {
@@ -204,14 +216,25 @@ export const TimeChallengePage = () => {
     }
   };
 
-  // Коректні типи для подій
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') handleSubmit();
+  const handleInput = (num: number) => {
+    if (activeField === 'hours') {
+      if (userHours.length < 2) setUserHours(prev => prev + num.toString());
+    } else if (activeField === 'minutes') {
+      if (userMinutes.length < 2) setUserMinutes(prev => prev + num.toString());
+    } else {
+      if (userAnswer.length < 5) setUserAnswer(prev => prev + num.toString());
+    }
   };
 
-  const handleHoursChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserHours(e.target.value);
-  const handleMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserMinutes(e.target.value);
-  const handleAnswerChange = (e: React.ChangeEvent<HTMLInputElement>) => setUserAnswer(e.target.value);
+  const handleBackspace = () => {
+    if (activeField === 'hours') {
+      setUserHours(prev => prev.slice(0, -1));
+    } else if (activeField === 'minutes') {
+      setUserMinutes(prev => prev.slice(0, -1));
+    } else {
+      setUserAnswer(prev => prev.slice(0, -1));
+    }
+  };
 
   return (
     <Box sx={{ maxWidth: 900, mx: 'auto' }}>
@@ -263,45 +286,43 @@ export const TimeChallengePage = () => {
                   minutes={question.minutes}
                   size={220}
                 />
-                {question.type === 'time-difference' && question.hours2 !== undefined && (
+                {question.type === 'time-difference' && (
                   <Typography
                     variant='caption'
                     color='text.secondary'
                     sx={{ display: 'block', mt: 1 }}
                   >
-                    Start Time
+                    {t('game.startTime')}
                   </Typography>
                 )}
               </Box>
 
-              {question.type === 'time-difference' &&
-                question.hours2 !== undefined &&
-                question.minutes2 !== undefined && (
-                  <>
+              {question.type === 'time-difference' && (
+                <>
+                  <Typography
+                    variant='h3'
+                    color='primary.main'
+                  >
+                    →
+                  </Typography>
+                  <Box>
+                    <AnalogClock
+                      hours={question.hours2 || 0}
+                      minutes={question.minutes2 || 0}
+                      size={220}
+                    />
                     <Typography
-                      variant='h3'
-                      color='primary.main'
+                      variant='caption'
+                      color='text.secondary'
+                      sx={{ display: 'block', mt: 1 }}
                     >
-                      →
+                      {t('game.endTime')}
                     </Typography>
-                    <Box>
-                      <AnalogClock
-                        hours={question.hours2}
-                        minutes={question.minutes2}
-                        size={220}
-                      />
-                      <Typography
-                        variant='caption'
-                        color='text.secondary'
-                        sx={{ display: 'block', mt: 1 }}
-                      >
-                        End Time
-                      </Typography>
-                    </Box>
-                  </>
-                )}
+                  </Box>
+                </>
+              )}
 
-              {question.type === 'add-time' && question.hours2 !== undefined && question.minutes2 !== undefined && (
+              {question.type === 'add-time' && (
                 <Box sx={{ textAlign: 'center' }}>
                   <Typography
                     variant='h5'
@@ -320,7 +341,7 @@ export const TimeChallengePage = () => {
                     variant='body2'
                     color='text.secondary'
                   >
-                    What time will it be?
+                    {t('game.whatTimeWillItBe')}
                   </Typography>
                 </Box>
               )}
@@ -330,13 +351,13 @@ export const TimeChallengePage = () => {
               {question.type === 'time-difference' ? (
                 <TextField
                   value={userAnswer}
-                  onChange={handleAnswerChange}
-                  onKeyPress={handleKeyPress}
-                  placeholder='Hours or H:MM'
+                  placeholder='H:MM'
                   autoFocus
+                  slotProps={{ htmlInput: { readOnly: true } }}
                   disabled={feedback === 'correct'}
                   sx={{ '& input': { fontSize: '2rem', textAlign: 'center', fontWeight: 700 }, width: 250 }}
-                  helperText='Enter hours or hours:minutes (e.g., 2 or 2:30)'
+                  helperText={t('game.enterTimeHelper')}
+                  onClick={() => setActiveField('answer')}
                 />
               ) : (
                 <Stack
@@ -346,18 +367,17 @@ export const TimeChallengePage = () => {
                 >
                   <TextField
                     value={userHours}
-                    onChange={handleHoursChange}
-                    onKeyPress={handleKeyPress}
-                    type='number'
                     placeholder='H'
                     autoFocus
+                    slotProps={{ htmlInput: { readOnly: true } }}
                     disabled={feedback === 'correct'}
-                    inputProps={{ min: 1, max: 12 }}
+                    onClick={() => setActiveField('hours')}
                     sx={{
-                      '& input': { fontSize: '2rem', textAlign: 'center', fontWeight: 700, MozAppearance: 'textfield' },
-                      '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
-                        WebkitAppearance: 'none',
-                        margin: 0,
+                      '& input': {
+                        fontSize: '2rem',
+                        textAlign: 'center',
+                        fontWeight: 700,
+                        backgroundColor: activeField === 'hours' ? 'action.selected' : 'transparent',
                       },
                       width: 100,
                     }}
@@ -370,17 +390,16 @@ export const TimeChallengePage = () => {
                   </Typography>
                   <TextField
                     value={userMinutes}
-                    onChange={handleMinutesChange}
-                    onKeyPress={handleKeyPress}
-                    type='number'
                     placeholder='MM'
+                    slotProps={{ htmlInput: { readOnly: true } }}
                     disabled={feedback === 'correct'}
-                    inputProps={{ min: 0, max: 59 }}
+                    onClick={() => setActiveField('minutes')}
                     sx={{
-                      '& input': { fontSize: '2rem', textAlign: 'center', fontWeight: 700, MozAppearance: 'textfield' },
-                      '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
-                        WebkitAppearance: 'none',
-                        margin: 0,
+                      '& input': {
+                        fontSize: '2rem',
+                        textAlign: 'center',
+                        fontWeight: 700,
+                        backgroundColor: activeField === 'minutes' ? 'action.selected' : 'transparent',
                       },
                       width: 100,
                     }}
@@ -388,15 +407,15 @@ export const TimeChallengePage = () => {
                 </Stack>
               )}
 
-              <Button
-                variant='contained'
-                size='large'
-                onClick={handleSubmit}
-                disabled={feedback === 'correct'}
-                sx={{ minWidth: 200 }}
-              >
-                {t('common.submit')}
-              </Button>
+              <Box sx={{ mt: 2, width: '100%', maxWidth: 400 }}>
+                <CustomNumericKeyboard
+                  onInput={handleInput}
+                  onBackspace={handleBackspace}
+                  onToggleSign={() => {}}
+                  onSubmit={handleSubmit}
+                  disabled={feedback === 'correct'}
+                />
+              </Box>
             </Box>
 
             {feedback === 'correct' && (
@@ -404,7 +423,7 @@ export const TimeChallengePage = () => {
                 severity='success'
                 sx={{ mt: 3 }}
               >
-                {t('feedback.correct')} Great time telling! ⏰
+                {t('feedback.correct')} {t('game.greatTimeTelling')}
               </Alert>
             )}
             {feedback === 'incorrect' && (
@@ -412,7 +431,7 @@ export const TimeChallengePage = () => {
                 severity='error'
                 sx={{ mt: 3 }}
               >
-                {t('feedback.incorrect')} The correct answer is {question.answer}
+                {t('feedback.incorrect')} {t('game.correctAnswerWas')} {question.answer}
               </Alert>
             )}
           </CardContent>

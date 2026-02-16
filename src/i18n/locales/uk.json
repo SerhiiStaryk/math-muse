@@ -169,7 +169,23 @@
     "bestStreak": "🔥 Найкраща серія: {{streak}} поспіль!",
     "sessionQuestions": "Чудова робота! Ти відповів на {{count}} питань!",
     "findMissingNumber": "Знайди пропущене число:",
-    "theAnswerIs": "Відповідь:"
+    "theAnswerIs": "Відповідь:",
+    "isEquationCorrect": "Цей вираз правильний?",
+    "trueChoice": "Правда",
+    "falseChoice": "Неправда",
+    "findSequenceMissing": "Знайди пропущене число в послідовності:",
+    "hint": "Підказка",
+    "greatRecognition": "Чудове розпізнавання закономірностей! 🎉",
+    "whatTimeIsIt": "Котру годину показує годинник?",
+    "howMuchTimePassed": "Скільки часу минуло?",
+    "addTimeMsg": "Додай {{hours}} год. та {{minutes}} хв.",
+    "startTime": "Початок",
+    "endTime": "Кінець",
+    "whatTimeWillItBe": "Котра година буде?",
+    "enterTimeHelper": "Введи години або години:хвилини (напр., 2 або 2:30)",
+    "greatTimeTelling": "Чудове знання часу! ⏰",
+    "addingMsg": "Додаємо {{step}} кожного разу",
+    "subtractingMsg": "Віднімаємо {{step}} кожного разу"
   },
   "button": {
     "playNow": "Почати Гру"

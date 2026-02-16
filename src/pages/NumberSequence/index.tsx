@@ -3,7 +3,7 @@ import { Box, Typography, Card, CardContent, TextField, Stack, Chip, Alert, Grid
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
-import { recordAttempt } from '@/helpers';
+import { recordAttempt, masteredTasks } from '@/helpers';
 import { GameType } from '@/types';
 import { CustomNumericKeyboard } from '@/components';
 
@@ -25,44 +25,42 @@ export const NumberSequencePage = () => {
   const [streak, setStreak] = useState(0);
 
   const generateQuestion = useCallback(() => {
-    // Generate step (difference between numbers)
-    const steps = [1, 2, 3, 5, 10, -1, -2, -3, -5];
-    const step = steps[Math.floor(Math.random() * steps.length)];
+    const mastered = masteredTasks(GameType.numberSequence);
+    let attemptsCount = 0;
+    const MAX_ATTEMPTS = 100;
 
-    // Generate starting number
-    const maxStart = Math.min(settings.maxSequenceNumber, 50);
-    const start = Math.floor(Math.random() * maxStart) + 1;
+    while (true) {
+      attemptsCount++;
+      // Generate step (difference between numbers)
+      const steps = [1, 2, 3, 5, 10, -1, -2, -3, -5];
+      const step = steps[Math.floor(Math.random() * steps.length)];
 
-    // Generate sequence based on settings
-    const length = settings.sequenceLength || 5;
-    const fullSequence = Array.from({ length }, (_, i) => start + step * i);
+      // Generate starting number
+      const maxStart = Math.min(settings.maxSequenceNumber, 50);
+      const start = Math.floor(Math.random() * maxStart) + 1;
 
-    // Make sure all numbers are positive and within reasonable range
-    if (fullSequence.some(n => n < 0 || n > settings.maxSequenceNumber)) {
-      // Try again with a different start
-      const newStart = step > 0 ? Math.floor(Math.random() * 20) + 1 : Math.floor(Math.random() * 50) + 50;
-      const newSequence = Array.from({ length }, (_, i) => newStart + step * i);
+      // Generate sequence based on settings
+      const length = settings.sequenceLength || 5;
+      const fullSequence = Array.from({ length }, (_, i) => start + step * i);
 
-      if (newSequence.every(n => n >= 0 && n <= settings.maxSequenceNumber)) {
-        const missingIndex = Math.floor(Math.random() * 3) + 1; // Don't hide first or last
-        const answer = newSequence[missingIndex];
-        const sequence = newSequence.map((n, i) => (i === missingIndex ? null : n));
-
-        setQuestion({ sequence, step, answer, missingIndex });
-        setUserAnswer('');
-        setFeedback(null);
-        return;
+      // Make sure all numbers are positive and within reasonable range
+      if (fullSequence.some(n => n < 0 || n > settings.maxSequenceNumber)) {
+        if (attemptsCount < MAX_ATTEMPTS) continue;
       }
+
+      // Choose which number to hide (not first or last to make it easier)
+      const missingIndex = Math.floor(Math.random() * (length - 2)) + 1;
+      const answer = fullSequence[missingIndex];
+      const sequence = fullSequence.map((n, i) => (i === missingIndex ? null : n));
+
+      const task = `Step ${step}, Start ${start}, Pos ${missingIndex}`;
+      if (mastered.has(task) && attemptsCount < MAX_ATTEMPTS) continue;
+
+      setQuestion({ sequence, step, answer, missingIndex });
+      setUserAnswer('');
+      setFeedback(null);
+      break;
     }
-
-    // Choose which number to hide (not first or last to make it easier)
-    const missingIndex = Math.floor(Math.random() * 3) + 1;
-    const answer = fullSequence[missingIndex];
-    const sequence = fullSequence.map((n, i) => (i === missingIndex ? null : n));
-
-    setQuestion({ sequence, step, answer, missingIndex });
-    setUserAnswer('');
-    setFeedback(null);
   }, [settings.maxSequenceNumber, settings.sequenceLength]);
 
   useEffect(() => {
@@ -77,7 +75,7 @@ export const NumberSequencePage = () => {
     setAttempts(prev => prev + 1);
 
     // Record the attempt for statistics
-    const taskDescription = `Sequence with step ${question.step > 0 ? '+' : ''}${question.step}`;
+    const taskDescription = `Step ${question.step}, Start ${question.sequence[0] || question.answer}, Pos ${question.missingIndex}`;
     recordAttempt(taskDescription, isCorrect, GameType.numberSequence);
 
     if (isCorrect) {
@@ -100,9 +98,9 @@ export const NumberSequencePage = () => {
   const getPatternHint = () => {
     if (!question) return '';
     if (question.step > 0) {
-      return `Adding ${question.step} each time`;
+      return t('game.addingMsg', { step: question.step });
     } else {
-      return `Subtracting ${Math.abs(question.step)} each time`;
+      return t('game.subtractingMsg', { step: Math.abs(question.step) });
     }
   };
 
@@ -139,7 +137,7 @@ export const NumberSequencePage = () => {
               gutterBottom
               color='text.secondary'
             >
-              Find the missing number in the sequence:
+              {t('game.findSequenceMissing')}
             </Typography>
 
             <Grid
@@ -199,7 +197,7 @@ export const NumberSequencePage = () => {
                 color='text.secondary'
                 sx={{ mb: 3, fontStyle: 'italic' }}
               >
-                💡 Hint: {getPatternHint()}
+                💡 {t('game.hint')}: {getPatternHint()}
               </Typography>
             )}
 
@@ -263,7 +261,7 @@ export const NumberSequencePage = () => {
                 severity='success'
                 sx={{ mt: 3 }}
               >
-                {t('feedback.correct')} Great pattern recognition! 🎉
+                {t('feedback.correct')} {t('game.greatRecognition')}
               </Alert>
             )}
 
@@ -272,7 +270,7 @@ export const NumberSequencePage = () => {
                 severity='error'
                 sx={{ mt: 3 }}
               >
-                {t('feedback.incorrect')} The answer is {question.answer}. {getPatternHint()}.
+                {t('feedback.incorrect')} {t('game.theAnswerIs')} {question.answer}. {getPatternHint()}.
               </Alert>
             )}
           </CardContent>
