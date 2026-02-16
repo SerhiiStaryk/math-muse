@@ -15,6 +15,7 @@ export const GameType = {
   trueFalse: 'trueFalse',
   numberSequence: 'numberSequence',
   timeChallenge: 'timeChallenge',
+  unitConverter: 'unitConverter',
 } as const;
 
 export type GameType = (typeof GameType)[keyof typeof GameType];

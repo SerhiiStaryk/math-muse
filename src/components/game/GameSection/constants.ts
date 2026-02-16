@@ -8,6 +8,7 @@ import {
   PATH_TRUE_FALSE,
   PATH_NUMBER_SEQUENCE,
   PATH_TIME_CHALLENGE,
+  PATH_UNIT_CONVERTER,
 } from '@/constants';
 import type { GameCardType } from '@/types';
 import { GameType } from '@/types';
@@ -84,5 +85,13 @@ export const GAME_CARDS: GameCardType[] = [
     title: 'games.timeChallenge',
     gameType: GameType.timeChallenge,
     description: 'games.timeChallengeDescription',
+  },
+  {
+    emoji: '📏',
+    color: '#3498DB',
+    path: PATH_UNIT_CONVERTER,
+    title: 'games.unitConverter',
+    gameType: GameType.unitConverter,
+    description: 'games.unitConverterDescription',
   },
 ];

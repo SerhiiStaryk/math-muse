@@ -3,6 +3,19 @@
     "name": "Math Muse",
     "tagline": "Веселі математичні ігри"
   },
+  "units": {
+    "km": "км",
+    "m": "м",
+    "cm": "см",
+    "mm": "мм",
+    "dm": "дм",
+    "t": "т",
+    "q": "ц",
+    "kg": "кг",
+    "g": "г",
+    "l": "л",
+    "ml": "мл"
+  },
   "nav": {
     "home": "Головна",
     "dashboard": "Панель прогресу",
@@ -29,7 +42,9 @@
     "numberSequence": "Числова послідовність",
     "numberSequenceDescription": "Впізнай закономірність і доповни послідовність",
     "timeChallenge": "Часовий виклик",
-    "timeChallengeDescription": "Читай годинники та опановуй обчислення часу"
+    "timeChallengeDescription": "Читай годинники та опановуй обчислення часу",
+    "unitConverter": "Конвертер Одиниць",
+    "unitConverterDescription": "Переводь одиниці вимірювання"
   },
   "common": {
     "score": "Рахунок",

@@ -11,6 +11,7 @@ import {
   PATH_TRUE_FALSE,
   PATH_NUMBER_SEQUENCE,
   PATH_TIME_CHALLENGE,
+  PATH_UNIT_CONVERTER,
 } from '@/constants';
 import HomeIcon from '@mui/icons-material/Home';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
@@ -24,6 +25,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
 export interface NavItem {
   path: string;
@@ -119,6 +121,12 @@ export const navGroups: NavGroup[] = [
         title: 'Time Challenge',
         translationKey: 'games.timeChallenge',
         icon: AccessTimeIcon,
+      },
+      {
+        path: PATH_UNIT_CONVERTER,
+        title: 'Unit Converter',
+        translationKey: 'games.unitConverter',
+        icon: SwapHorizIcon,
       },
     ],
   },

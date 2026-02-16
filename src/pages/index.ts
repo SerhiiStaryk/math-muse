@@ -10,3 +10,4 @@ export { MissingNumberPage } from './MissingNumber';
 export { TrueFalsePage } from './TrueFalse';
 export { NumberSequencePage } from './NumberSequence';
 export { TimeChallengePage } from './TimeChallenge';
+export { UnitConverterPage } from './UnitConverter';

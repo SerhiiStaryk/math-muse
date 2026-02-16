@@ -13,6 +13,7 @@ import {
   PATH_TRUE_FALSE,
   PATH_NUMBER_SEQUENCE,
   PATH_TIME_CHALLENGE,
+  PATH_UNIT_CONVERTER,
 } from '@/constants';
 import {
   AddPage,
@@ -27,6 +28,7 @@ import {
   TrueFalsePage,
   NumberSequencePage,
   TimeChallengePage,
+  UnitConverterPage,
 } from '@/pages';
 
 const router = createBrowserRouter(
@@ -47,6 +49,7 @@ const router = createBrowserRouter(
         { path: PATH_TRUE_FALSE, element: <TrueFalsePage /> },
         { path: PATH_NUMBER_SEQUENCE, element: <NumberSequencePage /> },
         { path: PATH_TIME_CHALLENGE, element: <TimeChallengePage /> },
+        { path: PATH_UNIT_CONVERTER, element: <UnitConverterPage /> },
       ],
     },
   ],

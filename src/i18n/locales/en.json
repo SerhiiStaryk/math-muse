@@ -3,6 +3,19 @@
     "name": "Math Muse",
     "tagline": "Fun Math Games"
   },
+  "units": {
+    "km": "km",
+    "m": "m",
+    "cm": "cm",
+    "mm": "mm",
+    "dm": "dm",
+    "t": "t",
+    "q": "q",
+    "kg": "kg",
+    "g": "g",
+    "l": "L",
+    "ml": "mL"
+  },
   "nav": {
     "home": "Home",
     "dashboard": "Dashboard",
@@ -29,7 +42,9 @@
     "numberSequence": "Number Sequence",
     "numberSequenceDescription": "Spot the pattern and complete the sequence",
     "timeChallenge": "Time Challenge",
-    "timeChallengeDescription": "Read clocks and master time calculations"
+    "timeChallengeDescription": "Read clocks and master time calculations",
+    "unitConverter": "Unit Converter",
+    "unitConverterDescription": "Convert between different units of measurement"
   },
   "common": {
     "score": "Score",

@@ -10,6 +10,7 @@ const PATH_MISSING_NUMBER = 'missing-number';
 const PATH_TRUE_FALSE = 'true-false';
 const PATH_NUMBER_SEQUENCE = 'number-sequence';
 const PATH_TIME_CHALLENGE = 'time-challenge';
+const PATH_UNIT_CONVERTER = 'unit-converter';
 
 export {
   PATH_ROOT,
@@ -24,4 +25,5 @@ export {
   PATH_TRUE_FALSE,
   PATH_NUMBER_SEQUENCE,
   PATH_TIME_CHALLENGE,
+  PATH_UNIT_CONVERTER,
 };
