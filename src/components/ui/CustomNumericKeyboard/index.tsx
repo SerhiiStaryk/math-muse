@@ -2,6 +2,7 @@ import { Box, Button, Grid } from '@mui/material';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { useSoundEffects } from '@/hooks';
 
 type CustomNumericKeyboardProps = {
   onInput: (value: number) => void;
@@ -18,8 +19,11 @@ export const CustomNumericKeyboard = ({
   onToggleSign,
   disabled = false,
 }: CustomNumericKeyboardProps) => {
+  const { playSound } = useSoundEffects();
+
   const handleNumberClick = (num: number) => {
     if (!disabled) {
+      playSound('click');
       onInput(num);
     }
   };
@@ -74,7 +78,10 @@ export const CustomNumericKeyboard = ({
             fullWidth
             variant='contained'
             color='secondary' // Distinctive color for Minus
-            onClick={onToggleSign}
+            onClick={() => {
+              playSound('click');
+              onToggleSign?.();
+            }}
             disabled={disabled || !onToggleSign}
             sx={{
               ...buttonSx,
@@ -112,7 +119,10 @@ export const CustomNumericKeyboard = ({
             fullWidth
             variant='contained'
             color='error'
-            onClick={onBackspace}
+            onClick={() => {
+              playSound('click');
+              onBackspace();
+            }}
             disabled={disabled}
             sx={{
               ...buttonSx,
@@ -134,7 +144,10 @@ export const CustomNumericKeyboard = ({
               fullWidth
               variant='contained'
               color='success'
-              onClick={onSubmit}
+              onClick={() => {
+                playSound('click');
+                onSubmit();
+              }}
               disabled={disabled}
               sx={{
                 ...buttonSx,

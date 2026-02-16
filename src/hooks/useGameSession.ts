@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useGameQuestion } from './useGameQuestion';
 import { useSettings } from '@/context/SettingsContext';
+import { useSoundEffects } from './useSoundEffects';
 import { GameType } from '@/types';
 import { FEEDBACK_DISPLAY_DURATION } from '@/constants';
 
@@ -73,13 +74,18 @@ export const useGameSession = ({ gameType, questionType }: UseGameSessionProps) 
     }
   }, [showingFeedback, nextQuestion, settings.autoAdvanceOnCorrect]);
 
+  const { playSound } = useSoundEffects();
+
   // Check if session is complete
   useEffect(() => {
-    if (settings.questionsPerSession > 0 && totalCount >= settings.questionsPerSession) {
+    if (settings.questionsPerSession > 0 && totalCount >= settings.questionsPerSession && !sessionComplete) {
       setSessionComplete(true);
+      if (settings.enableSoundEffects) {
+        playSound('complete');
+      }
       flushResults();
     }
-  }, [totalCount, settings.questionsPerSession]);
+  }, [totalCount, settings.questionsPerSession, sessionComplete, settings.enableSoundEffects, playSound]);
 
   const handleResetSession = useCallback(() => {
     flushResults();

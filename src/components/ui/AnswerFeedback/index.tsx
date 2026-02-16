@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Typography, Box } from '@mui/material';
 import { useSettings } from '@/context/SettingsContext';
 import { useEffect, useState } from 'react';
+import { useSoundEffects } from '@/hooks';
 
 type AnswerFeedbackProps = {
   isCorrect: boolean | null;
@@ -64,12 +65,13 @@ export const AnswerFeedback = ({ isCorrect }: AnswerFeedbackProps) => {
     }
   }, [isCorrect, settings.enableCelebrations, settings.reduceMotion]);
 
+  const { playSound } = useSoundEffects();
+
   useEffect(() => {
     if (isCorrect !== null && settings.enableSoundEffects) {
-      // Play sound effect (you can add actual audio files later)
-      console.log(isCorrect ? '🔊 Success sound!' : '🔊 Try again sound!');
+      playSound(isCorrect ? 'correct' : 'incorrect');
     }
-  }, [isCorrect, settings.enableSoundEffects]);
+  }, [isCorrect, settings.enableSoundEffects, playSound]);
 
   if (isCorrect === null) return null;
 
