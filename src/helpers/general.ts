@@ -41,7 +41,11 @@ export const generateQuestion = ({
     symbol = '-';
   }
 
+  let attempts = 0;
+  const MAX_ATTEMPTS = 100;
+
   while (true) {
+    attempts++;
     let a: number;
     let b: number;
     let correct: number;
@@ -70,7 +74,7 @@ export const generateQuestion = ({
     }
 
     const task = `${a}${symbol}${b}`;
-    if (mastered.has(task)) continue;
+    if (mastered.has(task) && attempts < MAX_ATTEMPTS) continue;
 
     let answers: number[] | undefined;
 
