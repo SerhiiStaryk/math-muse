@@ -3,7 +3,7 @@ import { useSettings } from '@/context/SettingsContext';
 
 const SOUNDS = {
   correct: 'https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3',
-  incorrect: 'https://assets.mixkit.co/active_storage/sfx/123/123-preview.mp3',
+  incorrect: 'https://assets.mixkit.co/active_storage/sfx/946/946-preview.mp3',
   click: 'https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3',
   complete: 'https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3',
 };
