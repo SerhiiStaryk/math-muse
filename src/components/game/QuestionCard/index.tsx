@@ -1,4 +1,4 @@
-import { useState, memo, useCallback, useEffect } from 'react';
+import { useState, memo, useCallback, useEffect, useRef } from 'react';
 import {
   Card,
   CardContent,
@@ -54,6 +54,23 @@ export const QuestionCard = memo(
 
     const isTimeCritical = timeLeft !== null && timeLeft <= 5;
 
+    // Use refs for values needed in interval to avoid effect re-runs
+    const inputValueRef = useRef(inputValue);
+    const onAnswerRef = useRef(onAnswer);
+    const useMultipleChoiceRef = useRef(useMultipleChoice);
+
+    useEffect(() => {
+      inputValueRef.current = inputValue;
+    }, [inputValue]);
+
+    useEffect(() => {
+      onAnswerRef.current = onAnswer;
+    }, [onAnswer]);
+
+    useEffect(() => {
+      useMultipleChoiceRef.current = useMultipleChoice;
+    }, [useMultipleChoice]);
+
     // Timer logic
     useEffect(() => {
       if (settings.enableTimer && !settings.practiceMode && isCorrect === null) {
@@ -64,8 +81,13 @@ export const QuestionCard = memo(
             if (prev === null || prev <= 1) {
               clearInterval(interval);
               // Auto-submit when time runs out
-              if (inputValue && !useMultipleChoice) {
-                handleInputSubmit();
+              if (inputValueRef.current && !useMultipleChoiceRef.current) {
+                const value = parseInt(inputValueRef.current, 10);
+                if (!isNaN(value)) {
+                  onAnswerRef.current(value);
+                  setInputValue('');
+                  setShowHint(false);
+                }
               }
               return 0;
             }
@@ -82,9 +104,7 @@ export const QuestionCard = memo(
       settings.practiceMode,
       settings.timePerQuestion,
       isCorrect,
-      inputValue,
-      useMultipleChoice,
-      handleInputSubmit,
+      question, // Reset timer when question changes
     ]);
 
     return (
