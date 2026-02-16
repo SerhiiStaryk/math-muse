@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion';
 import { Typography, Box } from '@mui/material';
 import { useSettings } from '@/context/SettingsContext';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 
 type AnswerFeedbackProps = {
   isCorrect: boolean | null;
@@ -40,16 +40,22 @@ const ENCOURAGEMENT_MESSAGES = {
 
 export const AnswerFeedback = ({ isCorrect }: AnswerFeedbackProps) => {
   const { settings } = useSettings();
+  const [message, setMessage] = useState<string | null>(null);
 
-  const message = useMemo(() => {
-    if (isCorrect === null) return null;
+  const encouragementLevel = settings.encouragementLevel;
+
+  useEffect(() => {
+    if (isCorrect === null) {
+      setMessage(null);
+      return;
+    }
 
     const messages = isCorrect
-      ? ENCOURAGEMENT_MESSAGES.correct[settings.encouragementLevel]
-      : ENCOURAGEMENT_MESSAGES.incorrect[settings.encouragementLevel];
+      ? ENCOURAGEMENT_MESSAGES.correct[encouragementLevel]
+      : ENCOURAGEMENT_MESSAGES.incorrect[encouragementLevel];
 
-    return messages[Math.floor(Math.random() * messages.length)];
-  }, [isCorrect, settings.encouragementLevel]);
+    setMessage(messages[Math.floor(Math.random() * messages.length)]);
+  }, [isCorrect, encouragementLevel]);
 
   useEffect(() => {
     if (isCorrect && settings.enableCelebrations && !settings.reduceMotion) {

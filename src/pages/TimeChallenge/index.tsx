@@ -139,7 +139,7 @@ export const TimeChallengePage = () => {
         const diffHours = Math.floor((addHours * 60 + addMinutes) / 60);
         const diffMinutes = (addHours * 60 + addMinutes) % 60;
         answer = diffMinutes === 0 ? `${diffHours}` : `${diffHours}:${diffMinutes.toString().padStart(2, '0')}`;
-        displayText = `How much time passed?`;
+        displayText = 'How much time passed?';
         break;
 
       case 'add-time':
