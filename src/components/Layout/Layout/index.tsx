@@ -8,7 +8,11 @@ export const Layout = () => (
     <Container
       component='main'
       maxWidth='lg'
-      sx={{ py: 4, flex: 1 }}
+      sx={{
+        py: { xs: 2, sm: 3, md: 4 },
+        px: { xs: 2, sm: 3 },
+        flex: 1,
+      }}
     >
       <Outlet />
     </Container>

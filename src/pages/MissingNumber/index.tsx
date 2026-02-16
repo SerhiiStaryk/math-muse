@@ -5,7 +5,7 @@ import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
 import { recordAttempt, masteredTasks } from '@/helpers';
 import { GameType } from '@/types';
-import { CustomNumericKeyboard, AnswerFeedback } from '@/components';
+import { CustomNumericKeyboard, AnswerFeedback, ResponsiveBox } from '@/components';
 
 type Position = 'first' | 'second' | 'result';
 type Operation = '+' | '-' | 'x' | '÷';
@@ -120,42 +120,35 @@ export const MissingNumberPage = () => {
     const result =
       operation === '+' ? num1 + num2 : operation === '-' ? num1 - num2 : operation === 'x' ? num1 * num2 : num1 / num2;
 
-    const size = { xs: 60, sm: 100 };
-    const fontSize = { xs: '3rem', sm: '4rem' };
+    const fontSize = { xs: '1.75rem', sm: '2.5rem', md: '4rem' };
 
     return (
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
-          gap: 2,
+          gap: { xs: 0.5, sm: 1, md: 2 },
           fontSize: fontSize,
           fontWeight: 700,
           justifyContent: 'center',
+          flexWrap: 'wrap',
+          px: { xs: 1, sm: 0 },
         }}
       >
         {missingPosition === 'first' ? (
-          <Box
-            sx={{
-              width: size,
-              height: size,
-              border: '4px dashed',
-              borderColor: 'primary.main',
-              borderRadius: 2,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'primary.light',
-              color: 'white',
-            }}
+          <ResponsiveBox
+            size='medium'
+            variant='dashed'
+            highlight={true}
+            color='primary'
           >
             <HelpOutlineIcon sx={{ fontSize }} />
-          </Box>
+          </ResponsiveBox>
         ) : (
           <Typography
             variant='h2'
             component='span'
-            sx={{ minWidth: size, textAlign: 'center' }}
+            sx={{ fontSize, textAlign: 'center', flexShrink: 0 }}
           >
             {num1}
           </Typography>
@@ -165,32 +158,25 @@ export const MissingNumberPage = () => {
           variant='h2'
           component='span'
           color='secondary'
+          sx={{ fontSize, px: { xs: 0.25, sm: 0.5 }, flexShrink: 0 }}
         >
           {operation}
         </Typography>
 
         {missingPosition === 'second' ? (
-          <Box
-            sx={{
-              width: size,
-              height: size,
-              border: '4px dashed',
-              borderColor: 'primary.main',
-              borderRadius: 2,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'primary.light',
-              color: 'white',
-            }}
+          <ResponsiveBox
+            size='medium'
+            variant='dashed'
+            highlight={true}
+            color='primary'
           >
-            <HelpOutlineIcon sx={fontSize} />
-          </Box>
+            <HelpOutlineIcon sx={{ fontSize }} />
+          </ResponsiveBox>
         ) : (
           <Typography
             variant='h2'
             component='span'
-            sx={{ minWidth: size, textAlign: 'center' }}
+            sx={{ fontSize, textAlign: 'center', flexShrink: 0 }}
           >
             {num2}
           </Typography>
@@ -200,32 +186,25 @@ export const MissingNumberPage = () => {
           variant='h2'
           component='span'
           color='text.secondary'
+          sx={{ fontSize, px: { xs: 0.25, sm: 0.5 }, flexShrink: 0 }}
         >
           =
         </Typography>
 
         {missingPosition === 'result' ? (
-          <Box
-            sx={{
-              width: size,
-              height: size,
-              border: '4px dashed',
-              borderColor: 'primary.main',
-              borderRadius: 2,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'primary.light',
-              color: 'white',
-            }}
+          <ResponsiveBox
+            size='medium'
+            variant='dashed'
+            highlight={true}
+            color='primary'
           >
-            <HelpOutlineIcon sx={fontSize} />
-          </Box>
+            <HelpOutlineIcon sx={{ fontSize }} />
+          </ResponsiveBox>
         ) : (
           <Typography
             variant='h2'
             component='span'
-            sx={{ minWidth: size, textAlign: 'center' }}
+            sx={{ fontSize, textAlign: 'center', flexShrink: 0 }}
           >
             {result}
           </Typography>
@@ -259,12 +238,20 @@ export const MissingNumberPage = () => {
         />
       </Stack>
 
-      <Card sx={{ mb: 3 }}>
-        <CardContent sx={{ textAlign: 'center', py: 6 }}>
+      <Card
+        sx={{
+          mb: { xs: 1, md: 3 },
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <CardContent sx={{ textAlign: 'center', py: { xs: 2, sm: 4, md: 6 }, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <Typography
             variant='h6'
             gutterBottom
             color='text.secondary'
+            sx={{ mb: { xs: 1, md: 2 } }}
           >
             {t('game.findMissingNumber')}
           </Typography>
@@ -273,11 +260,11 @@ export const MissingNumberPage = () => {
 
           <Box
             sx={{
-              mt: 4,
+              mt: { xs: 2, md: 4 },
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: 2,
+              gap: { xs: 1, md: 2 },
             }}
           >
             <TextField
@@ -304,7 +291,7 @@ export const MissingNumberPage = () => {
                 maxWidth: 400,
               }}
             />
-            <Box sx={{ mt: 2, width: '100%', maxWidth: 400 }}>
+            <Box sx={{ mt: { xs: 0, md: 2 }, width: '100%', maxWidth: 400 }}>
               <CustomNumericKeyboard
                 onInput={num => {
                   if (userAnswer.length < 5) {
@@ -330,7 +317,7 @@ export const MissingNumberPage = () => {
             <Typography
               variant='body1'
               color='error'
-              sx={{ mt: 2, fontWeight: 700 }}
+              sx={{ mt: { xs: 1, md: 2 }, fontWeight: 700 }}
             >
               {t('game.theAnswerIs')} {question?.answer}
             </Typography>

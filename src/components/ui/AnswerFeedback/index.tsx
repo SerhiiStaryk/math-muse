@@ -62,7 +62,7 @@ export const AnswerFeedback = ({ isCorrect }: AnswerFeedbackProps) => {
           damping: 15,
         },
       })}
-      sx={{ mt: 3, textAlign: 'center' }}
+      sx={{ mt: { xs: 1, md: 3 }, textAlign: 'center' }}
     >
       <Typography
         variant={settings.largeText ? 'h3' : 'h5'}

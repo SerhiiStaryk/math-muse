@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Box, Typography, Card, CardContent, TextField, Stack, Chip } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useTranslation } from 'react-i18next';
 import { recordAttempt, masteredTasks } from '@/helpers';
 import { GameType } from '@/types';
@@ -248,16 +249,20 @@ export const TimeChallengePage = () => {
 
       <Stack
         direction='row'
-        spacing={2}
-        sx={{ mb: 3 }}
+        justifyContent='space-between'
+        alignItems='center'
+        sx={{ mb: { xs: 2, sm: 4 } }}
       >
         <Chip
-          label={`${t('common.score')}: ${score}/${attempts}`}
+          icon={<HelpOutlineIcon />}
+          label={`${t('common.score')}: ${score}`}
           color='primary'
+          variant='outlined'
         />
         <Chip
-          label={`${t('common.streak')}: ${streak}`}
-          color='secondary'
+          label={`${t('common.streak')}: ${streak} 🔥`}
+          color='warning'
+          variant={streak > 0 ? 'filled' : 'outlined'}
         />
       </Stack>
 
@@ -274,7 +279,7 @@ export const TimeChallengePage = () => {
             </Typography>
 
             <Stack
-              direction='row'
+              direction={{ xs: 'column', md: 'row' }}
               spacing={4}
               justifyContent='center'
               alignItems='center'
@@ -302,6 +307,7 @@ export const TimeChallengePage = () => {
                   <Typography
                     variant='h3'
                     color='primary.main'
+                    sx={{ transform: { xs: 'rotate(90deg)', md: 'none' } }}
                   >
                     →
                   </Typography>

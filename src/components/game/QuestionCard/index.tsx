@@ -80,15 +80,22 @@ export const QuestionCard = memo(
           setTimeLeft(prev => {
             if (prev === null || prev <= 1) {
               clearInterval(interval);
+              
               // Auto-submit when time runs out
+              let value = -999999; // Default wrong answer
+
               if (inputValueRef.current && !useMultipleChoiceRef.current) {
-                const value = parseInt(inputValueRef.current, 10);
-                if (!isNaN(value)) {
-                  onAnswerRef.current(value);
-                  setInputValue('');
-                  setShowHint(false);
+                const parsed = parseInt(inputValueRef.current, 10);
+                if (!isNaN(parsed)) {
+                  value = parsed;
                 }
               }
+
+              // Always submit answer relative to timeout
+              onAnswerRef.current(value);
+              setInputValue('');
+              setShowHint(false);
+              
               return 0;
             }
             return prev - 1;
@@ -109,36 +116,61 @@ export const QuestionCard = memo(
 
     return (
       <>
-        <Card>
-          <CardContent sx={{ textAlign: 'center' }}>
+        <Card
+          sx={{
+            height: 'auto',
+            display: { xs: 'flex', md: 'block' },
+            flexDirection: { xs: 'column', md: 'row' },
+            // Повертаємо стилі картки
+            boxShadow: { xs: 3, md: 1 }, 
+            borderRadius: { xs: 0, sm: 2 }, // Лише на дуже малих 0, або 2 скрізь? Хай буде як було або 2.
+            // Прибираємо прозорість
+          }}
+        >
+          <CardContent
+            sx={{
+              textAlign: 'center',
+              flex: { xs: 1, md: 'initial' },
+              display: { xs: 'flex', md: 'block' },
+              flexDirection: { xs: 'column', md: 'row' },
+              justifyContent: { xs: 'center', md: 'initial' }, // Центруємо контент!
+              gap: { xs: 1, md: 0 },
+              py: { xs: 2, sm: 3, md: 6 }, // 16px, як в MissingNumber
+              px: { xs: 2, sm: 3 },
+              '&:last-child': {
+                pb: { xs: 2, sm: 3, md: 6 },
+              },
+            }}
+          >
             {/* Timer Display */}
             {settings.enableTimer && !settings.practiceMode && timeLeft !== null && (
-              <Box sx={{ mb: 2 }}>
+              <Box sx={{ mb: { xs: 1, md: 2 } }}>
                 <Box
                   sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    mb: 1,
+                    mb: { xs: 0.5, md: 1 },
                   }}
                 >
                   <Typography
                     variant='body2'
                     color='text.secondary'
+                    sx={{ display: { xs: 'none', sm: 'block' } }}
                   >
                     Time Left
                   </Typography>
                   <Chip
                     label={`${timeLeft}s`}
                     color={isTimeCritical ? 'error' : 'primary'}
-                    size={settings.largeText ? 'medium' : 'small'}
+                    size='small'
                   />
                 </Box>
                 <LinearProgress
                   variant='determinate'
                   value={timePercentage}
                   color={isTimeCritical ? 'error' : 'primary'}
-                  sx={{ height: 8, borderRadius: 4 }}
+                  sx={{ height: { xs: 4, md: 8 }, borderRadius: 4 }}
                 />
               </Box>
             )}
@@ -147,9 +179,13 @@ export const QuestionCard = memo(
             {settings.practiceMode && (
               <Alert
                 severity='info'
-                sx={{ mb: 2 }}
+                sx={{
+                  mb: { xs: 1, md: 2 },
+                  display: { xs: 'none', sm: 'flex' },
+                  py: { sm: 0.5 },
+                }}
               >
-                🎓 Practice Mode - Take your time!
+                🎓 Practice Mode
               </Alert>
             )}
 
@@ -157,8 +193,7 @@ export const QuestionCard = memo(
               variant={settings.largeText ? 'h3' : 'h5'}
               gutterBottom
               sx={{
-                // fontSize: settings.largeText ? '2.5rem' : '1.5rem',
-                fontSize: '2rem',
+                fontSize: { xs: '1.5rem', sm: '2rem', md: settings.largeText ? '2.5rem' : '1.5rem' },
                 fontWeight: 600,
                 color: settings.highContrast ? 'text.primary' : 'inherit',
               }}
@@ -219,11 +254,13 @@ export const QuestionCard = memo(
             ) : (
               <Box
                 sx={{
-                  mt: 4,
+                  mt: { xs: 2, md: 4 }, // Трохи збільшимо margin, бо прибрали flex розтягування
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: 2,
+                  gap: { xs: 1, md: 2 },
+                  // flex: 1 прибрано
+                  justifyContent: 'center',
                 }}
               >
                 <TextField
@@ -254,7 +291,7 @@ export const QuestionCard = memo(
                     },
                   }}
                 />
-                <Box sx={{ mt: 2, width: '100%', maxWidth: 400 }}>
+                <Box sx={{ mt: { xs: 0, md: 2 }, width: '100%', maxWidth: 400 }}>
                   <CustomNumericKeyboard
                     onInput={num => {
                       if (inputValue.length < 5) {
@@ -273,11 +310,14 @@ export const QuestionCard = memo(
                     // disabled={feedback === 'correct'}
                   />
                 </Box>
-              </Box>
+                </Box>
             )}
+            
+            <Box sx={{ mt: 2, minHeight: 24 }}>
+              <AnswerFeedback isCorrect={isCorrect} />
+            </Box>
           </CardContent>
         </Card>
-        <AnswerFeedback isCorrect={isCorrect} />
       </>
     );
   }

@@ -6,9 +6,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:mobile": "vite --host 0.0.0.0",
+    "dev:mobile:debug": "vite --host 0.0.0.0 --debug",
     "build": "tsc -b && vite build",
     "lint": "eslint . --fix",
     "preview": "vite preview",
+    "preview:mobile": "vite preview --host 0.0.0.0",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",

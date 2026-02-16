@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Button, Typography, Box, Card, CardContent, useTheme } from '@mui/material';
+import { Button, Typography, Box, Card, CardContent, useTheme, Stack, Chip } from '@mui/material';
 import { AnswerFeedback } from '@/components';
 import { useSettings } from '@/context/SettingsContext';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { getRandomNumber, recordAttempt, masteredTasks } from '@/helpers';
 import { useHistory } from '@/hooks';
 import { GameType } from '@/types';
@@ -20,6 +21,8 @@ export const ComparePage = () => {
   const { t } = useTranslation();
   const [num1, setNum1] = useState<number>(0);
   const [num2, setNum2] = useState<number>(0);
+  const [score, setScore] = useState(0);
+  const [streak, setStreak] = useState(0);
 
   const theme = useTheme();
 
@@ -64,6 +67,13 @@ export const ComparePage = () => {
 
       setIsCorrect(correctAnswer);
       recordAttempt(`${num1}${symbol}${num2}`, correctAnswer, GameType.compare);
+
+      if (correctAnswer) {
+        setScore(prev => prev + 1);
+        setStreak(prev => prev + 1);
+      } else {
+        setStreak(0);
+      }
     },
     [num1, num2, setIsCorrect]
   );
@@ -89,6 +99,26 @@ export const ComparePage = () => {
       >
         {t('games.compare')}
       </Typography>
+
+      <Stack
+        direction='row'
+        justifyContent='space-between'
+        alignItems='center'
+        sx={{ mb: { xs: 2, sm: 4 } }}
+      >
+        <Chip
+          icon={<HelpOutlineIcon />}
+          label={`${t('common.score')}: ${score}`}
+          color='primary'
+          variant='outlined'
+        />
+        <Chip
+          label={`${t('common.streak')}: ${streak} 🔥`}
+          color='warning'
+          variant={streak > 0 ? 'filled' : 'outlined'}
+        />
+      </Stack>
+
       <Card>
         <CardContent>
           <Box

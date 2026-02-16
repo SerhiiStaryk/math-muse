@@ -1,6 +1,15 @@
 import type { Components, Theme } from '@mui/material/styles';
 
 export const components: Components<Theme> = {
+  MuiCssBaseline: {
+    styleOverrides: {
+      body: {
+        // iOS safe area
+        paddingTop: 'env(safe-area-inset-top)',
+        paddingBottom: 'env(safe-area-inset-bottom)',
+      },
+    },
+  },
   MuiButton: {
     styleOverrides: {
       root: {

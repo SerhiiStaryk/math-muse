@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Box, Typography, Card, CardContent, TextField, Stack, Chip, Grid } from '@mui/material';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useSettings } from '@/context/SettingsContext';
 import { useTranslation } from 'react-i18next';
 import { recordAttempt, masteredTasks } from '@/helpers';
 import { GameType } from '@/types';
-import { CustomNumericKeyboard, AnswerFeedback } from '@/components';
+import { CustomNumericKeyboard, AnswerFeedback, ResponsiveBox } from '@/components';
 
 interface Question {
   sequence: (number | null)[];
@@ -116,16 +117,20 @@ export const NumberSequencePage = () => {
 
       <Stack
         direction='row'
-        spacing={2}
-        sx={{ mb: 3 }}
+        justifyContent='space-between'
+        alignItems='center'
+        sx={{ mb: { xs: 2, sm: 4 } }}
       >
         <Chip
-          label={`${t('common.score')}: ${score}/${attempts}`}
+          icon={<HelpOutlineIcon />}
+          label={`${t('common.score')}: ${score}`}
           color='primary'
+          variant='outlined'
         />
         <Chip
-          label={`${t('common.streak')}: ${streak}`}
-          color='secondary'
+          label={`${t('common.streak')}: ${streak} 🔥`}
+          color='warning'
+          variant={streak > 0 ? 'filled' : 'outlined'}
         />
       </Stack>
 
@@ -142,50 +147,32 @@ export const NumberSequencePage = () => {
 
             <Grid
               container
-              spacing={2}
+              spacing={{ xs: 0.5, sm: 1, md: 2 }}
               justifyContent='center'
-              sx={{ my: 4 }}
+              sx={{ my: { xs: 2, sm: 4 } }}
             >
               {question.sequence.map((num, index) => (
-                <Grid key={index}>
+                <Grid
+                  key={index}
+                  size='auto'
+                >
                   {num === null ? (
-                    <Box
-                      sx={{
-                        width: { xs: 50, sm: 100 },
-                        height: { xs: 50, sm: 100 },
-                        border: '4px dashed',
-                        borderColor: 'primary.main',
-                        borderRadius: 2,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: 'primary.light',
-                        fontSize: { xs: '2rem', sm: '3rem' },
-                        fontWeight: 700,
-                        color: 'white',
-                      }}
+                    <ResponsiveBox
+                      size='medium'
+                      variant='dashed'
+                      highlight={true}
+                      color='primary'
                     >
                       ?
-                    </Box>
+                    </ResponsiveBox>
                   ) : (
-                    <Box
-                      sx={{
-                        width: { xs: 50, sm: 100 },
-                        height: { xs: 50, sm: 100 },
-                        border: '3px solid',
-                        borderColor: 'secondary.main',
-                        borderRadius: 2,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: 'secondary.light',
-                        fontSize: { xs: '1.5rem', sm: '2.5rem' },
-                        fontWeight: 700,
-                        color: 'white',
-                      }}
+                    <ResponsiveBox
+                      size='medium'
+                      variant='solid'
+                      color='secondary'
                     >
                       {num}
-                    </Box>
+                    </ResponsiveBox>
                   )}
                 </Grid>
               ))}

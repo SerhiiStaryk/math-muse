@@ -133,16 +133,20 @@ export const TrueFalsePage = () => {
 
       <Stack
         direction='row'
-        spacing={2}
-        sx={{ mb: 3 }}
+        justifyContent='space-between'
+        alignItems='center'
+        sx={{ mb: { xs: 2, sm: 4 } }}
       >
         <Chip
-          label={`${t('common.score')}: ${score}/${attempts}`}
+          icon={<CheckCircleOutlineIcon />} // Використовуємо CheckCircle або HelpOutline
+          label={`${t('common.score')}: ${score}`}
           color='primary'
+          variant='outlined'
         />
         <Chip
-          label={`${t('common.streak')}: ${streak}`}
-          color='secondary'
+          label={`${t('common.streak')}: ${streak} 🔥`}
+          color='warning'
+          variant={streak > 0 ? 'filled' : 'outlined'}
         />
       </Stack>
 
