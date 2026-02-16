@@ -13,7 +13,7 @@ export const Logo = ({ size = 120 }: LogoProps) => {
 
   return (
     <Link
-      to='/math-muse'
+      to='/'
       style={{ textDecoration: 'none' }}
     >
       <StyledLogoContainer>
