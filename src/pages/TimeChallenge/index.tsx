@@ -108,7 +108,6 @@ export const TimeChallengePage = () => {
   const [activeField, setActiveField] = useState<'hours' | 'minutes' | 'answer'>('hours');
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const [score, setScore] = useState(0);
-  const [attempts, setAttempts] = useState(0);
   const [streak, setStreak] = useState(0);
 
   const generateQuestion = useCallback(() => {
@@ -203,7 +202,6 @@ export const TimeChallengePage = () => {
 
     const isCorrect = userResponse === question.answer;
     setFeedback(isCorrect ? 'correct' : 'incorrect');
-    setAttempts(prev => prev + 1);
 
     const taskDescription = `${question.type}: ${question.hours}:${question.minutes} -> ${question.hours2}:${question.minutes2}`;
     recordAttempt(taskDescription, isCorrect, GameType.timeChallenge);
