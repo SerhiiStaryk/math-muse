@@ -10,6 +10,7 @@ export const GAME_EMOJIS: Record<GameType, string> = {
   trueFalse: '✅',
   numberSequence: '🔢',
   timeChallenge: '⏰',
+  unitConverter: '🔄',
 };
 
 export const GAME_NAMES: Record<GameType, string> = {
@@ -22,4 +23,5 @@ export const GAME_NAMES: Record<GameType, string> = {
   trueFalse: 'games.trueFalse',
   numberSequence: 'games.numberSequence',
   timeChallenge: 'games.timeChallenge',
+  unitConverter: 'games.unitConverter',
 };

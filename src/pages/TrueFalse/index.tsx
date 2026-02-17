@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { Box, Typography, Card, CardContent, Stack, Chip, Button } from '@mui/material';
 import { AnswerFeedback } from '@/components';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import CancelIcon from '@mui/icons-material/Cancel';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { useSettings } from '@/context/SettingsContext';
@@ -27,7 +26,6 @@ export const TrueFalsePage = () => {
   const [question, setQuestion] = useState<Question | null>(null);
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const [score, setScore] = useState(0);
-  const [attempts, setAttempts] = useState(0);
   const [streak, setStreak] = useState(0);
 
   const generateQuestion = useCallback(() => {
@@ -72,7 +70,8 @@ export const TrueFalsePage = () => {
       const showCorrectAnswer = Math.random() > 0.5;
       const displayedResult = showCorrectAnswer
         ? correctResult
-        : correctResult + (Math.random() > 0.5 ? Math.floor(Math.random() * 5) + 1 : -Math.floor(Math.random() * 5) - 1);
+        : correctResult +
+          (Math.random() > 0.5 ? Math.floor(Math.random() * 5) + 1 : -Math.floor(Math.random() * 5) - 1);
 
       const task = `${num1}${operation}${num2}=${displayedResult}`;
       if (mastered.has(task) && attemptsCount < MAX_ATTEMPTS) continue;
@@ -99,7 +98,6 @@ export const TrueFalsePage = () => {
 
     const isCorrect = userSaysTrue === question.isCorrect;
     setFeedback(isCorrect ? 'correct' : 'incorrect');
-    setAttempts(prev => prev + 1);
 
     // Record the attempt for statistics
     const taskDescription = `${question.num1}${question.operation}${question.num2}=${question.displayedResult}`;

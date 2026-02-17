@@ -22,7 +22,6 @@ export const NumberSequencePage = () => {
   const [userAnswer, setUserAnswer] = useState('');
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const [score, setScore] = useState(0);
-  const [attempts, setAttempts] = useState(0);
   const [streak, setStreak] = useState(0);
 
   const generateQuestion = useCallback(() => {
@@ -73,7 +72,6 @@ export const NumberSequencePage = () => {
 
     const isCorrect = parseInt(userAnswer) === question.answer;
     setFeedback(isCorrect ? 'correct' : 'incorrect');
-    setAttempts(prev => prev + 1);
 
     // Record the attempt for statistics
     const taskDescription = `Step ${question.step}, Start ${question.sequence[0] || question.answer}, Pos ${question.missingIndex}`;

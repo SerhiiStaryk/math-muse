@@ -13,6 +13,7 @@ const DEFAULT_RESULTS: ResultsData = {
   trueFalse: {},
   numberSequence: {},
   timeChallenge: {},
+  unitConverter: {},
 };
 
 export const useGameStats = () => {
@@ -42,6 +43,7 @@ export const useGameStats = () => {
       trueFalse: { correct: 0, attempts: 0, mastered: 0 },
       numberSequence: { correct: 0, attempts: 0, mastered: 0 },
       timeChallenge: { correct: 0, attempts: 0, mastered: 0 },
+      unitConverter: { correct: 0, attempts: 0, mastered: 0 },
     };
 
     Object.entries(results).forEach(([gameType, records]) => {

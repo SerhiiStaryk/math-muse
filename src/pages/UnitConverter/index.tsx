@@ -110,7 +110,7 @@ export const UnitConverterPage = () => {
       setStreak(0);
       setSessionComplete(false);
       generateNewQuestion();
-  }
+  };
 
   // Session object adaptor for GamePageLayout
   // We explicitly match the expected structure
