@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Layout } from '@/components';
+import { AppLayout } from '@/components';
 import {
   PATH_ADD,
   PATH_COMPARE,
@@ -35,7 +35,7 @@ const router = createBrowserRouter(
   [
     {
       path: '/',
-      element: <Layout />,
+      element: <AppLayout />,
       children: [
         { path: PATH_ROOT, element: <HomePage /> },
         { path: PATH_ADD, element: <AddPage /> },
@@ -55,7 +55,7 @@ const router = createBrowserRouter(
   ],
   {
     basename: '/math-muse/',
-  }
+  },
 );
 
 export default router;
